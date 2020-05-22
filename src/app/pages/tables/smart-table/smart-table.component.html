@@ -1,0 +1,73 @@
+<nb-card>
+  <nb-card-header>
+    Campaigns
+  </nb-card-header>
+
+  <nb-card-body>
+    <!-- <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table> -->
+    <nb-layout>
+
+      <nb-layout-column class="colored-column-warning">
+        <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="15">
+          <thead>
+            <tr>
+              <th style="width: 20%">
+                <mfDefaultSorter by="name">Name</mfDefaultSorter>
+              </th>
+              <th style="width: 20%">
+                <mfDefaultSorter by="email">Email</mfDefaultSorter>
+              </th>
+              <th style="width: 20%">
+                <mfDefaultSorter by="email">FirstName</mfDefaultSorter>
+              </th>
+
+              <th style="width: 20%">
+                <mfDefaultSorter by="email">Action</mfDefaultSorter>
+              </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of mf.data">
+              <td>{{item.id}}</td>
+              <td>{{item.email}}</td>
+              <td>{{item.firstName}}</td>
+              <td>
+                <nb-icon [icon]="'trash-2'" pack="eva">
+                </nb-icon>
+                <nb-icon [icon]="'edit-outline'" pack="eva">
+                </nb-icon>
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+      </nb-layout-column>
+      <nb-layout-column class="colored-column-danger">
+
+        <nb-card>
+          <nb-card-header>Create Compaign</nb-card-header>
+          <nb-card-body>
+            <form>
+              <div class="form-group">
+                <input type="text" nbInput fullWidth placeholder="Recipients">
+              </div>
+              <div class="form-group">
+                <input type="text" nbInput fullWidth placeholder="Subject">
+              </div>
+              <div class="form-group">
+                <textarea nbInput placeholder="Message"></textarea>
+              </div>
+              <button type="submit" nbButton status="success">Create</button>
+            </form>
+          </nb-card-body>
+        </nb-card>
+
+      </nb-layout-column>
+    </nb-layout>
+
+
+  </nb-card-body>
+</nb-card>
