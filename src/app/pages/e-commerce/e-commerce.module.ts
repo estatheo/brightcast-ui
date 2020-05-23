@@ -71,6 +71,7 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
     NgxEchartsModule,
     NgxChartsModule,
     LeafletModule,
+    NbCardModule,
   ],
   declarations: [
     ECommerceComponent,
