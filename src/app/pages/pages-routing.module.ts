@@ -10,6 +10,7 @@ const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
+
     {
       path: 'dashboard',
       component: ECommerceComponent,
@@ -17,6 +18,9 @@ const routes: Routes = [{
     {
       path: 'iot-dashboard',
       component: DashboardComponent,
+    },
+    {
+      path: 'main', loadChildren: () => import('./main/main.module').then(m => m.MainModule),
     },
     {
       path: 'layout',

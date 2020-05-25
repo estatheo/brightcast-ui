@@ -1,0 +1,49 @@
+<div class="customer-list">
+    <nb-card>
+        <nb-card-header>
+            Customer-List
+        </nb-card-header>
+        <nb-card-header>
+            <div class="row">
+                <div class="col custom">
+                    #id
+                </div>
+                <div class="col custom">
+                    Contacts
+                </div>
+                <div class="col custom">
+                    Column
+                </div>
+                <div class="col custom">
+                    Action
+                </div>
+            </div>
+        </nb-card-header>
+        <nb-card-body>
+
+            <div *ngFor="let contact of contacts" class="row">
+                <div class="col custom">
+                    1
+                </div>
+                <div class="col custom">
+                    0
+                </div>
+                <div class="col custom">
+                    0
+                </div>
+                <div class="col custom">
+                    <div class="icon-flex">
+                        <div class="icon-itself">
+                            <nb-icon [icon]="'trash-2'" pack="eva">
+                            </nb-icon>
+                        </div>
+                        <div class="icon-itself">
+                            <nb-icon [icon]="'edit-outline'" pack="eva">
+                            </nb-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
+</div>

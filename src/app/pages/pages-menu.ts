@@ -16,13 +16,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Contact Lists',
     icon: 'person-add-outline',
-    link: '/pages/dashboard',
+    link: '/pages/main/customer-list',
     home: true,
   },
   {
     title: 'Settings',
     icon: 'settings-2-outline',
-    link: '/pages/dashboard',
+    link: '/pages/main/settings',
     home: true,
   },
   {
