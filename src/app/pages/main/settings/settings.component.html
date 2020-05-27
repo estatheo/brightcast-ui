@@ -1,0 +1,69 @@
+<div class="settings">
+    <div class="settings-container">
+        <nb-card>
+            <nb-card-header>User Settings</nb-card-header>
+            <nb-card-body>
+                <div class="toggler">
+                    <div class="toggle-btn">
+                        <button nbButton status="{{btnstuatus[0]}}" (click)="toggle()">Personal</button>
+                    </div>
+                    <div class="toggle-btn">
+                        <button nbButton status="{{btnstuatus[1]}}" (click)="toggle()">Business</button>
+                    </div>
+                </div>
+                <form *ngIf="settingClass[0] == 'personal'">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="label">First Name</label>
+                        <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Email" value="test">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="label">Last Name</label>
+                        <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Email" value="test">
+                    </div>
+                    <div class="form-group">
+                        <label for="selective_input" class="label">Role</label>
+                        <nb-select selected="1" id="selective_input" fullWidth>
+                            <nb-option value="1">Option 1</nb-option>
+                            <nb-option value="2">Option 2</nb-option>
+                        </nb-select>
+                    </div>
+
+                    <button type="submit" nbButton status="primary">Save</button>
+                </form>
+
+                <form *ngIf="settingClass[0] == 'business'">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="label">Business Name</label>
+                        <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Business"
+                            value="test">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="label">Business Logo</label>
+                        <input type="file" nbInput fullWidth id="exampleInputEmail1" placeholder="Website" value="test">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo" class="label">Website</label>
+                        <input type="email" nbInput fullWidth id="logo" placeholder="logo">
+                    </div>
+                    <div class="form-group">
+                        <label for="selective_input" class="label">Business Category</label>
+                        <nb-select selected="1" id="selective_input" fullWidth>
+                            <nb-option value="1">Sports </nb-option>
+                            <nb-option value="2">Automtive</nb-option>
+                            <nb-option value="2">Fashion</nb-option>
+                            <nb-option value="2">Education</nb-option>
+                            <nb-option value="2">Entertainment</nb-option>
+                        </nb-select>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="label">Bio</label>
+                            <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Bio"
+                                value="test">
+                        </div>
+                    </div>
+
+                    <button type="submit" nbButton status="primary">Save</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
