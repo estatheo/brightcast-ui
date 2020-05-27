@@ -11,7 +11,7 @@
                         <button nbButton status="{{btnstuatus[1]}}" (click)="toggle()">Business</button>
                     </div>
                 </div>
-                <form *ngIf="settingClass[0] == 'personal'">
+                <form *ngIf="settingClass[0] == 'personal'" class="setting-form">
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="label">First Name</label>
                         <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Email" value="test">
@@ -31,7 +31,7 @@
                     <button type="submit" nbButton status="primary">Save</button>
                 </form>
 
-                <form *ngIf="settingClass[0] == 'business'">
+                <form *ngIf="settingClass[0] == 'business'" class="setting-form">
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="label">Business Name</label>
                         <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Business"

@@ -1,6 +1,12 @@
 .custom {
     text-align: center;
 }
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 .icon-flex {
     display: flex;
     flex-direction: row;
@@ -14,3 +20,22 @@
     padding-right: 5px;
     cursor: pointer;
 }
+nb-icon {
+    cursor: pointer;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  table {
+      margin-top: 5px;
+      tr {
+        color: white;
+      }
+    
+      td {
+          color: white;
+          text-align: center;
+      }
+      th {
+          text-align: center;
+      }
+    }

@@ -1,0 +1,67 @@
+<nb-card>
+    <nb-card-header>
+        <div class="header-container">
+            <div>
+                Compaings
+            </div>
+            <div>
+                <button type="button" nbButton status="primary" (click)="openModal()">Create New</button>
+            </div>
+        </div>
+
+    </nb-card-header>
+    <nb-card-body>
+        <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="15">
+            <thead>
+                <tr>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="sent">Sent</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="email">Read</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="email">Response</mfDefaultSorter>
+                    </th>
+                    <th class="statusCol">
+                        <mfDefaultSorter by="email">Status</mfDefaultSorter>
+                    </th>
+                    <th style="width: 30%">
+                        <mfDefaultSorter by="email">Action</mfDefaultSorter>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of mf.data">
+                    <td>{{item.name}}</td>
+                    <td>{{item.sent}}</td>
+                    <td>{{item.read}}</td>
+                    <td>{{item.response}}</td>
+                    <td *ngIf="item.status == 0" class="status created"> Created </td>
+                    <td *ngIf="item.status == 1" class="status submitted"> Submitted </td>
+                    <td *ngIf="item.status == 2" class="status completed"> Completed </td>
+                    <td *ngIf="item.status == 3" class="status canceled"> Canceled </td>
+                    <td>
+                        <div class="flex-icons">
+                            <nb-icon [icon]="'trash-2'" pack="eva" class="compaign-icons">
+                            </nb-icon>
+                            <nb-icon [icon]="'edit-outline'" pack="eva" (click)="openModalForEdit(item)"
+                                class="compaign-icons">
+                            </nb-icon>
+                            <nb-icon [icon]="'refresh'" pack="eva" class="compaign-icons">
+                            </nb-icon>
+                            <nb-icon [icon]="'paper-plane'" pack="eva" class="compaign-icons">
+                            </nb-icon>
+                        </div>
+
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </nb-card-body>
+</nb-card>

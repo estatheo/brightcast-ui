@@ -10,7 +10,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Compaigns',
     icon: 'message-square-outline',
-    link: '/pages/tables/smart-table',
+    link: '/pages/main/compaign',
     home: true,
   },
   {

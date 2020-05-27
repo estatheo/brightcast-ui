@@ -1,0 +1,56 @@
+
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+nb-icon {
+  cursor: pointer;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.statusCol {
+  width: 20%;
+}
+.flex-icons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+table {
+    margin-top: 5px;
+    tr {
+      color: white;
+    }
+  
+    td {
+        color: white;
+        text-align: center;
+    }
+    th {
+        text-align: center;
+    }
+  }
+  
+  .status {
+      border-radius: 5px;
+  }
+  .created {
+    background-color: #F9DAAA;
+    color: #FFAB2B !important;
+  }
+  .submitted {
+    background-color: #BCCEFF;
+    color: #0048CD !important;
+  }
+  .completed {
+    background-color: #EDFFE2 ;
+    color: #6DD230 !important;
+  }
+  .canceled {
+    background-color: #FFAED0;
+    color: #FE4D97 !important;
+  }
+

@@ -1,49 +1,55 @@
 <div class="customer-list">
     <nb-card>
         <nb-card-header>
-            Customer-List
-        </nb-card-header>
-        <nb-card-header>
-            <div class="row">
-                <div class="col custom">
-                    #id
+            <div class="header-container">
+                <div>
+                    Customer-List
                 </div>
-                <div class="col custom">
-                    Contacts
-                </div>
-                <div class="col custom">
-                    Column
-                </div>
-                <div class="col custom">
-                    Action
+                <div>
+                    <button type="button" nbButton status="primary" (click)="openModal()">Create New</button>
                 </div>
             </div>
         </nb-card-header>
         <nb-card-body>
+            <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="15">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="name">Name</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="contacts">Contacts</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="email">Compaigns</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="email">Unsubscribed</mfDefaultSorter>
+                        </th>
+                        <th style="width: 20%">
+                            <mfDefaultSorter by="email">Action</mfDefaultSorter>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of mf.data">
 
-            <div *ngFor="let contact of contacts" class="row">
-                <div class="col custom">
-                    1
-                </div>
-                <div class="col custom">
-                    0
-                </div>
-                <div class="col custom">
-                    0
-                </div>
-                <div class="col custom">
-                    <div class="icon-flex">
-                        <div class="icon-itself">
-                            <nb-icon [icon]="'trash-2'" pack="eva">
+                        <td>{{item.name}}</td>
+                        <td>{{item.contacts}}</td>
+                        <td>{{item.compaigns}}</td>
+                        <td>{{item.unsubscribed}}</td>
+                        <td>
+                            <nb-icon [icon]="'trash-2'" pack="eva" class="compaign-icons">
                             </nb-icon>
-                        </div>
-                        <div class="icon-itself">
-                            <nb-icon [icon]="'edit-outline'" pack="eva">
+                            <nb-icon [icon]="'edit-outline'" pack="eva" (click)="openModalForEdit(item)"
+                                class="compaign-icons">
                             </nb-icon>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
         </nb-card-body>
     </nb-card>
 </div>

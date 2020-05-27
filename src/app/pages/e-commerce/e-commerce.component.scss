@@ -1,0 +1,19 @@
+.card-values {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.absolute {
+    animation: fadein;
+    animation-duration: 2s;
+    font-size: 2em;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

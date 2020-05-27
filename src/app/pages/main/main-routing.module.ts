@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
 import { MainComponent } from './main/main.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
+import { CompaignComponent } from './compaign/compaign.component';
+import { OnboardingComponent } from './onboarding/onboarding.component';
 
 
 const routes: Routes = [
@@ -14,7 +16,13 @@ const routes: Routes = [
       },
       {
         path: 'customer-list', component: CustomerListComponent,
-      }
+      },
+      {
+        path: 'compaign', component: CompaignComponent,
+      },
+      {
+        path: 'onboarding', component: OnboardingComponent,
+      },
     ]
   }
 

@@ -29,3 +29,17 @@
         min-height: 340px;
     }
 }
+
+.setting-form{
+    animation-name: fadeIn;
+    animation-duration: 2s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }   
+    to{
+        opacity: 1;
+    }
+}
