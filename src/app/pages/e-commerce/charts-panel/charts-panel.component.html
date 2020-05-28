@@ -1,4 +1,4 @@
-<nb-card size="large">
+<!-- <nb-card size="large">
   <nb-tabset fullWidth (changeTab)="changeTab($event)">
     <nb-tab tabTitle="Orders">
       <div class="chart-container">
@@ -17,4 +17,15 @@
       </div>
     </nb-tab>
   </nb-tabset>
+</nb-card>
+ -->
+
+
+<nb-card size="large">
+  <div class="chart-container">
+    <div class="header-title">
+      Delivered
+    </div>
+    <ngx-orders-chart #ordersChart [ordersChartData]="ordersChartData"></ngx-orders-chart>
+  </div>
 </nb-card>

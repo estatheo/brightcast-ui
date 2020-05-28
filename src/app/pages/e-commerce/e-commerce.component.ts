@@ -11,7 +11,7 @@ export class ECommerceComponent implements OnInit {
 
   absoluteValues = [10, 25, 15, 7, 9];
   absoluteValues1 = [0, 0, 0, 0, 0];
-
+  percentageValues = [+2.5, -1.5, +2.5, -1.5, -1.5];
   constructor(private router: Router) {
 
   }
@@ -23,10 +23,9 @@ export class ECommerceComponent implements OnInit {
     console.log("max value", maxValue);
     const self = this;
     let initial = 0;
-
-    setTimeout(function () {
-      self.router.navigate(['pages/main/onboarding']);
-    }, 5000)
+    // setTimeout(function () {
+    //   self.router.navigate(['pages/main/onboarding']);
+    // }, 5000)
 
   }
 }

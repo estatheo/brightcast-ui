@@ -14,54 +14,69 @@
                 <form *ngIf="settingClass[0] == 'personal'" class="setting-form">
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="label">First Name</label>
-                        <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Email" value="test">
+                        <input [disabled]="edit" type="email" nbInput fullWidth id="exampleInputEmail1"
+                            placeholder="Email" value="test">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="label">Last Name</label>
-                        <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Email" value="test">
+                        <input [disabled]="edit" type="email" nbInput fullWidth id="exampleInputEmail1"
+                            placeholder="Email" value="test">
                     </div>
                     <div class="form-group">
                         <label for="selective_input" class="label">Role</label>
-                        <nb-select selected="1" id="selective_input" fullWidth>
-                            <nb-option value="1">Option 1</nb-option>
-                            <nb-option value="2">Option 2</nb-option>
+                        <nb-select [disabled]="edit" selected="1" id="selective_input" fullWidth>
+                            <nb-option value="1">Founder</nb-option>
+                            <nb-option value="2">CEO</nb-option>
                         </nb-select>
                     </div>
-
-                    <button type="submit" nbButton status="primary">Save</button>
+                    <div class="btns-container">
+                        <div class="edit-btn" (click)="toggleEdit()">
+                            Edit
+                        </div>
+                        <div>
+                            <button type="submit" nbButton status="primary">Save</button>
+                        </div>
+                    </div>
                 </form>
 
                 <form *ngIf="settingClass[0] == 'business'" class="setting-form">
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="label">Business Name</label>
-                        <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Business"
-                            value="test">
+                        <input type="email" [disabled]="edit1" nbInput fullWidth id="exampleInputEmail1"
+                            placeholder="Business" value="test">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1" class="label">Business Logo</label>
-                        <input type="file" nbInput fullWidth id="exampleInputEmail1" placeholder="Website" value="test">
+                        <input type="file" [disabled]="edit1" nbInput fullWidth id="exampleInputEmail1"
+                            placeholder="Website" value="test">
                     </div>
                     <div class="form-group">
                         <label for="logo" class="label">Website</label>
-                        <input type="email" nbInput fullWidth id="logo" placeholder="logo">
+                        <input type="email" [disabled]="edit1" nbInput fullWidth id="logo" placeholder="logo">
                     </div>
                     <div class="form-group">
                         <label for="selective_input" class="label">Business Category</label>
-                        <nb-select selected="1" id="selective_input" fullWidth>
+                        <nb-select selected="1" [disabled]="edit1" id="selective_input" fullWidth>
                             <nb-option value="1">Sports </nb-option>
                             <nb-option value="2">Automtive</nb-option>
                             <nb-option value="2">Fashion</nb-option>
                             <nb-option value="2">Education</nb-option>
                             <nb-option value="2">Entertainment</nb-option>
                         </nb-select>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1" class="label">Bio</label>
-                            <input type="email" nbInput fullWidth id="exampleInputEmail1" placeholder="Bio"
-                                value="test">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1" class="label">Bio</label>
+                        <input type="email" [disabled]="edit1" nbInput fullWidth id="exampleInputEmail1"
+                            placeholder="Bio" value="test">
+                    </div>
+                    <div class="btns-container">
+                        <div class="edit-btn" (click)="toggleEdit1()">
+                            Edit
+                        </div>
+                        <div>
+                            <button type="submit" nbButton status="primary">Save</button>
                         </div>
                     </div>
-
-                    <button type="submit" nbButton status="primary">Save</button>
                 </form>
             </nb-card-body>
         </nb-card>

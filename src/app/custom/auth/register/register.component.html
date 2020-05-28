@@ -1,4 +1,4 @@
-<div class="login">
+<!-- <div class="login">
 
     <div class="login-container">
         <nb-card>
@@ -52,5 +52,42 @@
                 </nb-card>
             </nb-card-body>
         </nb-card>
+    </div>
+</div> -->
+
+<div class="logo">
+    <img class="logo-img" src="assets/logo/logo.png" />
+</div>
+<div class="login">
+    <div class="login-container">
+        <div class="form-heading">
+            Create Account
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="label">Your email</label>
+                <input type="email" class="form-control" nbInput id="exampleInputEmail1" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="label">Password</label>
+                <input type="password" class="form-control" nbInput id="exampleInputPassword1"
+                    placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="label">Confirm password</label>
+                <input type="password" class="form-control" nbInput id="exampleInputPassword1"
+                    placeholder="Enter password Again">
+            </div>
+            <div class="form-group">
+                <nb-checkbox>I agree with terms & conditions</nb-checkbox>
+            </div>
+            <button type="submit" fullWidth nbButton status="primary">Create Account</button>
+            <div class="login-bottom-container">
+                <div>
+                    <p>Already have an account? <span class="login-black" routerLink="/auth/login">Sign
+                            In</span></p>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

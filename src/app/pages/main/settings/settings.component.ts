@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class SettingsComponent implements OnInit {
   btnstuatus = ['primary', 'secondary']
   settingClass = ['personal', 'business'];
+  edit = true;
+  edit1 = true
   constructor() { }
 
   ngOnInit(): void {
@@ -20,5 +22,11 @@ export class SettingsComponent implements OnInit {
     temp = this.settingClass[0];
     this.settingClass[0] = this.settingClass[1];
     this.settingClass[1] = temp;
+  }
+  toggleEdit() {
+    this.edit = !this.edit;
+  }
+  toggleEdit1() {
+    this.edit1 = !this.edit1;
   }
 }
