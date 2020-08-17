@@ -1,54 +1,29 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
+import { AuthGuard } from './pages/_helpers';
+import { LandingComponent } from './landing/landing.component';
 
 export const routes: Routes = [
+
+  {
+    path: 'home', component: LandingComponent,
+  },
   {
     path: 'pages',
-    loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule),
+    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard],
   },
   {
     path: 'auth',
-    loadChildren: () => import('./custom/auth/auth.module').then(m => m.AuthModule),
+    loadChildren: './custom/auth/auth.module#AuthModule',
   },
-  // {
-  //   path: 'auth',
-  //   component: NbAuthComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: NbLoginComponent,
-  //     },
-  //     {
-  //       path: 'login',
-  //       component: NbLoginComponent,
-  //     },
-  //     {
-  //       path: 'register',
-  //       component: NbRegisterComponent,
-  //     },
-  //     {
-  //       path: 'logout',
-  //       component: NbLogoutComponent,
-  //     },
-  //     {
-  //       path: 'request-password',
-  //       component: NbRequestPasswordComponent,
-  //     },
-  //     {
-  //       path: 'reset-password',
-  //       component: NbResetPasswordComponent,
-  //     },
-  //   ],
-  // },
+  {
+    path: 'onboarding',
+    loadChildren: './custom/onboarding/onboarding.module#OnboardingModule', canActivate: [AuthGuard],
+  },
+  {
+    path: 'signup_contact/:id',
+    loadChildren: './custom/contact-signup/contact-signup.module#ContactSignupModule',
+  },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
 ];

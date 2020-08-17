@@ -55,7 +55,7 @@ import { EarningCardBackComponent } from './earning-card/back-side/earning-card-
 import { EarningPieChartComponent } from './earning-card/back-side/earning-pie-chart.component';
 import { EarningCardFrontComponent } from './earning-card/front-side/earning-card-front.component';
 import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earning-live-update-chart.component';
-
+import { CountoModule } from 'angular2-counto';
 @NgModule({
   imports: [
     ThemeModule,
@@ -72,6 +72,8 @@ import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earni
     NgxChartsModule,
     LeafletModule,
     NbCardModule,
+    CountoModule,
+
   ],
   declarations: [
     ECommerceComponent,

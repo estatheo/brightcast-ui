@@ -1,38 +1,19 @@
 <div class="login">
-
     <div class="login-container">
-        <nb-card>
-            <nb-card-header>
-                <div class="login-logo-image">
-                    <img src="https://brightcast.azurewebsites.net/assets/img/logo.png">
+        <div class="form-heading">
+            Reset Password
+        </div>
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="label">Your email</label>
+                <input type="email" class="form-control" nbInput id="exampleInputEmail1" #email placeholder="Enter your email">
+            </div>
+            <button [nbSpinner]="loading" nbSpinnerStatus="success" type="submit" fullWidth nbButton status="primary" class="button" (click)="reset(email.value)">Reset Password</button>
+            <div class="login-bottom-container">
+                <div>
+                    <p>Dont have an account? <span class="login-black" routerLink="/auth/register"> Sign up</span></p>
                 </div>
-            </nb-card-header>
-            <nb-card-body>
-                <nb-card>
-                    <nb-card-header>
-                        <div class="login-text">
-                            Register
-                        </div>
-                    </nb-card-header>
-                    <nb-card-body>
-                        <form>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1" class="label">Current Password</label>
-                                <input type="password" nbInput fullWidth id="exampleInputPassword1"
-                                    placeholder="Current Password">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1" class="label">New Password</label>
-                                <input type="password" nbInput fullWidth id="exampleInputPassword2"
-                                    placeholder="New Password">
-                            </div>
-                            <div class="login-submit-btn">
-                                <button type="submit" nbButton status="danger">Change Password</button>
-                            </div>
-                        </form>
-                    </nb-card-body>
-                </nb-card>
-            </nb-card-body>
-        </nb-card>
+            </div>
+        </form>
     </div>
 </div>

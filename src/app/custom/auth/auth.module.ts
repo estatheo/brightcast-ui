@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
@@ -11,17 +11,36 @@ import {
   NbCheckboxModule,
   NbInputModule,
   NbCardModule,
+  NbTabsetModule,
+  NbSelectModule,
+  NbRouteTabsetModule,
+  NbStepperModule,
+  NbLayoutModule,
+  NbToastrModule,
+  NbSpinnerModule,
 } from '@nebular/theme';
 import { RegisterComponent } from './register/register.component';
-import { AuthComponent } from './auth/auth.component';
 import { ResetComponent } from './reset/reset.component';
-import { RequestPasswordComponent } from './request-password/request-password.component';
+import { ThemeModule } from '../../@theme/theme.module';
+import { VerifyComponent } from './verify/verify.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
+import { CommunicationPageComponent } from './communication-page/communication-page.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent, ResetComponent, RequestPasswordComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    ResetComponent,
+    VerifyComponent,
+    NewPasswordComponent,
+    CommunicationPageComponent,
+    TermsComponent],
   imports: [
     CommonModule,
+    ThemeModule,
+    ReactiveFormsModule,
     FormsModule,
     RouterModule,
     NbAlertModule,
@@ -30,9 +49,14 @@ import { RequestPasswordComponent } from './request-password/request-password.co
     NbCheckboxModule,
     NbCardModule,
     AuthRoutingModule,
-
+    NbTabsetModule,
+    NbSelectModule,
+    NbRouteTabsetModule,
+    NbStepperModule,
+    NbLayoutModule,
     NbAuthModule,
-
-  ]
+    NbToastrModule,
+    NbSpinnerModule,
+  ],
 })
 export class AuthModule { }

@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
-import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { AccountService } from '../../../pages/_services';
+import { UserProfile } from '../../../pages/_models/userProfile';
 
 @Component({
   selector: 'ngx-header',
@@ -15,8 +16,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: any;
-
+  user: UserProfile;
+  name;
+  avatar;
   themes = [
     {
       value: 'default',
@@ -26,34 +28,38 @@ export class HeaderComponent implements OnInit, OnDestroy {
       value: 'dark',
       name: 'Dark',
     },
-    {
-      value: 'cosmic',
-      name: 'Cosmic',
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
+    // {
+    //   value: 'cosmic',
+    //   name: 'Cosmic',
+    // },
+    // {
+    //   value: 'corporate',
+    //   name: 'Corporate',
+    // },
   ];
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Profile', link: 'pages/main/settings' }, { title: 'Log out', link: 'pages/logout' }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private userService: AccountService,
+    private layoutService: LayoutService,
+    private breakpointService: NbMediaBreakpointsService) {
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
-    this.userService.getUsers()
+    this.userService.getUserProfile()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+      .subscribe((user: UserProfile) => {
+        this.user = user;
+        this.avatar = 'url("' + this.user.pictureUrl + '")';
+        this.name = this.user.firstName + ' ' + this.user.lastName;
+      });
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()

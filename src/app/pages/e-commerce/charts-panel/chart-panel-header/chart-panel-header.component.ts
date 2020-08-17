@@ -14,16 +14,16 @@ export class ChartPanelHeaderComponent implements OnDestroy {
 
   @Output() periodChange = new EventEmitter<string>();
 
-  @Input() type: string = 'week';
+  @Input() type: string = 'month';
 
-  types: string[] = ['week', 'month', 'year'];
-  chartLegend: {iconColor: string; title: string}[];
+  types: string[] = ['month', 'week', 'year'];
+  chartLegend: { iconColor: string; title: string }[];
   breakpoint: NbMediaBreakpoint = { name: '', width: 0 };
   breakpoints: any;
   currentTheme: string;
 
   constructor(private themeService: NbThemeService,
-              private breakpointService: NbMediaBreakpointsService) {
+    private breakpointService: NbMediaBreakpointsService) {
     this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
@@ -33,12 +33,12 @@ export class ChartPanelHeaderComponent implements OnDestroy {
         this.setLegendItems(orderProfitLegend);
       });
 
-      this.breakpoints = this.breakpointService.getBreakpointsMap();
-      this.themeService.onMediaQueryChange()
-        .pipe(takeWhile(() => this.alive))
-        .subscribe(([oldValue, newValue]) => {
-          this.breakpoint = newValue;
-        });
+    this.breakpoints = this.breakpointService.getBreakpointsMap();
+    this.themeService.onMediaQueryChange()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(([oldValue, newValue]) => {
+        this.breakpoint = newValue;
+      });
   }
 
   setLegendItems(orderProfitLegend) {

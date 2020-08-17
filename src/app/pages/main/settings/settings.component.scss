@@ -14,7 +14,14 @@
     margin-bottom: 20px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
+
+}
+.toggle-btn:nth-child(1) {
+    margin-right: 5px;
+}
+.toggle-btn:nth-child(2) {
+    margin-left: 5px;
 }
 
 @media (max-width: 500px){
@@ -28,4 +35,32 @@
         min-width: 340px;
         min-height: 340px;
     }
+}
+
+.setting-form{
+    animation-name: fadeIn;
+    animation-duration: 2s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }   
+    to{
+        opacity: 1;
+    }
+}
+.btns-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-btn{
+    cursor: pointer;
+}
+
+.button {
+    color: #017fdc;
 }
