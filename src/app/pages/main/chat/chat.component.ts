@@ -69,13 +69,13 @@ export class ChatComponent implements OnInit {
     this.campaignsService.data.subscribe((data: CampaignData) => {
       this.campaign_data = data;
       this.campaign_data.campaigns.forEach((campaign_item) => {
-        if (campaign_item.id === this.campaign_id) {
-          this.chat_title = 'Chat for \"' + campaign_item.name + '\"' + ' with ' + '' + this.customer_list.find(x => x.id = this.contact_id).firstName + ' ' + this.customer_list.find(x => x.id = this.contact_id).lastName;
-          this.contactService.SetContactListId(campaign_item.contactListIds[0]);
+        if (campaign_item.id === this.campaign_id) {          
+          this.contactService.SetContactListId(isNaN(this.contact_id) ? campaign_item.contactListIds[0] : this.contact_id);
           this.contactService.data.subscribe((contactlist: Contact[]) => {
             this.contactService.refreshData();
             this.customer_list = contactlist;
             this.contact_id = this.customer_list[0].id;
+            this.chat_title = 'Chat for \"' + campaign_item.name + '\"' + ' with ' + '' + this.customer_list.find(x => x.id = this.contact_id).firstName + ' ' + this.customer_list.find(x => x.id = this.contact_id).lastName;
             if(this.chat_menu.filter(x => x.title === campaign_item.name).length == 0) {
               this.chat_menu.push({
                 title: campaign_item.name,
@@ -93,7 +93,7 @@ export class ChatComponent implements OnInit {
           });
         } else {
           this.campaign_id = this.campaign_data.campaigns[0].id;
-          this.contactService.SetContactListId(campaign_item.contactListIds[0]);
+          this.contactService.SetContactListId(isNaN(this.contact_id) ? campaign_item.contactListIds[0] : this.contact_id);
           this.contactService.data.subscribe((contactlist: Contact[]) => {
             this.contactService.refreshData();
             this.customer_list = contactlist;
