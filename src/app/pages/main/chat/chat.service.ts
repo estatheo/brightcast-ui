@@ -19,10 +19,6 @@ export class ChatService {
   constructor(private httpClient: HttpClient) {
   }
 
-  sendMessage(message: ChatMessage) {
-    this._hubConnection.invoke('messageReceived', message);
-  }
-
   startConnection = () => {
     Object.defineProperty(WebSocket, 'OPEN', { value: 1 });
     this._hubConnection = new HubConnectionBuilder()
@@ -36,7 +32,7 @@ export class ChatService {
   }
 
   registerOnServerEvents(): void {
-    this._hubConnection.on('messageReceived', (data: any) => {
+    this._hubConnection.on('newMessage', (data: any) => {
       this.messageReceived.emit(data);
     });
   }

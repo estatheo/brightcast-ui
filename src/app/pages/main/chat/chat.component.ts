@@ -65,8 +65,10 @@ export class ChatComponent implements OnInit {
               console.log('all', this.messages);
               var replies = this.messages.filter(x => x.senderId !== this.user.id);
               console.log('replies', replies);
-              if(Math.floor((this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt.getTime() - new Date().getTime()) % 86400000 / 3600000) >= 24 || this.messages.length === 0) {  
+              if(((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) { 
                 this.showInvite = true;
+              } else {
+                this.showInvite = false;
               }
             });
           }        
@@ -117,7 +119,6 @@ export class ChatComponent implements OnInit {
     tempMsg.campaignId = this.campaign_id;
     tempMsg.contactId = this.contact_id;
     this.messages.push(tempMsg);
-    this.chatService.sendMessage(tempMsg);
     this.chatService.newChatMessage(tempMsg).subscribe(() => {
     }, error => {
       this.toastrService.danger(error, 'There was an error on our side😢');
@@ -127,16 +128,24 @@ export class ChatComponent implements OnInit {
   private subscribeToEvents(): void {
     this.chatService.messageReceived.subscribe((message: ChatMessage) => {
       this._ngZone.run(() => {
-        if (message.campaignId !== this.campaign_id) {
+        if (message.campaignId !== this.campaign_id || message.contactId !== this.contact_id) {
           return;
         }
         message.reply = true;
         if (message.senderId !== this.user.id) {
           message.reply = false;
           this.messages.push(message);
+        } else {
+          //template message
+
+          this.messages.push(message);
         }
+
+        
         if(((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) {  
           this.showInvite = true;
+        } else {
+          this.showInvite = false;
         }
       });
     });
