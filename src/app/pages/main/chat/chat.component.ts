@@ -28,6 +28,7 @@ export class ChatComponent implements OnInit {
   campaign_id: number;
   contact_id: number;
   customer_list: Contact[] = [];
+  showInvite = false;
   user: UserProfile;
 
   constructor(
@@ -61,6 +62,12 @@ export class ChatComponent implements OnInit {
                 }
                 this.messages.push(message);
               });
+              console.log('all', this.messages);
+              var replies = this.messages.filter(x => x.senderId !== this.user.id);
+              console.log('replies', replies);
+              if(Math.floor((this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt.getTime() - new Date().getTime()) % 86400000 / 3600000) >= 24 || this.messages.length === 0) {  
+                this.showInvite = true;
+              }
             });
           }        
         });
@@ -82,39 +89,10 @@ export class ChatComponent implements OnInit {
               this.customer_list = contactlist;
               this.contact_id = this.customer_list[0].id;
               this.chat_title = 'Chat for \"' + campaign_item.name + '\"' + ' with ' + '' + this.customer_list.find(x => x.id = this.contact_id).firstName + ' ' + this.customer_list.find(x => x.id = this.contact_id).lastName;
-              
-              // this.chatService.loadMessagesByCampaignAndContactId(this.campaign_id, this.contact_id).subscribe( (data: ChatMessage[]) => {
-              //   data.forEach((message: ChatMessage) => {
-              //     if (message.senderId === this.user.id) {
-              //       message.reply = true;
-              //     }
-              //     this.messages.push(message);
-              //   });
-              // });        
             });
           });         
         }
       });
-      // if(this.customer_list.length < 1) {
-      //   this.campaign_id = this.campaign_data.campaigns[0].id;
-      //   this.campaign_data.campaigns[0].contactListIds.forEach(contactListId => {
-      //     this.contactService.SetContactListId(contactListId);
-      //     this.contactService.data.subscribe((contactlist: Contact[]) => {
-      //       this.contactService.refreshData();
-      //       this.customer_list = contactlist;
-      //       this.contact_id = this.customer_list[0].id;
-      //       this.chat_title = 'Chat for \"' + this.campaign_data.campaigns[0].name + '\"' + ' with ' + '' + this.customer_list.find(x => x.id = this.contact_id).firstName + ' ' + this.customer_list.find(x => x.id = this.contact_id).lastName;
-      //       this.chatService.loadMessagesByCampaignAndContactId(this.campaign_id, this.contact_id).subscribe( (data: ChatMessage[]) => {
-      //         data.forEach((message: ChatMessage) => {
-      //           if (message.senderId === this.user.id) {
-      //             message.reply = true;
-      //           }
-      //           this.messages.push(message);
-      //         });
-      //       });
-      //     });
-      //   });
-      // }
     });
   }
 
@@ -157,6 +135,9 @@ export class ChatComponent implements OnInit {
           message.reply = false;
           this.messages.push(message);
         }
+        if(((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) {  
+          this.showInvite = true;
+        }
       });
     });
   }
@@ -171,22 +152,27 @@ export class ChatComponent implements OnInit {
                 }
                 this.messages.push(message);
               });
+              if(((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) {  
+                this.showInvite = true;
+              }
             });
   }
 
 
-  invite(inviteeId: number, phoneNumber: string) {
-    const temp = new Invitation();
-    temp.inviteeId = inviteeId;
-    temp.campaignId = this.campaign_id;
-    temp.senderId = this.user.id;
-    temp.senderName = this.user.firstName + ' ' + this.user.lastName;
-    temp.phoneNumber = phoneNumber;
-    temp.bodyMessage = temp.senderName +
-      ' sent you an invitation for Brightcast chat.' +
-      ' URL is http://localhost:4200/pages/main/campaign/chat/' + temp.campaignId;
-    temp.createdAt = new Date();
-    this.chatService.sendInviteMessage(temp).subscribe(() => {
+  invite() {
+    const tempMsg = new ChatMessage();
+    tempMsg.text = "Chat Initialization through template";
+    tempMsg.createdAt = new Date();
+    tempMsg.reply = true;
+    tempMsg.type = 'text';
+    tempMsg.files = ""
+    tempMsg.senderId = this.user.id;
+    tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
+    tempMsg.avatarUrl = this.user.pictureUrl;
+    tempMsg.campaignId = this.campaign_id;
+    tempMsg.contactId = this.contact_id;
+
+    this.chatService.sendInviteMessage(tempMsg).subscribe(() => {
     }, error => {
       this.toastrService.danger(error, 'There was an error on our side😢');
     });

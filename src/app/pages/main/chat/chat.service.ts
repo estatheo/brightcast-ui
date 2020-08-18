@@ -20,7 +20,7 @@ export class ChatService {
   }
 
   sendMessage(message: ChatMessage) {
-    this._hubConnection.invoke('NewMessage', message);
+    this._hubConnection.invoke('messageReceived', message);
   }
 
   startConnection = () => {
@@ -36,7 +36,7 @@ export class ChatService {
   }
 
   registerOnServerEvents(): void {
-    this._hubConnection.on('MessageReceived', (data: any) => {
+    this._hubConnection.on('messageReceived', (data: any) => {
       this.messageReceived.emit(data);
     });
   }
@@ -49,7 +49,7 @@ export class ChatService {
     return this.httpClient.post(`${this.apiURL}/chat/new`, newMessage).pipe(map(response => response));
   }
 
-  sendInviteMessage(invitation: Invitation) {
+  sendInviteMessage(invitation: ChatMessage) {
     return this.httpClient.post(`${this.apiURL}/chat/sendInvitation`, invitation).pipe(map(response => response));
   }
 

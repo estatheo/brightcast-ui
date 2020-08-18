@@ -24,9 +24,10 @@
             [longitude]="msg.longitude"
             [avatar]="msg.avatarUrl">
           </nb-chat-message>
-          <nb-chat-form (send)="sendMessage($event)" [dropFiles]="true">
+          <nb-chat-form *ngIf="!showInvite" (send)="sendMessage($event)" [dropFiles]="true">
           </nb-chat-form>
         </nb-chat>
+        <button *ngIf="showInvite"  nbButton outline (click)="invite()" size="small" status="primary" class="ping">Ping the user</button>
       </div>
       <div class="chat-container col-md-12 col-lg-3 col-xxxl-3">
         <div class="chart-features">
