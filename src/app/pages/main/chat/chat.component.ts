@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit {
   chat_themes = ['success', 'danger', 'primary', 'info', 'warning'];
   chat_theme: string;
   campaign_id: number;
-  contact_id: number;
+  contact: Contact;
   customer_list: Contact[] = [];
   showInvite = false;
   user: UserProfile;
@@ -53,19 +53,17 @@ export class ChatComponent implements OnInit {
         this.user = user;
         this.route.params.subscribe(p => {
           this.campaign_id = parseInt(p['campaignId'], 10);
-          this.contact_id = parseInt(p['contactId'], 10);
-          if(!(isNaN(this.campaign_id) || isNaN(this.contact_id))){
-            this.chatService.loadMessagesByCampaignAndContactId(this.campaign_id, this.contact_id).subscribe( (data: ChatMessage[]) => {
+          var contact_id = parseInt(p['contactId'], 10);
+          if(!(isNaN(this.campaign_id) || isNaN(contact_id))){
+            this.chatService.loadMessagesByCampaignAndContactId(this.campaign_id, contact_id).subscribe( (data: ChatMessage[]) => {
               data.forEach((message: ChatMessage) => {
                 if (message.senderId === this.user.id) {
                   message.reply = true;
                 }
                 this.messages.push(message);
               });
-              console.log('all', this.messages);
               var replies = this.messages.filter(x => x.senderId !== this.user.id);
-              console.log('replies', replies);
-              if(((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) { 
+              if(this.messages.length === 0 || this.messages.filter(x => x.senderId !== this.user.id).length === 0 || ((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) { 
                 this.showInvite = true;
               } else {
                 this.showInvite = false;
@@ -89,8 +87,7 @@ export class ChatComponent implements OnInit {
             this.contactService.data.subscribe((contactlist: Contact[]) => {
               this.contactService.refreshData();
               this.customer_list = contactlist;
-              this.contact_id = this.customer_list[0].id;
-              this.chat_title = 'Chat for \"' + campaign_item.name + '\"' + ' with ' + '' + this.customer_list.find(x => x.id = this.contact_id).firstName + ' ' + this.customer_list.find(x => x.id = this.contact_id).lastName;
+              this.contact =  Object.assign({}, this.customer_list[0]);              
             });
           });         
         }
@@ -117,7 +114,7 @@ export class ChatComponent implements OnInit {
     tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
     tempMsg.avatarUrl = this.user.pictureUrl;
     tempMsg.campaignId = this.campaign_id;
-    tempMsg.contactId = this.contact_id;
+    tempMsg.contactId = this.contact?.id;
     this.messages.push(tempMsg);
     this.chatService.newChatMessage(tempMsg).subscribe(() => {
     }, error => {
@@ -128,7 +125,7 @@ export class ChatComponent implements OnInit {
   private subscribeToEvents(): void {
     this.chatService.messageReceived.subscribe((message: ChatMessage) => {
       this._ngZone.run(() => {
-        if (message.campaignId !== this.campaign_id || message.contactId !== this.contact_id) {
+        if (message.campaignId !== this.campaign_id || message.contactId !== this.contact?.id) {
           return;
         }
         message.reply = true;
@@ -142,7 +139,7 @@ export class ChatComponent implements OnInit {
         }
 
         
-        if(((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) {  
+        if(this.messages.length === 0 || this.messages.filter(x => x.senderId !== this.user.id).length === 0 || ((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) {  
           this.showInvite = true;
         } else {
           this.showInvite = false;
@@ -152,16 +149,19 @@ export class ChatComponent implements OnInit {
   }
 
   selectContact(contactId: number) {
-    this.contact_id = contactId;
+    this.contact = Object.assign({},this.customer_list.find(x => x.id === contactId));
+    
+    this.messages = [];
 
-    this.chatService.loadMessagesByCampaignAndContactId(this.campaign_id, this.contact_id).subscribe( (data: ChatMessage[]) => {
+    this.chatService.loadMessagesByCampaignAndContactId(this.campaign_id, this.contact.id).subscribe( (data: ChatMessage[]) => {
               data.forEach((message: ChatMessage) => {
                 if (message.senderId === this.user.id) {
                   message.reply = true;
                 }
                 this.messages.push(message);
               });
-              if(((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) {  
+              this.chat_title = 'Chat for \"' + this.campaign_data.campaigns.find(x => x.id === this.campaign_id).name + '\"' + ' with ' + '' + this.contact.firstName + ' ' + this.contact.lastName;
+              if(this.messages.length === 0 ||  this.messages.filter(x => x.senderId !== this.user.id).length === 0 || ((new Date().getTime() - new Date(this.messages.filter(x => x.senderId !== this.user.id)[this.messages.filter(x => x.senderId !== this.user.id).length - 1].createdAt).getTime()) / 1000 / 60 / 60) >= 24 ) {  
                 this.showInvite = true;
               }
             });
@@ -179,7 +179,7 @@ export class ChatComponent implements OnInit {
     tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
     tempMsg.avatarUrl = this.user.pictureUrl;
     tempMsg.campaignId = this.campaign_id;
-    tempMsg.contactId = this.contact_id;
+    tempMsg.contactId = this.contact?.id;
 
     this.chatService.sendInviteMessage(tempMsg).subscribe(() => {
     }, error => {

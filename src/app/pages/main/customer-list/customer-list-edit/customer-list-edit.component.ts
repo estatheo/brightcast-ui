@@ -64,11 +64,29 @@ export class CustomerListEditComponent implements OnInit {
     onSubmit() {
       this.loading = true;
 
-      this.accountService.uploadDoc(this.docData).subscribe(csvfile => {
+      if(this.docData !== undefined && this.docData !== null) {
+        this.accountService.uploadDoc(this.docData).subscribe(csvfile => {
+          this.contactListService.Update({
+            id: this.contactList.id,
+            name: this.form.controls.name.value,
+            fileUrl: csvfile['name'],
+          }).subscribe(() => {
+              this.toastrService.success('🚀 The Contact List has been updated!', 'Success!');
+              this.contactListService.refreshData();
+              this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+                this.router.navigate(['/pages/main/customer-list']);
+                this.close();
+              });
+            }, error => {
+              this.toastrService.danger(error, 'There was an error on our side😢');
+              this.loading = false;
+          });
+        });
+      } else {
         this.contactListService.Update({
           id: this.contactList.id,
           name: this.form.controls.name.value,
-          fileUrl: csvfile['name'],
+          fileUrl: this.contactList.fileUrl,
         }).subscribe(() => {
             this.toastrService.success('🚀 The Contact List has been updated!', 'Success!');
             this.contactListService.refreshData();
@@ -80,7 +98,9 @@ export class CustomerListEditComponent implements OnInit {
             this.toastrService.danger(error, 'There was an error on our side😢');
             this.loading = false;
         });
-      });
+      }
+
+      
 
       setTimeout(() => {
         this.loading = false;

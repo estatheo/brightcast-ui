@@ -4,4 +4,5 @@
     contacts?: number;
     campaigns?: number;
     unsubscribed?: number;
+    fileUrl?: string;
 }
