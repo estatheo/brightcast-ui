@@ -22,6 +22,7 @@ export class CampaignComponent implements OnInit {
     private toastrService: NbToastrService,
     private campaignsService: CampaignService) { }
   loading = false;
+  dataReady = false;
   data: any;
   selectedChart = 'delivered';
   btnstatus = ['hero', 'outline'];
@@ -33,6 +34,7 @@ export class CampaignComponent implements OnInit {
   ngOnInit(): void {
     this.routeSub =  this.route.params.subscribe(p => {
       this.campaignId = p['id'];
+      this.dataReady = true;
       this.campaignsService.GetCampaignData(this.campaignId).subscribe((data: Campaign) => {
         this.campaign = data;
       });
@@ -96,5 +98,23 @@ export class CampaignComponent implements OnInit {
 
   getChartTitle(){
     return this.selectedChart.charAt(0).toUpperCase() + this.selectedChart.slice(1) + ' Messages';
+  }
+
+  getFilter(){
+    switch(this.selectedItem){
+      case '0':
+        return 'month';
+      case '1':
+        return 'week';
+      case '2':
+        return 'day';
+      default:
+        return 'month';
+    }
+  }
+
+  updateTimeFilter(){
+    this.dataReady = false;
+    this.dataReady = true;
   }
 }

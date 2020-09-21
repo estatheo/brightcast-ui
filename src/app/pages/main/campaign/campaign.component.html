@@ -1,5 +1,4 @@
-<!-- <nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
-    <nb-card-header> -->
+
         <div class="header-container">
             <div class="header-title">
                 <p>{{campaign?.name}}</p>
@@ -8,17 +7,19 @@
             <div>
                 <div class="toggler">
                     <div class="toggle-btn">
-                        <button nbButton status="primary" matripple appearance="{{btnstatus[0]}}" (click)="toggle()" class="btn1">Messages</button>
+                        <button nbButton status="primary" matripple appearance="{{btnstatus[1]}}" (click)="toggle()" class="btn1">Messages</button>
                     </div>
                     <div class="toggle-btn">
-                        <button nbButton status="primary" matripple appearance="{{btnstatus[1]}}" (click)="toggle()" class="btn2">Analytics</button>
+                        <button nbButton status="primary" matripple appearance="{{btnstatus[0]}}" (click)="toggle()" class="btn2">Analytics</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="header2">
-            <nb-select [(selected)]="selectedItem" size="small">
-                <nb-option value="0" class="select-text">Select period: <span class="select-text-bold">1 Jun 2020 - 1 Sep 2020</span></nb-option>
+            <nb-select [(selected)]="selectedItem" size="small" >
+                <nb-option (click)="updateTimeFilter()" value="0" class="select-text">Select period: <span class="select-text-bold">One Month</span></nb-option>
+                <nb-option (click)="updateTimeFilter()" value="1" class="select-text">Select period: <span class="select-text-bold">One Week</span></nb-option>
+                <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Select period: <span class="select-text-bold">One Day</span></nb-option>
             </nb-select>
         </div>
         <div class="main">
@@ -46,11 +47,12 @@
                 </div>
             </div>
             <div class="chart">
-                <ngx-ecommerce-charts chartName="{{getChartTitle()}}" option="{{selectedChart}}" ></ngx-ecommerce-charts>
+                <ngx-ecommerce-charts *ngIf="dataReady" chartName="{{getChartTitle()}}" option="{{selectedChart}}" id="{{campaignId}}" filter="{{getFilter()}}" ></ngx-ecommerce-charts>
             </div>
         </div>
 
-
+<!-- <nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
+    <nb-card-header> -->
 <!-- 
     </nb-card-header>
     <nb-card-body>
