@@ -46,4 +46,8 @@ export class CampaignService {
   SendCampaign(campaign) {
     return this.httpClient.post(`${this.apiURL}/campaign/send`, campaign).pipe(map(response => response));
   }
+
+  GetCampaignData(id) {
+    return this.httpClient.get(`${this.apiURL}/campaign/data/${id}`).pipe(map(response => response));
+  }
 }

@@ -4,6 +4,10 @@ import { CampaignFormComponent } from './campaign-form/campaign-form.component';
 import { CampaignService} from '../../../@core/apis/campaign.service';
 import { CampaignNewComponent } from './campaign-new/campaign-new.component';
 import { CampaignData } from '../../_models/campaignData';
+import { CampaignElement } from '../../_models/campaignElement';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Campaign } from '../../_models/campaign';
 
 @Component({
   selector: 'ngx-campaign',
@@ -13,16 +17,27 @@ import { CampaignData } from '../../_models/campaignData';
 export class CampaignComponent implements OnInit {
 
   constructor(
+    private route: ActivatedRoute,
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
     private campaignsService: CampaignService) { }
   loading = false;
   data: any;
+  selectedChart = 'delivered';
+  btnstatus = ['hero', 'outline'];
+  settingClass = ['personal', 'business'];
+  selectedItem = "0";
+  campaignId: number;
+  routeSub: Subscription;
+  campaign: Campaign = { name: "Campaign One", response: 2, status: 1, contactListIds: [], delivered: 1000, read: 15000, subscribed: 1230, replies: 1231, deliveredPercentage: 12, readPercentage: -0.5, subscribedPercentage: -15, repliesPercentage: 23};
   ngOnInit(): void {
-    this.campaignsService.refreshData();
-    this.campaignsService.data.subscribe((data: CampaignData) => {
-      this.data = data;
+    this.routeSub =  this.route.params.subscribe(p => {
+      this.campaignId = p['id'];
+      this.campaignsService.GetCampaignData(this.campaignId).subscribe((data: Campaign) => {
+        this.campaign = data;
+      });
     });
+    
   }
 
   openModal() {
@@ -67,5 +82,19 @@ export class CampaignComponent implements OnInit {
       this.campaignsService.refreshData();
       this.loading = false;
     });
+  }
+  
+  toggle() {
+    let temp = this.btnstatus[0];
+    this.btnstatus[0] = this.btnstatus[1];
+    this.btnstatus[1] = temp;
+
+    temp = this.settingClass[0];
+    this.settingClass[0] = this.settingClass[1];
+    this.settingClass[1] = temp;
+  }
+
+  getChartTitle(){
+    return this.selectedChart.charAt(0).toUpperCase() + this.selectedChart.slice(1) + ' Messages';
   }
 }

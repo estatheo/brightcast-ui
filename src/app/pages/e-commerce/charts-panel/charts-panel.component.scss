@@ -45,5 +45,15 @@ $legend-canceled-color: #3f4fda;
   padding-left: 1.25rem;
   padding-bottom: 20px;
   font-size: 1.2rem;
-  font-weight: 650;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: left;
+  letter-spacing: 0.1px;
+  opacity: 1;
+  padding-bottom: 0.2rem
+}
+
+.card {
+  border: 0px;
 }

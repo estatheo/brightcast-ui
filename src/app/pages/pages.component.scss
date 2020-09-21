@@ -16,3 +16,11 @@
     }
   }
 }
+
+.menu2 {
+  margin-top: 16rem;
+}
+
+::ng-deep .nb-theme-default nb-menu .menu-item {
+  border: 0px;
+}

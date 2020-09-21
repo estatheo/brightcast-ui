@@ -112,5 +112,9 @@ import { CountoModule } from 'angular2-counto';
   providers: [
     CountryOrdersMapService,
   ],
+  exports: [
+    ECommerceChartsPanelComponent
+  ]
+
 })
 export class ECommerceModule { }

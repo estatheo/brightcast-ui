@@ -1,14 +1,57 @@
-<nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
-    <nb-card-header>
+<!-- <nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
+    <nb-card-header> -->
         <div class="header-container">
-            <div>
-                Campaigns
+            <div class="header-title">
+                <p>{{campaign?.name}}</p>
+                <button type="button" nbButton outline small status="primary" (click)="openModal()" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
             </div>
             <div>
-                <button type="button" nbButton status="primary" (click)="openModal()">Create New</button>
+                <div class="toggler">
+                    <div class="toggle-btn">
+                        <button nbButton status="primary" matripple appearance="{{btnstatus[0]}}" (click)="toggle()" class="btn1">Messages</button>
+                    </div>
+                    <div class="toggle-btn">
+                        <button nbButton status="primary" matripple appearance="{{btnstatus[1]}}" (click)="toggle()" class="btn2">Analytics</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header2">
+            <nb-select [(selected)]="selectedItem" size="small">
+                <nb-option value="0" class="select-text">Select period: <span class="select-text-bold">1 Jun 2020 - 1 Sep 2020</span></nb-option>
+            </nb-select>
+        </div>
+        <div class="main">
+            <div class="cards">
+                <div class="card-arrow" ></div>
+                <div class="card" [class.selected]="selectedChart==='delivered'" [class.sb1]="selectedChart==='delivered'" (click)="selectedChart = 'delivered'">
+                    <div class="value" [style.color]="selectedChart=='delivered' ? '#FFF' : '#171725'">{{campaign?.delivered}}</div>
+                    <div class="type" [style.color]="selectedChart=='delivered' ? '#FFF' : '#696974'">Delivered</div>
+                    <div class="percentage" [style.color]="campaign?.deliveredPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.deliveredPercentage >=0">+</span>{{campaign.deliveredPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.deliveredPercentage >=0" icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.deliveredPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+                <div class="card" [class.selected]="selectedChart==='read'" (click)="selectedChart = 'read'">
+                    <div class="value" [style.color]="selectedChart=='read' ? '#FFF' : '#171725'">{{campaign?.read}}</div>
+                    <div class="type" [style.color]="selectedChart=='read' ? '#FFF' : '#696974'">Read</div>
+                    <div class="percentage" [style.color]="campaign?.readPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.readPercentage >=0">+</span>{{campaign.readPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.readPercentage >=0" icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.readPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+                <div class="card" [class.selected]="selectedChart==='subscribed'" (click)="selectedChart = 'subscribed'">
+                    <div class="value" [style.color]="selectedChart=='subscribed' ? '#FFF' : '#171725'">{{campaign?.subscribed}}</div>
+                    <div class="type" [style.color]="selectedChart=='subscribed' ? '#FFF' : '#696974'">Subscribed</div>
+                    <div class="percentage" [style.color]="campaign?.subscribedPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.subscribedPercentage >=0">+</span>{{campaign.subscribedPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.subscribedPercentage >=0"icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.subscribedPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+                <div class="card" [class.selected]="selectedChart==='replies'" (click)="selectedChart = 'replies'">
+                    <div class="value" [style.color]="selectedChart=='replies' ? '#FFF' : '#171725'">{{campaign?.replies}}</div>
+                    <div class="type" [style.color]="selectedChart=='replies' ? '#FFF' : '#696974'">Replies</div>
+                    <div class="percentage" [style.color]="campaign?.repliesPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.repliesPercentage >=0">+</span>{{campaign.repliesPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.repliesPercentage >=0"icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.repliesPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+            </div>
+            <div class="chart">
+                <ngx-ecommerce-charts chartName="{{getChartTitle()}}" option="{{selectedChart}}" ></ngx-ecommerce-charts>
             </div>
         </div>
 
+
+<!-- 
     </nb-card-header>
     <nb-card-body>
         <table class="table table-striped" [mfData]="data?.campaigns" #mf="mfDataTable" [mfRowsOnPage]="15">
@@ -51,8 +94,7 @@
                             <nb-icon nbTooltip="Edit Campaign" nbTooltipIcon="edit-outline" [icon]="'edit-outline'" pack="eva" (click)="openModalForEdit(item)"
                                 class="campaign-icons">
                             </nb-icon>
-                            <!-- <nb-icon [icon]="'refresh'" pack="eva" class="campaign-icons">
-                            </nb-icon> --> 
+                            
                             <nb-icon nbTooltip="Send Campaign Messages To Members in Contact List" nbTooltipIcon="paper-plane" [icon]="'paper-plane'" pack="eva" class="campaign-icons" (click)="send(item)">
                             </nb-icon>
                         </div>
@@ -63,4 +105,4 @@
 
         </table>
     </nb-card-body>
-</nb-card>
+</nb-card> -->

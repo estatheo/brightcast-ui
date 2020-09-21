@@ -19,7 +19,7 @@ const routes: Routes = [
         path: 'customer-list', component: CustomerListComponent,
       },
       {
-        path: 'campaign', component: CampaignComponent,
+        path: 'campaign/:id', component: CampaignComponent,
       },
       {
         path: 'customer-list/:id/contacts', component: ContactComponent,

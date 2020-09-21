@@ -16,6 +16,10 @@ export const routes: Routes = [
     path: 'auth',
     loadChildren: './custom/auth/auth.module#AuthModule',
   },
+  // {
+  //   path: 'a',
+  //   loadChildren: './auth/a.module#'
+  // }
   {
     path: 'onboarding',
     loadChildren: './custom/onboarding/onboarding.module#OnboardingModule', canActivate: [AuthGuard],

@@ -13,6 +13,8 @@ import { RouterModule } from '@angular/router';
 import { NbAuthModule } from '@nebular/auth';
 import { LogoutComponent } from './logout/logout.component';
 import { DashboardService } from '../@core/apis/dashboard.service';
+import { CampaignService } from '../@core/apis/campaign.service';
+import { ContactListService } from '../@core/apis/contactList.service';
 
 @NgModule({
   imports: [
@@ -38,6 +40,8 @@ import { DashboardService } from '../@core/apis/dashboard.service';
   ],
   providers: [
     DashboardService,
+    CampaignService,
+    ContactListService
   ],
 })
 export class PagesModule {

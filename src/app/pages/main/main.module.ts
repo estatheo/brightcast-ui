@@ -45,6 +45,7 @@ import { ContactFormComponent } from './contact/contact-form/contact-form.compon
 import { ContactService } from '../../@core/apis/contact.service';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ChatComponent } from './chat/chat.component';
+import { ECommerceModule } from '../e-commerce/e-commerce.module';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { ChatComponent } from './chat/chat.component';
     NbChatModule,
     NbMenuModule,
     NbToastrModule,
+    ECommerceModule
   ],
   entryComponents: [
     WindowFormComponent,

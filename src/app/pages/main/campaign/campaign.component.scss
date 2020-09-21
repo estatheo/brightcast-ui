@@ -1,10 +1,203 @@
 
 .header-container {
+    padding-bottom: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    .header-title{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      p {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 24px;
+        text-align: left;
+        letter-spacing: 0.1px;
+        color: #171725;
+        opacity: 1;
+        padding-right: 1rem;
+        margin: 0px;
+      }
+      .edit-button {
+        min-width: 8rem;
+      }
+    }
+    .toggler {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .btn1 {
+      border-radius: 0px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+    .btn2 {
+      border-radius: 0px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
 }
+
+.header2 {
+  min-width: 8rem;
+  margin-bottom: 0.5rem;
+  .select-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: left;
+    letter-spacing: 0px;
+    color: #696974;
+    opacity: 1;
+    padding-bottom: 2rem;
+
+    .select-text-bold {
+      font-weight: 700;
+    }
+  }
+}
+
+.selected {
+  background-color: #0062FF;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .card {
+      border: 0px;
+      border-radius: 20px;
+      padding: 2rem 3rem;
+      margin: 0.5rem 0rem;
+      width: 10rem;
+      height: 7.5rem;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .sb1:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid #0062FF;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #0062FF;
+        border-bottom: 10px solid transparent;
+        right: -19px;
+        top: 6px;
+      }
+
+      .value {        
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 26px;
+        text-align: left;
+        letter-spacing: 0.1px;
+        opacity: 1;
+        padding-bottom: 0.2rem
+      }
+      .type {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        text-align: left;
+        letter-spacing: 0px;
+        opacity: 1;
+        padding-bottom: 0.5rem;
+      }
+      .percentage {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        text-align: left;
+        letter-spacing: 0.1px;
+        opacity: 1;
+        display: flex;
+        flex-direction: row;
+
+      }
+    }
+  }
+  
+  .chart {
+    background-color: #FFF;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+
+    .chart-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      text-align: left;
+      letter-spacing: 0.1px;
+      opacity: 1;
+      padding-bottom: 0.2rem
+    }
+  }
+
+}
+
+::ng-deep .nb-theme-default nb-select.size-small {
+  min-width: 21rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 nb-icon {
   cursor: pointer;
   margin-left: 3px;
@@ -57,4 +250,3 @@ table {
     // color: #FE4D97 !important;
     color: black;
   }
-

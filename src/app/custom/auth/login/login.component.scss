@@ -4,16 +4,51 @@
     justify-content: center;
     }
 
- .logo {
-     position: fixed;
-     top: 20px;
-     left: 20px;
- }   
+.title-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    text-align: left;
+    letter-spacing: 0.12px;
+    color: #171725;
+    opacity: 1;
+    padding-bottom: 2rem;
+}
+
+.label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    text-align: left;
+    letter-spacing: 0px;
+    color: #D5D5DC;
+    opacity: 1;
+}
+.form-control{
+    height: 3em;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    text-align: left;
+    letter-spacing: 0.1px;
+    color: #44444F;
+    opacity: 1;
+}
+
+::ng-deep .nb-theme-default [nbInput].status-basic {
+    border: 0px;
+    border-bottom: #E2E2EA solid 1px;
+    background-color: #fff;
+    padding: 0px;
+    
+}
+.logo {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}   
     .login-container {
-      align-self: center;
-      width: 30rem;
+        align-self: center;
+        width: 50rem;
         background-color: #222b45;
-        padding-top: 2rem;
+        padding-top: 6rem;
         padding-left: 5rem;
         padding-right: 5rem;
         padding-bottom: 8rem;
@@ -25,37 +60,49 @@
         margin-bottom: 20px;
         font-weight: 650;
     }
-.form-control{
-    height: 3em;
+
+.login-logo-image{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
-    .login-logo-image{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-    .login-text {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-    .login-submit-btn {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
+.login-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.login-submit-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 .login-bottom-container{
     padding-top: 30px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     
     p {
         margin: 0;
     }
 }
 
+.checks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem 0rem;
+}
+
 .login-black {
     color: #017fdc;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+    letter-spacing: 0.1px;
+    opacity: 1;
     cursor: pointer;
 }
 
@@ -79,6 +126,10 @@
     background-color: #101426;
 }
 
+::ng-deep nb-card-header {
+    background-color: #FAFAFB;
+}
+
 // ::ng-deep .nb-theme-default p {
 //     color: #ffffff;
 // }
@@ -87,8 +138,14 @@
     color: #222b45;
 }
 
+::ng-deep .nb-theme-default nb-checkbox.status-basic {
+    color: #017fdc;
+}
+
+::ng-deep .nb-theme-default nb-card-body {
+    background-color: #FAFAFB;
+}
+
 ::ng-deep .nb-theme-default .login-container {
     background-color: white;
-    border: 5px solid #017fdc;
-    border-radius: 50px;
 }
