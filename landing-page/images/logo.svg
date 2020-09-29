@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="163px" height="45px" viewBox="0 0 163 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>Custom Preset</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Custom-Preset" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Logo" transform="translate(9.000000, 7.000000)">
+            <text id="Brightcast" font-family="Poppins-SemiBold, Poppins" font-size="20" font-weight="500" fill="#000000">
+                <tspan x="38" y="22">Brightcast</tspan>
+            </text>
+            <rect id="Rectangle" stroke="#0073FF" stroke-width="4" x="2" y="3" width="24" height="24" rx="10"></rect>
+            <rect id="Rectangle-Copy" stroke="#0073FF" stroke-width="4" x="13" y="4" width="12" height="12" rx="6"></rect>
+        </g>
+    </g>
+</svg>

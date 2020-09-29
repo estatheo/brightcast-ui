@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <g id="Component_02" data-name="Component 02" transform="translate(-1226 -1843)">
+    <rect id="Rectangle_17" data-name="Rectangle 17" width="180" height="180" rx="18" transform="translate(1226 1843)" fill="#fff"/>
+    <rect id="Rectangle_18" data-name="Rectangle 18" width="48" height="12" rx="6" transform="translate(1292 1957)" fill="#e6eaf5"/>
+    <rect id="Rectangle_19" data-name="Rectangle 19" width="108" height="8" rx="4" transform="translate(1262 1981)" fill="#e6eaf5" opacity="0.5"/>
+    <rect id="Rectangle_20" data-name="Rectangle 20" width="84" height="8" rx="4" transform="translate(1274 1995)" fill="#e6eaf5" opacity="0.5"/>
+    <path id="Path_49" data-name="Path 49" d="M1146,508a32,32,0,1,1,32,32A32,32,0,0,1,1146,508Z" transform="translate(138 1397)" fill="#fff7f2"/>
+    <path id="Path_50" data-name="Path 50" d="M1172.86,501.7a8.089,8.089,0,1,0,11.44,0A8.088,8.088,0,0,0,1172.86,501.7Z" transform="translate(138 1397)" fill="none" stroke="#ff9f59" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_51" data-name="Path 51" d="M1182.41,508.962v-1.083" transform="translate(138 1397)" fill="none" stroke="#ff9f59" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_52" data-name="Path 52" d="M1178.81,508.962V506.8" transform="translate(138 1397)" fill="none" stroke="#ff9f59" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_53" data-name="Path 53" d="M1175.22,508.962v-3.25" transform="translate(138 1397)" fill="none" stroke="#ff9f59" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_54" data-name="Path 54" d="M1169.33,516.667l3.53-3.524" transform="translate(138 1397)" fill="none" stroke="#ff9f59" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

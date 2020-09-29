@@ -1,0 +1,6 @@
+The following files failed to download during site export. Please check them in the designer assets view (images) or dashboard (fonts).
+
+images/Feature-Icon-1.svg
+images/Social-03_1Social 03.png
+images/documentation-image.png
+images/image-02.png
