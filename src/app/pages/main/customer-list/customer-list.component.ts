@@ -6,6 +6,7 @@ import { ContactListElement } from '../../_models/contactListElement';
 import { CustomerListEditComponent } from './customer-list-edit/customer-list-edit.component';
 import { Router } from '@angular/router';
 import { ContactService } from '../../../@core/apis/contact.service';
+import { Contact } from '../../_models/contact';
 
 @Component({
   selector: 'ngx-customer-list',
@@ -15,7 +16,9 @@ import { ContactService } from '../../../@core/apis/contact.service';
 export class CustomerListComponent implements OnInit {
 
   data: ContactListElement[];
-
+  contactList: ContactListElement;
+  contacts: Contact[] = [{contactListId: 1, email: 'test@gmail.com', firstName: 'theo', lastName: 'bogdan',subscribed: 'true', phone: '+44 7843753547', id: 1}]
+  selectedItem = "0";
   constructor(
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
@@ -54,5 +57,15 @@ export class CustomerListComponent implements OnInit {
     }, error => {
       this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
     });
+  }
+
+  updateTimeFilter(){}
+
+  editContact(id) {
+
+  }
+
+  deleteContact(id) {
+    
   }
 }

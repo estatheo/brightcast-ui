@@ -1,57 +1,56 @@
-<div class="customer-list">
-    <nb-card>
-        <nb-card-header>
-            <div class="header-container">
-                <div>
-                    Contact List
-                </div>
-                <div>
-                    <button type="button" nbButton status="primary" (click)="openModal()">Create New</button>
+
+        <div class="header-container">
+            <div class="header-title">
+                <p>{{contactList?.name}}</p>
+            </div>
+            <div>                
+            </div>
+        </div>
+        <div class="header2">
+            <div class="header2-left">
+                <nb-select [(selected)]="selectedItem" size="medium" class="selector" >
+                    <nb-option (click)="updateTimeFilter()" value="0" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Title (A-Z)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="1" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Contacts (Asc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Contacts (Desc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Campaigns (Asc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Campaigns (Desc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Unsubscribed (Asc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Unsubscribed (Desc)</span></nb-option>
+                </nb-select>
+                <button type="button" nbButton small status="primary" (click)="openModal()" class="new-contact-button">
+                    <nb-icon icon="plus-outline"></nb-icon> 
+                    New contact
+                </button>
+            </div>
+            <div class="header2-right">
+                <button type="button" nbButton outline small status="basic" (click)="openModal()" class="edit-button">
+                    <nb-icon icon="edit-2-outline"></nb-icon> 
+                    Edit contact list
+                </button>
+                <button type="button" nbButton small status="primary" (click)="openModal()" class="share-button">
+                    <nb-icon icon="share-outline"></nb-icon> 
+                    Share Link
+                </button>
+            </div>
+            </div>
+        <div class="main">
+            <div class="main-header">
+                <div class="header-field">NAME</div>
+                <div class="header-field">PHONE</div>
+                <div class="header-field">EMAIL</div>
+                <div class="header-field">SUBSCRIBED</div>
+                <div class="header-field"></div>
+            </div>
+            <div class="main-data">
+                <div *ngFor="let contact of contacts" class="main-data-row">
+                    <div class="main-data-field">{{contact.lastName}} {{contact.firstName}}</div>
+                    <div class="main-data-field">{{contact.phone}}</div>
+                    <div class="main-data-field">{{contact.email}}</div>
+                    <div class="main-data-field subscribed">{{contact.subscribed === 'true' ? '✅' : '❌'}}</div>
+                    <div class="main-data-field">
+                        <nb-icon icon="edit-outline" (click)="editContact(contact.id)" class="button"></nb-icon> 
+                        <nb-icon icon="trash-2-outline" (click)="deleteContact(contact.id)" class="button"></nb-icon>
+                    </div>
                 </div>
             </div>
-        </nb-card-header>
-        <nb-card-body>
-            <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="15">
-                <thead>
-                    <tr>
-                        <th style="width: 20%">
-                            <mfDefaultSorter by="name">Name</mfDefaultSorter>
-                        </th>
-                        <th style="width: 20%">
-                            <mfDefaultSorter by="contacts">Contacts</mfDefaultSorter>
-                        </th>
-                        <th style="width: 20%">
-                            <mfDefaultSorter by="email">Campaigns</mfDefaultSorter>
-                        </th>
-                        <th style="width: 20%">
-                            <mfDefaultSorter by="email">Unsubscribed</mfDefaultSorter>
-                        </th>
-                        <th style="width: 20%">
-                            <mfDefaultSorter by="email">Action</mfDefaultSorter>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of mf.data" class="list-row">
-
-                        <td routerLink="/pages/main/customer-list/{{item.id}}/contacts">{{item.name}}</td>
-                        <td routerLink="/pages/main/customer-list/{{item.id}}/contacts">{{item.contacts}}</td>
-                        <td routerLink="/pages/main/customer-list/{{item.id}}/contacts">{{item.campaigns}}</td>
-                        <td routerLink="/pages/main/customer-list/{{item.id}}/contacts">{{item.unsubscribed}}</td>
-                        <td>
-                            <div class="flex-icons">
-                                <nb-icon nbTooltip="Delete ContactList" nbTooltipIcon="trash-2" [icon]="'trash-2'" pack="eva" class="campaign-icons" (click)="delete(item.id)">
-                                </nb-icon>
-                                <nb-icon nbTooltip="Edit ContactList" nbTooltipIcon="edit-outline" [icon]="'edit-outline'" pack="eva" (click)="openModalForEdit(item)"
-                                    class="campaign-icons">
-                                </nb-icon>
-                            </div>
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-        </nb-card-body>
-    </nb-card>
-</div>
+        </div>

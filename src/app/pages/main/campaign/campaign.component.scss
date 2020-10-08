@@ -24,6 +24,7 @@
       }
       .edit-button {
         min-width: 8rem;
+        max-height: 2rem;
       }
     }
     .toggler {
@@ -162,7 +163,9 @@
   min-width: 21rem;
 }
 
-
+::ng-deep .nb-theme-default nb-select.appearance-outline.size-small .select-button {
+  background: white;
+}
 
 
 
