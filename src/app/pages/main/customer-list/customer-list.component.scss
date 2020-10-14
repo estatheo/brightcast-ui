@@ -6,6 +6,28 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    .header-title{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        p {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 24px;
+            text-align: left;
+            letter-spacing: 0.1px;
+            color: #171725;
+            opacity: 1;
+            padding-right: 1rem;
+            padding-bottom: 2rem;
+            margin: 0px;
+        }
+        .edit-button {
+            min-width: 8rem;
+            max-height: 2rem;
+        }
+    }
 }
 .icon-flex {
     display: flex;

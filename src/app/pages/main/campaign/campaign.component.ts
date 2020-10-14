@@ -8,6 +8,10 @@ import { CampaignElement } from '../../_models/campaignElement';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Campaign } from '../../_models/campaign';
+import { Contact } from '../../_models/contact';
+import { ContactPreview } from '../../_models/contactPreview';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { ChatMessage } from '../../_models/chat';
 
 @Component({
   selector: 'ngx-campaign',
@@ -23,9 +27,13 @@ export class CampaignComponent implements OnInit {
     private campaignsService: CampaignService) { }
   loading = false;
   dataReady = false;
+  isAnalytics = false;
+  contacts: ContactPreview[] = [{firstName: 'Theo', lastName: 'Chichirita', body: 'This is a message for', time: new Date(), id: 1},{firstName: 'Theo', lastName: 'Chichirita', body: 'This is a message for', time: new Date(), id: 2}];
+  messages: ChatMessage[]  = [{id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}, {id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}];
   data: any;
+  selectedContactId = 0;
   selectedChart = 'delivered';
-  btnstatus = ['hero', 'outline'];
+  btnstatus = ['outline', 'hero'];
   settingClass = ['personal', 'business'];
   selectedItem = "0";
   campaignId: number;
@@ -34,6 +42,7 @@ export class CampaignComponent implements OnInit {
   ngOnInit(): void {
     this.routeSub =  this.route.params.subscribe(p => {
       this.campaignId = p['id'];
+      this.selectedContactId = this.contacts[0].id;
       this.dataReady = true;
       this.campaignsService.GetCampaignData(this.campaignId).subscribe((data: Campaign) => {
         this.campaign = data;
@@ -86,14 +95,46 @@ export class CampaignComponent implements OnInit {
     });
   }
   
-  toggle() {
-    let temp = this.btnstatus[0];
-    this.btnstatus[0] = this.btnstatus[1];
-    this.btnstatus[1] = temp;
+  toggle(check) {
 
-    temp = this.settingClass[0];
-    this.settingClass[0] = this.settingClass[1];
-    this.settingClass[1] = temp;
+    if(check === 0 && this.isAnalytics) {
+
+      this.isAnalytics = !this.isAnalytics;
+      
+      // let temp = this.btnstatus[1];
+
+      // this.btnstatus[1] = this.btnstatus[0];
+      // this.btnstatus[0] = temp;
+
+      // temp = this.settingClass[1];
+      // this.settingClass[1] = this.settingClass[0];
+      // this.settingClass[0] = temp;
+
+      let temp = this.btnstatus[1];
+
+      this.btnstatus[1] = this.btnstatus[0];
+      this.btnstatus[0] = temp;
+
+      temp = this.settingClass[1];
+      this.settingClass[1] = this.settingClass[0];
+      this.settingClass[0] = temp;
+      
+    }
+    if(check === 1 && !this.isAnalytics) {
+
+      this.isAnalytics = !this.isAnalytics;
+
+      let temp = this.btnstatus[0];
+
+      this.btnstatus[0] = this.btnstatus[1];
+      this.btnstatus[1] = temp;
+
+      temp = this.settingClass[0];
+      this.settingClass[0] = this.settingClass[1];
+      this.settingClass[1] = temp;
+
+      
+    }
   }
 
   getChartTitle(){
@@ -116,5 +157,17 @@ export class CampaignComponent implements OnInit {
   updateTimeFilter(){
     this.dataReady = false;
     this.dataReady = true;
+  }
+
+  isToday(date: Date) {
+    if(date === null) {
+      return false;
+    }
+    const today = new Date();
+    return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear();
+  }
+
+  selectContactId(id) {
+    this.selectedContactId = id;
   }
 }

@@ -46,6 +46,8 @@ import { ContactService } from '../../@core/apis/contact.service';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ChatComponent } from './chat/chat.component';
 import { ECommerceModule } from '../e-commerce/e-commerce.module';
+import { ContactListNewComponent } from './contact-list-new/contact-list-new.component';
+import { ContactNewComponent } from './contact-new/contact-new.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { ECommerceModule } from '../e-commerce/e-commerce.module';
     CampaignNewComponent,
     ContactComponent,
     ChatComponent,
+    ContactListNewComponent,
+    ContactNewComponent,
   ],
   imports: [
     CommonModule,

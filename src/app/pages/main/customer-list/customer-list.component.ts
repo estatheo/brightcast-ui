@@ -16,7 +16,7 @@ import { Contact } from '../../_models/contact';
 export class CustomerListComponent implements OnInit {
 
   data: ContactListElement[];
-  contactList: ContactListElement;
+  contactList = { name: 'Accounting'};
   contacts: Contact[] = [{contactListId: 1, email: 'test@gmail.com', firstName: 'theo', lastName: 'bogdan',subscribed: 'true', phone: '+44 7843753547', id: 1}]
   selectedItem = "0";
   constructor(
