@@ -19,11 +19,11 @@
             <div class="header-group">
                 <div class="top-title">NEW CAMPAIGN</div>
                 <div class="header">
-                    {{campaignData?.title}}
+                    {{campaignData?.name}}
                 </div>
             </div>            
-                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId">
-                    <nb-option *ngFor="cl of contactLists" value="cl?.id">{{cl?.name}}</nb-option>
+                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" *ngIf="ready">
+                    <nb-option *ngFor="let cl of contactLists" [value]="cl.id">{{cl.name}}</nb-option>
                 </nb-select>
             <div class="button-group">
                 <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepOne()">Next</button>
@@ -50,9 +50,9 @@
             <div class="header-group">
                 <div class="top-title">NEW CAMPAIGN</div>
                 <div class="header">
-                    {{campaignData?.title}}
+                    {{campaignData?.name}}
                 </div>
-                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>THE MUSIC CREW</div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListName}}</div>
             </div>            
             <div class="preview">
                 <div class="header">

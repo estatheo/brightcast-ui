@@ -46,7 +46,7 @@
                     <div class="main-data-field">{{contact.lastName}} {{contact.firstName}}</div>
                     <div class="main-data-field">{{contact.phone}}</div>
                     <div class="main-data-field">{{contact.email}}</div>
-                    <div class="main-data-field subscribed">{{contact.subscribed === 'true' ? '✅' : '❌'}}</div>
+                    <div class="main-data-field subscribed">{{contact.subscribed ? '✅' : '❌'}}</div>
                     <div class="main-data-field">
                         <nb-icon icon="edit-outline" [routerLink]="['./contact/'+ contact.id + '/edit']" class="button"></nb-icon> 
                         <nb-icon icon="trash-2-outline" (click)="deleteContact(contact.id)" class="button"></nb-icon>

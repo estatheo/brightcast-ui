@@ -35,7 +35,9 @@ export class ContactListEditComponent implements OnInit {
   }
 
   saveStepZero() {
-    this.contactList.name = this.contactListTitle.trim();
+    if(this.contactListTitle !== null && this.contactListTitle !== undefined && this.contactListTitle !== ''){
+      this.contactList.name = this.contactListTitle.trim();
+    }
 
     this.step++;
   }
@@ -46,7 +48,9 @@ export class ContactListEditComponent implements OnInit {
 
   saveStepTwo() {
     this.uploadFile();
-    this.contactList.fileUrl = this.contactListFileUrl.trim();
+    if(this.contactListFileUrl !== null && this.contactListFileUrl !== undefined && this.contactListFileUrl !== ''){
+      this.contactList.fileUrl = this.contactListFileUrl.trim();
+    }
 
     this.editList();
 

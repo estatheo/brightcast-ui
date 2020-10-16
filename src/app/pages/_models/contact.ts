@@ -4,6 +4,6 @@
     lastName?: string;
     phone?: string;
     email?: string;
-    subscribed?: string;
+    subscribed?: boolean;
     contactListId: number;
 }

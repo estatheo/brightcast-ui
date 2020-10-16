@@ -19,7 +19,7 @@ export class ContactEditComponent implements OnInit {
   contactListId: number;
   contactId: number;
   contactList: ContactList = {id: 0, fileUrl: '', name: '', keyString: ''};
-  contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: 'true'};
+  contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
   contactName: string = '';
   contactPhone: string = '';
   contactEmail: string = '';
@@ -45,18 +45,28 @@ export class ContactEditComponent implements OnInit {
   }
 
   saveStepZero() {
-    this.contact.firstName = this.contactName.trim().split(" ")[0];
-    this.contact.lastName = this.contactName.trim().split(" ")[1];
+    if(this.contactName.trim().split(" ")[0] !== null && this.contactName.trim().split(" ")[0] !== undefined && this.contactName.trim().split(" ")[0] !== ''
+        && this.contactName.trim().split(" ")[1] !== null && this.contactName.trim().split(" ")[1] !== undefined && this.contactName.trim().split(" ")[1] !== ''){
+      this.contact.firstName = this.contactName.trim().split(" ")[0];
+      this.contact.lastName = this.contactName.trim().split(" ")[1];
+    }
 
+    console.log('ah',this.contactName);
     this.step++;    
   }
   saveStepOne() {
+    if(this.contactPhone !== null && this.contactPhone !== undefined && this.contactPhone !== ''){
+
+    }
     this.contact.phone = this.contactPhone.trim().replace(" ", "");
     
     this.step++;    
   }
   saveStepTwo() {
-    this.contact.email = this.contactEmail.trim();
+    if(this.contactEmail !== null && this.contactEmail !== undefined && this.contactEmail !== ''){
+      this.contact.email = this.contactEmail.trim();
+    }
+    
 
     this.step++;
   }
@@ -78,7 +88,7 @@ export class ContactEditComponent implements OnInit {
   editContact() {    
     this.contactService.Update(this.contact).subscribe(() => {
       this.toastrService.primary('🎉 The contact has been updated!', 'UPDATED!');
-      this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: 'true'};
+      this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
       this.contactName = '';
       this.contactPhone = '';
       this.contactEmail = '';

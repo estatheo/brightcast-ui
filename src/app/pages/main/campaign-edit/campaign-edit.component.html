@@ -22,14 +22,12 @@
                     {{campaignData?.name}}
                 </div>
             </div>            
-                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" [value]="contactLists[0]?.id">
-                    <nb-option *ngFor="cl of contactLists" value="cl?.id">{{cl?.name}}</nb-option>
+                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" >
+                    <nb-option *ngFor="let cl of contactLists" [value]="cl?.id">{{cl?.name}}</nb-option>
                 </nb-select>
             <div class="button-group">
                 <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepOne()">Next</button>
-                <div class="or"><span>───────────────</span>&nbsp;&nbsp;or&nbsp;&nbsp;<span>───────────────</span></div>
-                <button type="button" class="button-secondary" nbButton shape="semi-round" status="basic" outline><nb-icon icon="plus-outline"></nb-icon>New list</button>
-            </div>
+                </div>
         </div>
         <div class="card" *ngIf="step === 2">
             <div class="header-group">
@@ -37,10 +35,10 @@
                 <div class="header">
                     {{campaignData?.name}}
                 </div>
-                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>THE MUSIC CREW</div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListName}}</div>
             </div>            
             <div class="input">
-                <textarea rows="5" class="message-text" [(ngModel)]="body" [value]="campaignData?.message"></textarea>
+                <textarea rows="5" class="message-text" [(ngModel)]="body" [placeholder]="campaignData?.message"></textarea>
             </div>
             <div class="button-group">
                 <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepTwo()">Preview</button>
@@ -52,7 +50,7 @@
                 <div class="header">
                     {{campaignData?.name}}
                 </div>
-                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>THE MUSIC CREW</div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListName}}</div>
             </div>            
             <div class="preview">
                 <div class="header">
@@ -64,7 +62,7 @@
                     <div class="message">
                         <div class="message-header">
                             <div class="name">Mehdi</div>
-                            <div class="date">{{Date.now() | date:'medium'}}</div>
+                            <div class="date">{{dateNow | date:'medium'}}</div>
                         </div>
                         <div class="text">{{campaignData?.message}}</div>
                     </div>

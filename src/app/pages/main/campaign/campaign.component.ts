@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { NbWindowService, NbToastrService } from '@nebular/theme';
 import { CampaignService} from '../../../@core/apis/campaign.service';
 import { CampaignData } from '../../_models/campaignData';
@@ -10,6 +10,10 @@ import { Contact } from '../../_models/contact';
 import { ContactPreview } from '../../_models/contactPreview';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { ChatMessage } from '../../_models/chat';
+import { ContactService } from '../../../@core/apis/contact.service';
+import { ChatService } from '../chat/chat.service';
+import { UserProfile } from '../../_models/userProfile';
+import { AccountService } from '../../_services';
 
 @Component({
   selector: 'ngx-campaign',
@@ -22,12 +26,18 @@ export class CampaignComponent implements OnInit {
     private route: ActivatedRoute,
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
-    private campaignsService: CampaignService) { }
+    private campaignsService: CampaignService,
+    private contactService: ContactService,
+    private userService: AccountService,
+    private _ngZone: NgZone,
+    private chatService: ChatService) { }
   loading = false;
   dataReady = false;
   isAnalytics = false;
-  contacts: ContactPreview[] = [{firstName: 'Theo', lastName: 'Chichirita', body: 'This is a message for', time: new Date(), id: 1},{firstName: 'Theo', lastName: 'Chichirita', body: 'This is a message for', time: new Date(), id: 2}];
-  messages: ChatMessage[]  = [{id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}, {id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}];
+  // contacts: ContactPreview[] = [{firstName: 'Theo', lastName: 'Chichirita', body: 'This is a message for', time: new Date(), id: 1},{firstName: 'Theo', lastName: 'Chichirita', body: 'This is a message for', time: new Date(), id: 2}];
+  // messages: ChatMessage[]  = [{id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}, {id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}];
+  contacts: ContactPreview[];
+  messages: ChatMessage[]; 
   data: any;
   selectedContactId = 0;
   selectedChart = 'delivered';
@@ -35,79 +45,105 @@ export class CampaignComponent implements OnInit {
   settingClass = ['personal', 'business'];
   selectedItem = "0";
   campaignId: number;
-  routeSub: Subscription;
+  routeSub: Subscription;  
+  user: UserProfile;
   campaign: Campaign = { name: "Campaign One", response: 2, status: 1, contactListIds: [], delivered: 1000, read: 15000, subscribed: 1230, replies: 1231, deliveredPercentage: 12, readPercentage: -0.5, subscribedPercentage: -15, repliesPercentage: 23};
+  
   ngOnInit(): void {
+    this.chatService.startConnection();
+    this.chatService.registerOnServerEvents();
     this.routeSub =  this.route.params.subscribe(p => {
       this.campaignId = p['id'];
-      this.selectedContactId = this.contacts[0].id;
-      this.dataReady = true;
-      this.campaignsService.GetCampaignData(this.campaignId).subscribe((data: Campaign) => {
-        this.campaign = data;
+      this.userService.getUserProfile()
+      .subscribe((user: UserProfile) => {
+        this.campaignsService.GetCampaignData(this.campaignId).subscribe((data: Campaign) => {
+          this.campaign = data;
+          this.contactService.GetContactsByCampaignId(this.campaignId).subscribe((c: ContactPreview[]) => {
+            this.contacts = c;
+            this.selectedContactId = this.contacts[0].id;
+            this.chatService.loadMessagesByCampaignAndContactId(this.campaignId, this.selectedContactId).subscribe((data: ChatMessage[]) => {
+              data.forEach((message: ChatMessage) => {
+                if (message.senderId === this.user.id) {
+                  message.reply = true;
+                }
+                this.messages.push(message);
+                this.dataReady = true;
+              });
+            });
+          });
+        });
       });
     });
     
   }
-
-  // openModal() {
-  //   this.windowService.open(
-  //     CampaignNewComponent,
-  //     { title: 'New Campaign', context: { contactListList: this.data.contactLists} });
-  // }
-
-  // openModalForEdit(event) {
-  //   this.campaignsService.data.subscribe((data: CampaignData) => {
-  //     this.data = data;
-  //     this.windowService.open(
-  //       CampaignFormComponent,
-  //       { title: 'Edit Campaign', context: { contactListList: this.data.contactLists, campaign: event } });
-  //   });
-
-  // }
-
-  delete(id) {
-    this.campaignsService.Delete(id).subscribe(() => {
-      this.toastrService.primary('❌ The campaign has been deleted!', 'Deleted!');
-      this.campaignsService.refreshData();
-      this.campaignsService.requestData().subscribe((data: CampaignData) => {
-        this.data = data;
-      });
-    }, error => {
-      this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
-    });
-  }
-
-  send(campaign) {
-    this.loading = true;
-    this.campaignsService.SendCampaign(campaign).subscribe(result => {
-      this.toastrService.primary('🎉 The campaign has been sent!', 'Success!');
-      this.campaignsService.refreshData();
-      this.campaignsService.data.subscribe((data: CampaignData) => {
-        this.data = data;
-      });
-      this.loading = false;
-    }, error => {
-      this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
-      this.campaignsService.refreshData();
-      this.loading = false;
-    });
-  }
   
+  sendMessage(event: any) {
+    const files = !event.files ? [] : event.files.map((file) => {
+      return {
+        url: file.src,
+        type: file.type,
+        icon: 'nb-compose',
+      };
+    });
+
+    const tempMsg = new ChatMessage();
+    tempMsg.text = event.message;
+    tempMsg.createdAt = new Date();
+    tempMsg.reply = true;
+    tempMsg.type = files.length ? 'file' : 'text';
+    tempMsg.files = files.toString();
+    tempMsg.senderId = this.user.id;
+    tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
+    tempMsg.avatarUrl = this.user.pictureUrl;
+    tempMsg.campaignId = this.campaignId;
+    tempMsg.contactId = this.selectedContactId;
+    this.messages.push(tempMsg);
+    this.chatService.newChatMessage(tempMsg).subscribe(() => {
+    }, error => {
+      this.toastrService.danger(error, 'There was an error on our side😢');
+    });
+  }
+
+  private subscribeToEvents(): void {
+    this.chatService.messageReceived.subscribe((message: ChatMessage) => {
+      this._ngZone.run(() => {
+        if (message.campaignId !== this.campaignId || message.contactId !== this.selectedContactId) {
+          return;
+        }
+        message.reply = true;
+        if (message.senderId !== this.user.id) {
+          message.reply = false;
+          this.messages.push(message);
+        } else {
+          //template message
+
+          this.messages.push(message);
+        }
+      });
+    });
+  }
+
+  selectContact(contactId: number) {
+    this.selectedContactId = contactId;
+    
+    this.messages = [];
+
+    this.chatService.loadMessagesByCampaignAndContactId(this.campaignId, this.selectedContactId).subscribe( (data: ChatMessage[]) => {
+              data.forEach((message: ChatMessage) => {
+                if (message.senderId === this.user.id) {
+                  message.reply = true;
+                }
+                this.messages.push(message);
+              });              
+            });
+  }
+
   toggle(check) {
 
     if(check === 0 && this.isAnalytics) {
 
       this.isAnalytics = !this.isAnalytics;
       
-      // let temp = this.btnstatus[1];
-
-      // this.btnstatus[1] = this.btnstatus[0];
-      // this.btnstatus[0] = temp;
-
-      // temp = this.settingClass[1];
-      // this.settingClass[1] = this.settingClass[0];
-      // this.settingClass[0] = temp;
-
       let temp = this.btnstatus[1];
 
       this.btnstatus[1] = this.btnstatus[0];

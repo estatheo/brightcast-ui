@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
+import { Subscription } from 'rxjs';
+import { ContactService } from '../../../@core/apis/contact.service';
+import { ContactListService } from '../../../@core/apis/contactList.service';
 import { Contact } from '../../_models/contact';
+import { ContactList } from '../../_models/contactList';
 
 @Component({
   selector: 'ngx-contact-new',
@@ -8,16 +14,32 @@ import { Contact } from '../../_models/contact';
 })
 export class ContactNewComponent implements OnInit {
 
+  routeSub: Subscription;
   step: number = 0;
-  contactListTitle = 'Test Title';
-  contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: 'true'};
+  contactListTitle: string;
+  contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
   contactName: string = '';
   contactPhone: string = '';
   contactEmail: string = '';
+  contactListId: number;
 
-  constructor() { }
+  constructor(
+    private toastrService: NbToastrService,
+    private contactService: ContactService,
+    private contactListService: ContactListService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.routeSub =  this.route.params.subscribe(p => {
+      this.contactListId = p['id'];
+      this.contactListService.GetContactList(this.contactListId).subscribe((cl: ContactList) => {
+        this.contactListTitle = cl.name;
+        this.contact.contactListId = cl.id;
+      })
+    });
+
   }
   
   saveStepZero() {
@@ -53,27 +75,41 @@ export class ContactNewComponent implements OnInit {
     this.step = newStep;
   }
   addAnotherContact() {
+    this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
+      this.contact.id = c.id;
+      this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
+
+      this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
+      this.contactName = '';
+      this.contactPhone = '';
+      this.contactEmail = '';
+
+      this.step = 0;
+    }, error => {
+      //todo: send trace request to server
+      this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
+    });
+
     
-    // create contact
-
-    this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: 'true'};
-    this.contactName = '';
-    this.contactPhone = '';
-    this.contactEmail = '';
-
-    this.step = 0;
   }
   
   addContact() {
+    this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
+      this.contact.id = c.id;
+      this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
+
+      this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
+      this.contactName = '';
+      this.contactPhone = '';
+      this.contactEmail = '';
+
+      this.router.navigateByUrl('pages/main/customer-list/' + this.contactListId);
+    }, error => {
+      //todo: send trace request to server
+      this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
+    });
+
     
-    // create contact
-
-    this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: 'true'};
-    this.contactName = '';
-    this.contactPhone = '';
-    this.contactEmail = '';
-
-    //route to contactList
   }
 
 }

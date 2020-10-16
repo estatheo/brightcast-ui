@@ -21,7 +21,9 @@ export class CampaignNewComponent implements OnInit {
   contactLists: ContactList[];
   title: any = '';
   contactListId: any = '0';
+  contactListName;
   body: any = '';
+  ready = false;
   constructor(
     private router: Router,
     private toastrService: NbToastrService,
@@ -32,6 +34,7 @@ export class CampaignNewComponent implements OnInit {
   ngOnInit(): void {
     this.contactListService.data.subscribe((cl: ContactList[]) => {
       this.contactLists = cl;
+      this.ready = true;
     })
   }
 
@@ -60,6 +63,8 @@ export class CampaignNewComponent implements OnInit {
     else {
       this.campaignData.contactListIds = [parseInt(this.contactListId)];
     }
+
+    this.contactListName = this.contactLists.filter(x => x.id === this.campaignData.contactListIds[0]);
     this.step++;
   }
 

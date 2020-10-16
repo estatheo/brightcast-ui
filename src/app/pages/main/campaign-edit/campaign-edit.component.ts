@@ -21,7 +21,9 @@ export class CampaignEditComponent implements OnInit {
   contactLists: ContactList[];
   title: any = '';
   contactListId: any = '0';
+  contactListName;
   body: any = '';
+  dateNow: Date = new Date();
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -57,7 +59,9 @@ export class CampaignEditComponent implements OnInit {
   }
 
   saveStepZero() {
-    this.campaignData.name = this.title.trim();
+    if(this.title !== null && this.title !== undefined && this.title !== ''){
+      this.campaignData.name = this.title.trim();
+    }
     this.step++;
   }
 
@@ -68,11 +72,15 @@ export class CampaignEditComponent implements OnInit {
     else {
       this.campaignData.contactListIds = [parseInt(this.contactListId)];
     }
+
+    this.contactListName = this.contactLists.filter(x => x.id === this.campaignData.contactListIds[0])[0].name;
     this.step++;
   }
 
   saveStepTwo() {
-    this.campaignData.message = this.body;
+    if(this.body !== null && this.body !== undefined && this.body !== ''){
+      this.campaignData.message = this.body;
+    }
     this.step++;
   }
 
