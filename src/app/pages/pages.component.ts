@@ -12,7 +12,7 @@ import { ContactListElement } from './_models/contactListElement';
   selector: 'ngx-pages',
   styleUrls: ['pages.component.scss'],
   template: `
-    <ngx-one-column-layout>
+    <ngx-one-column-layout class="column">
     <nb-menu [items]="menu"></nb-menu>
     <nb-menu [items]="menu2" class="menu2"></nb-menu>
     <router-outlet></router-outlet>
@@ -30,7 +30,7 @@ export class PagesComponent {
         {
           title: 'New Campaign',
           icon: 'plus-outline',
-          link: '/pages/main/campaign/new',        
+          link: '/pages/main/new/campaign',        
         }
       ],
 
@@ -38,12 +38,12 @@ export class PagesComponent {
     {
       title: 'CONTACT LISTS',
       expanded: true,
-      link:`/pages/main/contact-list`,
+      link:`/pages/main/customer-list`,
       children: [
         {
           title: 'New Contact List',
           icon: 'plus-outline',
-          link: '/pages/main/contact-list/new',        
+          link: '/pages/main/new/customer-list',        
         }
       ]
     }];

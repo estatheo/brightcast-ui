@@ -2,15 +2,15 @@
         <div class="header-container">
             <div class="header-title">
                 <p>{{campaign?.name}}</p>
-                <button type="button" nbButton outline small status="primary" (click)="openModal()" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
+                <button type="button" nbButton shape="semi-round" outline small status="primary" routerLink="../../new/campaign" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
             </div>
             <div>
                 <div class="toggler">
                     <div class="toggle-btn">
-                        <button nbButton status="primary" matripple appearance="{{btnstatus[1]}}" (click)="toggle(0)" class="btn1">Messages</button>
+                        <button nbButton shape="semi-round" status="primary" matripple appearance="{{btnstatus[1]}}" (click)="toggle(0)" class="btn1">Messages</button>
                     </div>
                     <div class="toggle-btn">
-                        <button nbButton status="primary" matripple appearance="{{btnstatus[0]}}" (click)="toggle(1)" class="btn2">Analytics</button>
+                        <button nbButton shape="semi-round" status="primary" matripple appearance="{{btnstatus[0]}}" (click)="toggle(1)" class="btn2">Analytics</button>
                     </div>
                 </div>
             </div>

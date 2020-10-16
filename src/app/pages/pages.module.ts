@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbAlertModule, NbInputModule, NbButtonModule, NbCheckboxModule, NbCardModule } from '@nebular/theme';
+import { NbMenuModule, NbAlertModule, NbInputModule, NbButtonModule, NbCheckboxModule, NbCardModule, NbSelectComponent, NbIconComponent } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';

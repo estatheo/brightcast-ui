@@ -4,8 +4,6 @@ import { Contact } from '../../_models/contact';
 import { ContactList } from '../../_models/contactList';
 import { ContactService } from '../../../@core/apis/contact.service';
 import { ContactListService } from '../../../@core/apis/contactList.service';
-import { ContactFormComponent } from './contact-form/contact-form.component';
-import { ContactEditComponent } from './contact-edit/contact-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -49,13 +47,10 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    this.windowService.open(
-      ContactFormComponent, { title: 'New Contact', context: { contactListId: this.contactListId} });
+    
   }
 
   openModalForEdit(event) {
-    const item: Contact = event;
-    this.windowService.open(ContactEditComponent, { title: 'Edit Contact', context: { contactElement: item } });
   }
 
   delete(id) {

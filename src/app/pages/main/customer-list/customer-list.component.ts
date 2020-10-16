@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NbWindowService, NbToastrService } from '@nebular/theme';
-import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { ContactListService } from '../../../@core/apis/contactList.service';
 import { ContactListElement } from '../../_models/contactListElement';
-import { CustomerListEditComponent } from './customer-list-edit/customer-list-edit.component';
 import { Router } from '@angular/router';
 import { ContactService } from '../../../@core/apis/contact.service';
 import { Contact } from '../../_models/contact';
@@ -31,19 +29,6 @@ export class CustomerListComponent implements OnInit {
       this.data = data;
     });
   }
-  openModal() {
-    this.windowService.open(CustomerFormComponent, { title: 'New Contact List'});
-
-  }
-  openModalForEdit(event) {
-    this.contactListService.data.subscribe((data: ContactListElement[]) => {
-      this.data = data;
-      const item: ContactListElement = event;
-      this.windowService.open(
-        CustomerListEditComponent, { title: 'Edit Contact List', context: { contactList: item } });
-    });
-
-  }
 
   delete(id) {
     this.contactListService.Delete(id).subscribe(() => {
@@ -66,6 +51,10 @@ export class CustomerListComponent implements OnInit {
   }
 
   deleteContact(id) {
+    
+  }
+
+  openModal() {
     
   }
 }

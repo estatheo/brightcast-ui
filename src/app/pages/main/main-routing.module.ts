@@ -6,6 +6,9 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { ContactComponent } from './contact/contact.component';
 import { ChatComponent } from './chat/chat.component';
+import { CampaignNewComponent } from './campaign-new/campaign-new.component';
+import { ContactListNewComponent } from './contact-list-new/contact-list-new.component';
+import { ContactNewComponent } from './contact-new/contact-new.component';
 
 
 const routes: Routes = [
@@ -19,10 +22,16 @@ const routes: Routes = [
         path: 'customer-list/:id', component: CustomerListComponent,
       },
       {
+        path: 'new/customer-list', component: ContactListNewComponent,
+      },
+      {
         path: 'campaign/:id', component: CampaignComponent,
       },
       {
-        path: 'customer-list/:id/contacts', component: ContactComponent,
+        path: 'new/campaign', component: CampaignNewComponent,
+      },
+      {
+        path: 'customer-list/:id/new/contact', component: ContactNewComponent,
       },
       {
         path: 'chat', component: ChatComponent,

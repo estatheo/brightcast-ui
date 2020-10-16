@@ -1,1 +1,140 @@
-<p>contact-list-new works!</p>
+<div class="main">
+    <div class="centered">
+        <div class="card" *ngIf="form === 0 && step === 0">
+            <div class="header header-solo">
+                New Contact List
+            </div>
+            <div class="input">
+                <div class="placeholder">
+                    Contact list title
+                </div>
+                <input class="value" [(ngModel)]="contactListTitle" />
+                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveFormZeroStepZero()">Next</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="form === 0 && step === 1">
+            <div class="header-group">
+                <div class="top-title">NEW CONTACT LIST</div>
+                <div class="header">
+                    {{contactList?.name}}
+                </div>
+            </div>          
+            <div class="input">
+                <div class="info">
+                    Please download and fill out the template provided below with your contact list data.
+                </div>
+                <button type="button" class="button-secondary-2" nbButton shape="semi-round" status="basic" outline><nb-icon icon="file-text-outline"></nb-icon>Download CSV</button>
+            </div>
+            <div class="button-group">
+                <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveFormZeroStepOne()">Next</button>
+                <div class="or"><span>───────────────</span>&nbsp;&nbsp;or&nbsp;&nbsp;<span>───────────────</span></div>
+                <button type="button" class="button last-2 " nbButton shape="semi-round" status="primary" matripple (click)="goToAddContact()">Add contacts manually</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="form === 0 && step === 2">
+            <div class="header-group">
+                <div class="top-title">NEW CONTACT LIST</div>
+                <div class="header">
+                    {{contactList?.name}}
+                </div>
+            </div>          
+            <div class="input">
+                <div class="info">
+                    Upload your completed CSV file here.
+                </div>
+                <button type="button" class="button-secondary-2" nbButton shape="semi-round" status="basic" outline>Browse files...</button>
+            </div>
+            <div class="button-group">
+                <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveFormZeroStepTwo()">Finish</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="form === 0 && step === 3">
+            <div class="header-group">
+                <div class="header">
+                    ✅ Contact list created!
+                </div>
+            </div>          
+            <div class="input">
+                <div class="info">
+                    Now let's <a [routerLink]="['pages/main/new/campaign']">create a new campaign</a> to send to your shiny new list of contacts.
+                </div>
+            </div>
+            <div class="button-group">
+                <div class="or"><span>───────────────</span>&nbsp;&nbsp;or&nbsp;&nbsp;<span>───────────────</span></div>
+                <button type="button" class="button-secondary" nbButton shape="semi-round" status="basic" outline (click)="addAnotherList()" >Add another list</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="form === 1 && step === 0">
+            <div class="header header-group">
+                <div class="header">
+                    New Contact 
+                </div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListTitle}}</div>                
+            </div>
+            <div class="input">
+                <div class="placeholder">
+                    Contact name
+                </div>
+                <input class="value" [(ngModel)]="contactName" />
+                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveFormOneStepZero()">Next</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="form === 1 && step === 1">
+            <div class="header header-group">
+                <div class="top-title">NEW CONTACT</div>
+                <div class="header">
+                    {{contactName}}
+                </div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListTitle}}</div>                
+            </div>
+            <div class="input">
+                <div class="placeholder">
+                    Phone number
+                </div>
+                <input class="value" [(ngModel)]="contactPhone" />                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveFormOneStepOne()">Next</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="form === 1 && step === 2">
+            <div class="header header-group">
+                <div class="top-title">NEW CONTACT</div>
+                <div class="header">
+                    {{contactName}}
+                </div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListTitle}}</div>                
+            </div>
+            <div class="input">
+                <div class="placeholder">
+                    Email address
+                </div>
+                <input class="value" [(ngModel)]="contactEmail" />                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="addContact()">Finish</button>
+                <button type="button" class="button last" nbButton shape="semi-round" status="primary" matripple (click)="addAnotherContact()">Add another contact</button>
+            </div>
+        </div>
+        <div class="step-container" *ngIf="form === 0 && step !== 3">
+            <div class="stepper">
+                <div class="step" [ngClass]="step === 0 ? 'currentStep' : ''" (click)="switchFormZeroStep(0)">●</div>
+                <div class="step" [ngClass]="step === 1 ? 'currentStep' : ''" (click)="switchFormZeroStep(1)">●</div>
+                <div class="step" [ngClass]="step === 2 ? 'currentStep' : ''" (click)="switchFormZeroStep(2)">●</div>
+            </div>
+        </div>
+        <div class="step-container" *ngIf="form === 1">
+            <div class="stepper">
+                <div class="step" [ngClass]="step === 0 ? 'currentStep' : ''" (click)="switchFormOneStep(0)">●</div>
+                <div class="step" [ngClass]="step === 1 ? 'currentStep' : ''" (click)="switchFormOneStep(1)">●</div>
+                <div class="step" [ngClass]="step === 2 ? 'currentStep' : ''" (click)="switchFormOneStep(2)">●</div>
+                </div>
+        </div>
+    </div>
+</div>

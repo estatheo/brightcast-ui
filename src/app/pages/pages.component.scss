@@ -17,8 +17,11 @@
   }
 }
 
-.menu2 {
-  margin-top: 16rem;
+::ng-deep .scrollable{
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 2rem;
 }
 
 ::ng-deep .nb-theme-default nb-menu .menu-item {

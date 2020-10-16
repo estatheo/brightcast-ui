@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbWindowService, NbToastrService } from '@nebular/theme';
-import { CampaignFormComponent } from './campaign-form/campaign-form.component';
 import { CampaignService} from '../../../@core/apis/campaign.service';
-import { CampaignNewComponent } from './campaign-new/campaign-new.component';
 import { CampaignData } from '../../_models/campaignData';
 import { CampaignElement } from '../../_models/campaignElement';
 import { ActivatedRoute } from '@angular/router';
@@ -51,21 +49,21 @@ export class CampaignComponent implements OnInit {
     
   }
 
-  openModal() {
-    this.windowService.open(
-      CampaignNewComponent,
-      { title: 'New Campaign', context: { contactListList: this.data.contactLists} });
-  }
+  // openModal() {
+  //   this.windowService.open(
+  //     CampaignNewComponent,
+  //     { title: 'New Campaign', context: { contactListList: this.data.contactLists} });
+  // }
 
-  openModalForEdit(event) {
-    this.campaignsService.data.subscribe((data: CampaignData) => {
-      this.data = data;
-      this.windowService.open(
-        CampaignFormComponent,
-        { title: 'Edit Campaign', context: { contactListList: this.data.contactLists, campaign: event } });
-    });
+  // openModalForEdit(event) {
+  //   this.campaignsService.data.subscribe((data: CampaignData) => {
+  //     this.data = data;
+  //     this.windowService.open(
+  //       CampaignFormComponent,
+  //       { title: 'Edit Campaign', context: { contactListList: this.data.contactLists, campaign: event } });
+  //   });
 
-  }
+  // }
 
   delete(id) {
     this.campaignsService.Delete(id).subscribe(() => {

@@ -17,17 +17,17 @@
                     <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Unsubscribed (Asc)</span></nb-option>
                     <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Unsubscribed (Desc)</span></nb-option>
                 </nb-select>
-                <button type="button" nbButton small status="primary" (click)="openModal()" class="new-contact-button">
+                <button type="button" nbButton shape="semi-round" small status="primary" [routerLink]="['./new/contact']" class="new-contact-button">
                     <nb-icon icon="plus-outline"></nb-icon> 
                     New contact
                 </button>
             </div>
             <div class="header2-right">
-                <button type="button" nbButton outline small status="basic" (click)="openModal()" class="edit-button">
+                <button type="button" nbButton shape="semi-round" outline small status="basic" (click)="openModal()" class="edit-button">
                     <nb-icon icon="edit-2-outline"></nb-icon> 
                     Edit contact list
                 </button>
-                <button type="button" nbButton small status="primary" (click)="openModal()" class="share-button">
+                <button type="button" nbButton shape="semi-round" small status="primary" (click)="openModal()" class="share-button">
                     <nb-icon icon="share-outline"></nb-icon> 
                     Share Link
                 </button>
