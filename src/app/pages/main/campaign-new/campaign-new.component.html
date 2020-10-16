@@ -23,7 +23,7 @@
                 </div>
             </div>            
                 <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId">
-                    <nb-option value="0">Music crew</nb-option>
+                    <nb-option *ngFor="cl of contactLists" value="cl?.id">{{cl?.name}}</nb-option>
                 </nb-select>
             <div class="button-group">
                 <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepOne()">Next</button>
@@ -66,14 +66,14 @@
                             <div class="name">Mehdi</div>
                             <div class="date">August 21</div>
                         </div>
-                        <div class="text">{{campaignData?.body}}</div>
+                        <div class="text">{{campaignData?.message}}</div>
                     </div>
                 </div>
                 
             </div>
             <div class="button-group">
                 <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="sendNow()">Send now</button>
-                <button type="button" class="button last" nbButton shape="semi-round" status="primary" matripple (click)="savePreview()">Preview</button>
+                <button type="button" class="button last" nbButton shape="semi-round" status="primary" matripple (click)="savePreview()">Save draft</button>
             </div>
         </div>
         <div class="step-container">

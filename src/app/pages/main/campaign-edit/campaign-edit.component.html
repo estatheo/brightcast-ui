@@ -1,1 +1,88 @@
-<p>campaign-edit works!</p>
+<div class="main">
+    <div class="centered">
+        <div class="card" *ngIf="step === 0">
+            <div class="header header-solo">
+                Edit Campaign
+            </div>
+            <div class="input">
+                <div class="placeholder">
+                    Campaign title
+                </div>
+                <input class="value" [(ngModel)]="title" [value]="campaignData?.name" />
+                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepZero()">Next</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="step === 1">
+            <div class="header-group">
+                <div class="top-title">EDIT CAMPAIGN</div>
+                <div class="header">
+                    {{campaignData?.name}}
+                </div>
+            </div>            
+                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" [value]="contactLists[0]?.id">
+                    <nb-option *ngFor="cl of contactLists" value="cl?.id">{{cl?.name}}</nb-option>
+                </nb-select>
+            <div class="button-group">
+                <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepOne()">Next</button>
+                <div class="or"><span>───────────────</span>&nbsp;&nbsp;or&nbsp;&nbsp;<span>───────────────</span></div>
+                <button type="button" class="button-secondary" nbButton shape="semi-round" status="basic" outline><nb-icon icon="plus-outline"></nb-icon>New list</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="step === 2">
+            <div class="header-group">
+                <div class="top-title">EDIT CAMPAIGN</div>
+                <div class="header">
+                    {{campaignData?.name}}
+                </div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>THE MUSIC CREW</div>
+            </div>            
+            <div class="input">
+                <textarea rows="5" class="message-text" [(ngModel)]="body" [value]="campaignData?.message"></textarea>
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepTwo()">Preview</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="step === 3">
+            <div class="header-group">
+                <div class="top-title">EDIT CAMPAIGN</div>
+                <div class="header">
+                    {{campaignData?.name}}
+                </div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>THE MUSIC CREW</div>
+            </div>            
+            <div class="preview">
+                <div class="header">
+                    <img class="avatar" src="assets/images/avatar-round.png" />
+                    <span>+44 7777 99999</span>
+                </div>
+                <div class="body">
+                    <div class="file" *ngIf="campaignData?.file !== '' && campaignData?.file !== null"></div>
+                    <div class="message">
+                        <div class="message-header">
+                            <div class="name">Mehdi</div>
+                            <div class="date">{{Date.now() | date:'medium'}}</div>
+                        </div>
+                        <div class="text">{{campaignData?.message}}</div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="sendNow()">Send now</button>
+                <button type="button" class="button last" nbButton shape="semi-round" status="primary" matripple (click)="savePreview()">Save draft</button>
+            </div>
+        </div>
+        <div class="step-container">
+            <div class="stepper">
+                <div class="step" [ngClass]="step === 0 ? 'currentStep' : ''" (click)="switchStep(0)">●</div>
+                <div class="step" [ngClass]="step === 1 ? 'currentStep' : ''" (click)="switchStep(1)">●</div>
+                <div class="step" [ngClass]="step === 2 ? 'currentStep' : ''" (click)="switchStep(2)">●</div>
+                <div class="step" [ngClass]="step === 3 ? 'currentStep' : ''" (click)="switchStep(3)">●</div>
+            </div>
+        </div>        
+    </div>    
+</div>

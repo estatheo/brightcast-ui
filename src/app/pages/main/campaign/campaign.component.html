@@ -2,7 +2,7 @@
         <div class="header-container">
             <div class="header-title">
                 <p>{{campaign?.name}}</p>
-                <button type="button" nbButton shape="semi-round" outline small status="primary" routerLink="../../new/campaign" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
+                <button type="button" nbButton shape="semi-round" outline small status="primary" [routerLink]="['./edit']" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
             </div>
             <div>
                 <div class="toggler">

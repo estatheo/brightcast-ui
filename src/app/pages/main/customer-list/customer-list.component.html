@@ -23,11 +23,11 @@
                 </button>
             </div>
             <div class="header2-right">
-                <button type="button" nbButton shape="semi-round" outline small status="basic" (click)="openModal()" class="edit-button">
+                <button type="button" nbButton shape="semi-round" outline small status="basic" [routerLink]="['./edit']" class="edit-button">
                     <nb-icon icon="edit-2-outline"></nb-icon> 
                     Edit contact list
                 </button>
-                <button type="button" nbButton shape="semi-round" small status="primary" (click)="openModal()" class="share-button">
+                <button type="button" nbButton shape="semi-round" small status="primary" (click)="copyLink()" class="share-button" [cdkCopyToClipboard]="shareLink">
                     <nb-icon icon="share-outline"></nb-icon> 
                     Share Link
                 </button>
@@ -48,7 +48,7 @@
                     <div class="main-data-field">{{contact.email}}</div>
                     <div class="main-data-field subscribed">{{contact.subscribed === 'true' ? '✅' : '❌'}}</div>
                     <div class="main-data-field">
-                        <nb-icon icon="edit-outline" (click)="editContact(contact.id)" class="button"></nb-icon> 
+                        <nb-icon icon="edit-outline" [routerLink]="['./contact/'+ contact.id + '/edit']" class="button"></nb-icon> 
                         <nb-icon icon="trash-2-outline" (click)="deleteContact(contact.id)" class="button"></nb-icon>
                     </div>
                 </div>

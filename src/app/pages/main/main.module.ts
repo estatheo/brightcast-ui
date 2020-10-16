@@ -44,7 +44,8 @@ import { ContactListNewComponent } from './contact-list-new/contact-list-new.com
 import { ContactNewComponent } from './contact-new/contact-new.component';
 import { CampaignNewComponent } from './campaign-new/campaign-new.component';
 import { CampaignEditComponent } from './campaign-edit/campaign-edit.component';
-import { CustomerListEditComponent } from './customer-list-edit/customer-list-edit.component';
+import { ContactEditComponent } from './contact-edit/contact-edit.component';
+import { ContactListEditComponent } from './contact-list-edit/contact-list-edit.component';
 
 @NgModule({
   declarations: [
@@ -56,9 +57,10 @@ import { CustomerListEditComponent } from './customer-list-edit/customer-list-ed
     ContactComponent,
     ChatComponent,
     ContactListNewComponent,
+    ContactListEditComponent,
     ContactNewComponent,
     CampaignEditComponent,
-    CustomerListEditComponent,
+    ContactEditComponent,
   ],
   imports: [
     CommonModule,
