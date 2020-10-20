@@ -86,7 +86,7 @@ export class CampaignEditComponent implements OnInit {
 
   sendNow() {
     this.campaignService.Update(this.campaignData).subscribe((c: CampaignElement) => {
-      this.campaignService.SendCampaign(c).subscribe(result => {
+      this.campaignService.SendCampaign(this.campaignData).subscribe(result => {
         this.toastrService.primary('🎉 The campaign has been sent!', 'SENT!');
 
         this.router.navigateByUrl('/pages/main/campaign/' + c.id);

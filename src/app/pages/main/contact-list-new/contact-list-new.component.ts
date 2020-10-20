@@ -6,6 +6,7 @@ import { ContactService } from '../../../@core/apis/contact.service';
 import { ContactListService } from '../../../@core/apis/contactList.service';
 import { Contact } from '../../_models/contact';
 import { ContactList } from '../../_models/contactList';
+import { AccountService } from '../../_services';
 
 @Component({
   selector: 'ngx-contact-list-new',
@@ -16,7 +17,7 @@ export class ContactListNewComponent implements OnInit {
 
   form: number = 0;
   step: number = 0;
-
+  doc: FormData;
   contactList: ContactList = {id: 0, name: '', keyString: '', fileUrl: ''};
   contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
   contactListTitle: string = '';
@@ -28,7 +29,8 @@ export class ContactListNewComponent implements OnInit {
   constructor(
     private toastrService: NbToastrService,
     private contactListService: ContactListService,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +47,6 @@ export class ContactListNewComponent implements OnInit {
     this.step++;  
   }
   saveFormZeroStepTwo() {
-    this.uploadFile();
     this.contactList.fileUrl = this.contactListFileUrl.trim();
 
     this.addList();
@@ -98,9 +99,20 @@ export class ContactListNewComponent implements OnInit {
     this.step = newStep;
   }
 
-  uploadFile() {
-    this.contactListFileUrl = '?';
+  uploadFile(files) {
 
+    if (files.length === 0) {
+      return;
+    }
+
+    this.doc = new FormData();
+
+    for (const file of files) {
+      this.doc.append(file.name, file);
+      this.accountService.uploadDoc(this.doc).subscribe(im => {
+        this.contactListFileUrl = im['name'];
+      });
+    }
   }
 
   addAnotherContact() {
@@ -181,5 +193,6 @@ export class ContactListNewComponent implements OnInit {
 
     
   }
+  
 
 }

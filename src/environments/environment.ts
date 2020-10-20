@@ -9,6 +9,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: 'https://localhost:44315',
+  production: true,
+  apiUrl: 'https://api.brightcast.io',
 };

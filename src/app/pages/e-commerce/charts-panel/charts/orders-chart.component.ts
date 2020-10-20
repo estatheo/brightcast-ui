@@ -313,7 +313,7 @@ export class OrdersChartComponent implements AfterViewInit, OnDestroy, OnChanges
               chartData['linesData'] = [data['readMonth']['chartValues']];
               break;
           }
-        case 'subscribers':
+        case 'subscribed':
           switch(this.timeFilter){
             case 'month':
               chartData['chartLabel'] = data['subscribersMonth']['chartLabels'];
