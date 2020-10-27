@@ -27,3 +27,8 @@
 ::ng-deep .nb-theme-default nb-menu .menu-item {
   border: 0px;
 }
+
+.menu {
+  max-height: 22rem;
+  overflow: auto;
+}

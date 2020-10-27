@@ -13,8 +13,9 @@ import { ContactListElement } from './_models/contactListElement';
   styleUrls: ['pages.component.scss'],
   template: `
     <ngx-one-column-layout class="column">
-    <nb-menu [items]="menu"></nb-menu>
-    <nb-menu [items]="menu2" class="menu2"></nb-menu>
+    <nb-menu [items]="menu" class="menu"></nb-menu>
+    <nb-menu [items]="menu2" class="menu"></nb-menu>
+    <nb-menu [items]="menu3" class="menu"></nb-menu>
     <router-outlet></router-outlet>
     </ngx-one-column-layout>
   `,
@@ -34,21 +35,24 @@ export class PagesComponent {
         }
       ],
 
-    },
-    {
-      title: 'CONTACT LISTS',
-      expanded: true,
-      link:`/pages/main/customer-list`,
-      children: [
-        {
-          title: 'New Contact List',
-          icon: 'plus-outline',
-          link: '/pages/main/new/customer-list',        
-        }
-      ]
     }];
 
-  menu2: NbMenuItem[] = [
+    menu2: NbMenuItem[] = [      
+      {
+        title: 'CONTACT LISTS',
+        expanded: true,
+        link:`/pages/main/customer-list`,
+        children: [
+          {
+            title: 'New Contact List',
+            icon: 'plus-outline',
+            link: '/pages/main/new/customer-list',        
+          }
+        ]
+      }];
+
+
+  menu3: NbMenuItem[] = [
     {
       title: 'Account settings',
       link:`/pages/main/settings`,
@@ -67,7 +71,7 @@ export class PagesComponent {
       c.campaigns.forEach(y => this.menu.find(x => x.title === 'CAMPAIGNS').children.push({title: y.name, link:`/pages/main/campaign/${y.id}`, icon: 'hash-outline',  data: {id: y.id}}))
     });
     this.contactListService.data.subscribe((cl: ContactListElement[]) => {
-      cl.forEach(y => this.menu.find(x => x.title === 'CONTACT LISTS').children.push({title: y.name, link:`/pages/main/customer-list/${y.id}`, icon: 'person-outline', data: {id: y.id}}))
+      cl.forEach(y => this.menu2.find(x => x.title === 'CONTACT LISTS').children.push({title: y.name, link:`/pages/main/customer-list/${y.id}`, icon: 'person-outline', data: {id: y.id}}))
     });
   }
 

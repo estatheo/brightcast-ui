@@ -47,6 +47,7 @@ import { CampaignEditComponent } from './campaign-edit/campaign-edit.component';
 import { ContactEditComponent } from './contact-edit/contact-edit.component';
 import { ContactListEditComponent } from './contact-list-edit/contact-list-edit.component';
 import { ChatService } from './chat/chat.service';
+import { OnboardingComponent } from '../../custom/onboarding/onboarding.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { ChatService } from './chat/chat.service';
     ContactNewComponent,
     CampaignEditComponent,
     ContactEditComponent,
+    OnboardingComponent
   ],
   imports: [
     CommonModule,

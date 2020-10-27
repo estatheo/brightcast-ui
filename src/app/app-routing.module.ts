@@ -19,11 +19,7 @@ export const routes: Routes = [
   // {
   //   path: 'a',
   //   loadChildren: './auth/a.module#'
-  // }
-  {
-    path: 'onboarding',
-    loadChildren: './custom/onboarding/onboarding.module#OnboardingModule', canActivate: [AuthGuard],
-  },
+  // }  
   {
     path: 'signup_contact/:id',
     loadChildren: './custom/contact-signup/contact-signup.module#ContactSignupModule',

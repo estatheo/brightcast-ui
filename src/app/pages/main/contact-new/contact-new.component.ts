@@ -55,9 +55,6 @@ export class ContactNewComponent implements OnInit {
   }
   saveStepTwo() {
     this.contact.email = this.contactEmail.trim();
-    
-    this.addContact();
-
     this.step++;
   }
   
@@ -94,6 +91,7 @@ export class ContactNewComponent implements OnInit {
   }
   
   addContact() {
+    this.saveStepTwo();
     this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
       this.contact.id = c.id;
       this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');

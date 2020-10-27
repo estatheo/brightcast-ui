@@ -8,7 +8,7 @@
                 <div class="placeholder">
                     Campaign title
                 </div>
-                <input class="value" [(ngModel)]="title" />
+                <input class="value" [(ngModel)]="title" nbTooltipStatus="primary" nbTooltip="Give your campaign a title. You can edit this later if you need to." nbTooltipPlacement="right" />
                 
             </div>
             <div class="button-group">
@@ -22,7 +22,7 @@
                     {{campaignData?.name}}
                 </div>
             </div>            
-                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" *ngIf="ready">
+                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" *ngIf="ready" nbTooltipStatus="primary" nbTooltip="Choose a contact list. This is the list your messages wil go out to." nbTooltipPlacement="right" >
                     <nb-option *ngFor="let cl of contactLists" [value]="cl.id">{{cl.name}}</nb-option>
                 </nb-select>
             <div class="button-group">
@@ -40,7 +40,7 @@
                 <div class="subheader"><nb-icon icon="people-outline"></nb-icon>THE MUSIC CREW</div>
             </div>            
             <div class="input">
-                <textarea rows="5" class="message-text" placeholder="Type your message..."  [(ngModel)]="body"></textarea>
+                <textarea rows="5" class="message-text" placeholder="Type your message..."  [(ngModel)]="body" nbTooltipStatus="primary" nbTooltip="Add your content. You can add attachments, emojis and any other formatting that WhatsApp allows." nbTooltipPlacement="right"></textarea>
             </div>
             <div class="button-group">
                 <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepTwo()">Preview</button>

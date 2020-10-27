@@ -8,7 +8,7 @@
                 <div class="placeholder">
                     Contact list title
                 </div>
-                <input class="value" [(ngModel)]="contactListTitle" />
+                <input class="value" [(ngModel)]="contactListTitle"  nbTooltipStatus="primary" nbTooltip="Give your list a title. You can edit this later if you need to." nbTooltipPlacement="right" />
                 
             </div>
             <div class="button-group">
@@ -26,7 +26,7 @@
                 <div class="info">
                     Please download and fill out the template provided below with your contact list data.
                 </div>
-                <a class="external-link" href="https://brightcaststrgprd.blob.core.windows.net/assets/ContactList.csv"><button type="button" class="button-secondary-2" nbButton shape="semi-round" status="basic" outline><nb-icon icon="file-text-outline"></nb-icon>Download CSV</button></a>
+                <a class="external-link" href="https://brightcaststrgprd.blob.core.windows.net/assets/ContactList.csv"><button type="button" class="button-secondary-2" nbButton shape="semi-round" status="basic" outline><nb-icon icon="file-text-outline"  nbTooltipStatus="primary" nbTooltip="Download our handy template. Save it to your computer, and enter the required data. Then save it again and continue to the next step." nbTooltipPlacement="right"></nb-icon>Download CSV</button></a>
             </div>
             <div class="button-group">
                 <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveFormZeroStepOne()">Next</button>
@@ -45,7 +45,7 @@
                 <div class="info">
                     Upload your completed CSV file here.
                 </div>
-                <input type="file" class="button-secondary-2" #file multiple accept=".csv" (change)="uploadFile(file.files)" nbButton shape="semi-round" status="basic" outline>
+                <input type="file" class="button-secondary-2" #file multiple accept=".csv" (change)="uploadFile(file.files)" nbButton shape="semi-round" status="basic" outline  nbTooltipStatus="primary" nbTooltip="Upload the file you just filled out. Make sure you've added your phone numbers correctly, too." nbTooltipPlacement="right">
             </div>
             <div class="button-group">
                 <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveFormZeroStepTwo()">Finish</button>

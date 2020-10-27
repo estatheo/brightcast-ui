@@ -86,6 +86,7 @@ export class ContactEditComponent implements OnInit {
   }
   
   editContact() {    
+    this.saveStepTwo();
     this.contactService.Update(this.contact).subscribe(() => {
       this.toastrService.primary('🎉 The contact has been updated!', 'UPDATED!');
       this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};

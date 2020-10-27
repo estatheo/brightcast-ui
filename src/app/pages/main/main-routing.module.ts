@@ -12,6 +12,7 @@ import { ContactNewComponent } from './contact-new/contact-new.component';
 import { ContactEditComponent } from './contact-edit/contact-edit.component';
 import { CampaignEditComponent } from './campaign-edit/campaign-edit.component';
 import { ContactListEditComponent } from './contact-list-edit/contact-list-edit.component';
+import { OnboardingComponent } from '../../custom/onboarding/onboarding.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,9 @@ const routes: Routes = [
       {
         path: 'campaign/chat/:campaignId/:contactId', component: ChatComponent,
       },
+      {
+        path: 'onboarding', component: OnboardingComponent
+      }
     ],
   },
 
