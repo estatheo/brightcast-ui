@@ -34,6 +34,8 @@ export class ECommerceComponent implements OnInit, AfterViewInit {
       else {
         this.router.navigateByUrl('pages/main/onboarding');
       }
+    }, error  => {
+      this.router.navigateByUrl('pages/main/onboarding');
     });
   }
 
@@ -43,27 +45,6 @@ export class ECommerceComponent implements OnInit, AfterViewInit {
     const self = this;
     const initial = 0;
     */
-    this.accountService.onboardingCheck();
-    this.dashboardService.data.subscribe(data => {
-      this.absoluteValues =
-      [
-        data['delivered']['value'],
-        data['read']['value'],
-        data['newSubscribers']['value'],
-        data['unsubscribed']['value'],
-        data['replies']['value'],
-      ];
-      this.percentageValues =
-      [
-        data['delivered']['percentage'],
-        data['read']['percentage'],
-        data['newSubscribers']['percentage'],
-        data['unsubscribed']['percentage'],
-        data['replies']['percentage'],
-      ];
-      this.dataReady = true;
-    });
-
   }
 
   getOption() {

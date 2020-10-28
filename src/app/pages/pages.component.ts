@@ -68,10 +68,10 @@ export class PagesComponent {
 
   constructor(private menuService: NbMenuService, private campaignService: CampaignService, private contactListService: ContactListService) {
     this.campaignService.data.subscribe((c: CampaignData) => {
-      c.campaigns.forEach(y => this.menu.find(x => x.title === 'CAMPAIGNS').children.push({title: y.name, link:`/pages/main/campaign/${y.id}`, icon: 'hash-outline',  data: {id: y.id}}))
+      c.campaigns?.forEach(y => this.menu.find(x => x.title === 'CAMPAIGNS').children.push({title: y.name, link:`/pages/main/campaign/${y.id}`, icon: 'hash-outline',  data: {id: y.id}}))
     });
     this.contactListService.data.subscribe((cl: ContactListElement[]) => {
-      cl.forEach(y => this.menu2.find(x => x.title === 'CONTACT LISTS').children.push({title: y.name, link:`/pages/main/customer-list/${y.id}`, icon: 'person-outline', data: {id: y.id}}))
+      cl?.forEach(y => this.menu2.find(x => x.title === 'CONTACT LISTS').children.push({title: y.name, link:`/pages/main/customer-list/${y.id}`, icon: 'person-outline', data: {id: y.id}}))
     });
   }
 

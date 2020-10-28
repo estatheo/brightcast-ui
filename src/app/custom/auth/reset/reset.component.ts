@@ -26,7 +26,7 @@ export class ResetComponent implements OnInit {
 
     this.accountService.requestPasswordReset(email).subscribe(data => {
       this.toastrService.success('We have sent you an email. Please reset password.', 'Success', {duration: 7000});
-      this.router.navigate(['../../login'], { relativeTo: this.route });
+      this.router.navigate(['../login'], { relativeTo: this.route });
       this.loading = false;
     },
     error => {

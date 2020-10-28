@@ -18,9 +18,9 @@ export class ContactNewComponent implements OnInit {
   step: number = 0;
   contactListTitle: string;
   contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
-  contactName: string = '';
-  contactPhone: string = '';
-  contactEmail: string = '';
+  contactName: string = 'Jane Doe';
+  contactPhone: string = '+447773335555';
+  contactEmail: string = 'hello@brightcast.io';
   contactListId: number;
 
   constructor(

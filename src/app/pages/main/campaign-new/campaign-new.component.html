@@ -24,11 +24,12 @@
             </div>            
                 <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" *ngIf="ready" nbTooltipStatus="primary" nbTooltip="Choose a contact list. This is the list your messages wil go out to." nbTooltipPlacement="right" >
                     <nb-option *ngFor="let cl of contactLists" [value]="cl.id">{{cl.name}}</nb-option>
+                    <nb-option value="" *ngIf="contactLists === null || contactLists?.length < 1"></nb-option>
                 </nb-select>
             <div class="button-group">
                 <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepOne()">Next</button>
                 <div class="or"><span>───────────────</span>&nbsp;&nbsp;or&nbsp;&nbsp;<span>───────────────</span></div>
-                <button type="button" class="button-secondary" nbButton shape="semi-round" status="basic" outline><nb-icon icon="plus-outline"></nb-icon>New list</button>
+                <button type="button" class="button-secondary" nbButton shape="semi-round" status="basic" outline [routerLink]="['/pages/main/new/customer-list']"><nb-icon icon="plus-outline" ></nb-icon>New list</button>
             </div>
         </div>
         <div class="card" *ngIf="step === 2">

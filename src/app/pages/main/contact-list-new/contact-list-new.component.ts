@@ -20,11 +20,11 @@ export class ContactListNewComponent implements OnInit {
   doc: FormData;
   contactList: ContactList = {id: 0, name: '', keyString: '', fileUrl: ''};
   contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
-  contactListTitle: string = '';
+  contactListTitle: string = 'Marketing Prospects';
   contactListFileUrl: string = '';
-  contactName: string = '';
-  contactPhone: string = '';
-  contactEmail: string = '';
+  contactName: string = 'Jane Doe';
+  contactPhone: string = '+447773335555';
+  contactEmail: string = 'hello@brightcast.io';
 
   constructor(
     private toastrService: NbToastrService,
@@ -66,8 +66,6 @@ export class ContactListNewComponent implements OnInit {
   }
   saveFormOneStepTwo() {
     this.contact.email = this.contactEmail.trim();
-    
-    this.addContact();
 
     this.step++;
   }
@@ -116,49 +114,98 @@ export class ContactListNewComponent implements OnInit {
   }
 
   addAnotherContact() {
+    this.saveFormOneStepTwo();
+    if (this.contactList.id === 0) {
+      this.contactListService.NewContactList(this.contactList).subscribe((cl: ContactList) => {
+        this.contactList.id = cl.id;
+        this.contact.contactListId = this.contactList.id;
+        this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
+
+          this.contact.id = c.id;          
+          this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
+          this.contactName = '';
+          this.contactPhone = '';
+          this.contactEmail = '';
+      
+          this.form = 1;
+          this.step = 0;    
+
+          this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
+        }, error => {
+          //todo: send trace request to server
+          this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
+        });
     
-    this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
-      this.contact.id = c.id;
-      this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
-    }, error => {
-      //todo: send trace request to server
-      this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
-    });
+        
+      }, error => {
+        //todo: send trace request to server
+        this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
+      });
+    } else {
+      this.contact.contactListId = this.contactList.id;
+      this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
 
-    this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
-    this.contactName = '';
-    this.contactPhone = '';
-    this.contactEmail = '';
-
-    this.form = 1;
-    this.step = 0;
+        this.contact.id = c.id;
+        this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
+        this.contactName = '';
+        this.contactPhone = '';
+        this.contactEmail = '';
+    
+        this.form = 1;
+        this.step = 0;      
+        this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
+      }, error => {
+        //todo: send trace request to server
+        this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
+      });
+  
+    }    
   }
   
-  addContact() {
+  addContact() {  
+    this.saveFormOneStepTwo();
+    if(this.contactList.id === 0 ) {
+      this.contactListService.NewContactList(this.contactList).subscribe((cl: ContactList) => {
+        this.contactList.id = cl.id;
+        this.contact.contactListId = this.contactList.id;
+        this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
+          this.contact.id = c.id;
+          this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
+          this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
+          this.contactName = '';
+          this.contactPhone = '';
+          this.contactEmail = '';
     
-    this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
-      this.contact.id = c.id;
-      this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
-      this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
-      this.contactName = '';
-      this.contactPhone = '';
-      this.contactEmail = '';
-
-      this.form = 0;
-      this.step = 3;
-    }, error => {
-      //todo: send trace request to server
-      this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
-    });
-
-    
+          this.form = 0;
+          this.step = 3;
+        }, error => {
+          //todo: send trace request to server
+          this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
+        });    
+      });
+    } else {
+      this.contact.contactListId = this.contactList.id;
+      this.contactService.NewContact(this.contact).subscribe((c: Contact) => {
+        this.contact.id = c.id;
+        this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
+        this.contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
+        this.contactName = '';
+        this.contactPhone = '';
+        this.contactEmail = '';
+  
+        this.form = 0;
+        this.step = 3;
+      }, error => {
+        //todo: send trace request to server
+        this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
+      });
+    }         
   }
 
   goToAddContact() {
 
     this.form = 1;
     this.step = 0;
-
   }
 
   addList() {

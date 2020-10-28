@@ -26,7 +26,7 @@ export class CampaignNewComponent implements OnInit {
   ready = false;
   constructor(
     private router: Router,
-    private toastrService: NbToastrService,
+    private toastrService: NbToastrService, 
     private contactListService: ContactListService,
     private campaignService: CampaignService
   ) { }
@@ -35,7 +35,9 @@ export class CampaignNewComponent implements OnInit {
     this.contactListService.data.subscribe((cl: ContactList[]) => {
       this.contactLists = cl;
       this.ready = true;
-    })
+    }, error => {
+      this.ready = true;
+    });
   }
 
   switchStep(s) {
