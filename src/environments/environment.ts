@@ -10,5 +10,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.brightcast.io',
+  apiUrl: 'https://localhost:44315',
 };
