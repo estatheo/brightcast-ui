@@ -80,7 +80,7 @@
                                 {{message?.senderName}}
                             </div>
                             <div class="date">
-                                {{message?.createdAt | date:'shortDate'}}
+                                {{message?.createdAt | date:'shortTime'}}
                             </div>
                         </div>                        
                         <div class="media" *ngIf="message?.files.length > 0">
