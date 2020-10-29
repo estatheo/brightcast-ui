@@ -20,7 +20,7 @@ export class ContactListNewComponent implements OnInit {
   doc: FormData;
   contactList: ContactList = {id: 0, name: '', keyString: '', fileUrl: ''};
   contact: Contact = {id: 0, contactListId: 0, firstName: '', lastName: '', email: '', phone: '', subscribed: true};
-  contactListTitle: string = 'Marketing Prospects';
+  contactListTitle: string = 'Prospects';
   contactListFileUrl: string = '';
   contactName: string = 'Jane Doe';
   contactPhone: string = '+447773335555';
@@ -30,7 +30,8 @@ export class ContactListNewComponent implements OnInit {
     private toastrService: NbToastrService,
     private contactListService: ContactListService,
     private contactService: ContactService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -74,10 +75,10 @@ export class ContactListNewComponent implements OnInit {
     if ( this.step === 0) {
       this.saveFormZeroStepZero();
     }
-    if ( this.step === 1) {
+    else if ( this.step === 1) {
       this.saveFormZeroStepOne();
     }
-    if ( this.step === 2) {
+    else if ( this.step === 2) {
       this.saveFormZeroStepTwo();
     }
     this.step = newStep;
@@ -87,10 +88,10 @@ export class ContactListNewComponent implements OnInit {
     if ( this.step === 0) {
       this.saveFormOneStepZero();
     }
-    if ( this.step === 1) {
+    else if ( this.step === 1) {
       this.saveFormOneStepOne();
     }
-    if ( this.step === 2) {
+    else if ( this.step === 2) {
       this.saveFormOneStepTwo();
     }
     
@@ -131,6 +132,8 @@ export class ContactListNewComponent implements OnInit {
           this.step = 0;    
 
           this.toastrService.primary('🎉 The Contact has been created!', 'CREATED!');
+          
+          this.contactListService.refreshData();
         }, error => {
           //todo: send trace request to server
           this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
@@ -178,10 +181,12 @@ export class ContactListNewComponent implements OnInit {
     
           this.form = 0;
           this.step = 3;
+          
+          this.contactListService.refreshData();
         }, error => {
           //todo: send trace request to server
           this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
-        });    
+        });   
       });
     } else {
       this.contact.contactListId = this.contactList.id;
@@ -213,6 +218,8 @@ export class ContactListNewComponent implements OnInit {
     this.contactListService.NewContactList(this.contactList).subscribe((cl: ContactList) => {
       this.contactList.id = cl.id;
       this.toastrService.primary('🎉 The Contact list has been created!', 'CREATED!');
+      
+      this.contactListService.refreshData();
     }, error => {
       //todo: send trace request to server
       this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
@@ -233,12 +240,19 @@ export class ContactListNewComponent implements OnInit {
 
       this.form = 0;
       this.step = 0;
+      
+      this.contactListService.refreshData();
     }, error => {
       //todo: send trace request to server
       this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
     });
 
     
+  }
+
+  goToCreatedList(){
+    this.router.navigateByUrl('pages/main/customer-list/' + this.contactList.id);
+    window.location.reload();
   }
   
 

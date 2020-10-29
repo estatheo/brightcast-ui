@@ -59,10 +59,33 @@ export class CustomerListComponent implements OnInit {
     });
   }
 
-  updateTimeFilter(){}
+  updateTimeFilter(){
+    switch (this.selectedItem) {
+      case "0":
+        this.contacts.sort((x,y) => (x.firstName > y.firstName) ? 1 : (x.firstName === y.firstName) ? ((x.lastName > y.lastName) ? 1: -1 ) : -1);
+        break;
+      case "1":
+        this.contacts.sort((x,y) => (x.firstName > y.firstName) ? 1 : (x.firstName === y.firstName) ? ((x.lastName > y.lastName) ? 1: -1 ) : -1).reverse();
+        break;
+      case "2":
+        this.contacts.sort((x,y) => (x.phone > y.phone) ? 1 : -1);
+        break;
+      case "3":
+        this.contacts.sort((x,y) => (x.phone > y.phone) ? 1 : -1).reverse();
+        break;
+      case "4":        
+        this.contacts.sort((x,y) => (x.email > y.email) ? 1 : -1);
+        break;
+      case "5":
+        this.contacts.sort((x,y) => (x.email > y.email) ? 1 : -1).reverse();
+        break;
+      case "6":
+        this.contacts.sort((x,y) => x.subscribed ? 1 : -1);
+        break;
 
-  editContact(id) {
-
+      default:
+        break;
+    }
   }
 
   deleteContact(id) {

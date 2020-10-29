@@ -334,6 +334,7 @@
             opacity: 1;
             color: #44444F;
           }
+          
         }
       }
   
@@ -378,6 +379,11 @@
           color: #FFFFFF;
         }
       }
+
+      .media-image {
+        width: 16rem;
+        border-radius: 15px;
+      }
     }
 
     .input {
@@ -421,6 +427,10 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
+
+        .media-input {
+          display: none;
+        }
 
         .upload, .emoji, .send {
           width: 1.5rem;

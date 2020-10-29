@@ -6,6 +6,7 @@ import { CampaignService } from '../../../@core/apis/campaign.service';
 import { ContactListService } from '../../../@core/apis/contactList.service';
 import { CampaignElement } from '../../_models/campaignElement';
 import { ContactList } from '../../_models/contactList';
+import { AccountService } from '../../_services';
 
 @Component({
   selector: 'ngx-campaign-edit',
@@ -23,13 +24,16 @@ export class CampaignEditComponent implements OnInit {
   contactListId: any = '0';
   contactListName;
   body: any = '';
-  dateNow: Date = new Date();
+  dateNow: Date = new Date();  
+  image: FormData;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private toastrService: NbToastrService,
     private contactListService: ContactListService,
-    private campaignService: CampaignService
+    private campaignService: CampaignService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -113,5 +117,23 @@ export class CampaignEditComponent implements OnInit {
       //todo: send trace request to server
       this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
     });
+  }
+
+  uploadImage(files) {
+    if (files.length === 0) {
+      return;
+    }
+
+    this.image = new FormData();
+
+    for (const file of files) {
+      this.image.append(file.name, file);
+    }
+
+    if (this.image != null || this.image !== undefined) {
+      this.accountService.uploadImage(this.image).subscribe(im => {
+        this.campaignData.fileUrl = im['name'];
+      });
+    }
   }
 }

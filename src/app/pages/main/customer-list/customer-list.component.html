@@ -9,13 +9,13 @@
         <div class="header2">
             <div class="header2-left">
                 <nb-select [(selected)]="selectedItem" size="medium" class="selector" >
-                    <nb-option (click)="updateTimeFilter()" value="0" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Title (A-Z)</span></nb-option>
-                    <nb-option (click)="updateTimeFilter()" value="1" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Contacts (Asc)</span></nb-option>
-                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Contacts (Desc)</span></nb-option>
-                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Campaigns (Asc)</span></nb-option>
-                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Campaigns (Desc)</span></nb-option>
-                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Unsubscribed (Asc)</span></nb-option>
-                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Unsubscribed (Desc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="0" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Name (A-Z)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="1" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Name (Z-A)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Phone (Asc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="3" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Phone (Desc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="4" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Email (Asc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="5" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Email (Desc)</span></nb-option>
+                    <nb-option (click)="updateTimeFilter()" value="6" class="select-text">Sort By:&nbsp;<span class="select-text-bold">Subscribed</span></nb-option>
                 </nb-select>
                 <button type="button" nbButton shape="semi-round" small status="primary" [routerLink]="['./new/contact']" class="new-contact-button">
                     <nb-icon icon="plus-outline"></nb-icon> 
@@ -35,7 +35,7 @@
             </div>
         <div class="main">
             <div class="main-header">
-                <div class="header-field">NAME</div>
+                <div class="header-field">FULL NAME</div>
                 <div class="header-field">PHONE</div>
                 <div class="header-field">EMAIL</div>
                 <div class="header-field">SUBSCRIBED</div>
@@ -43,7 +43,7 @@
             </div>
             <div class="main-data">
                 <div *ngFor="let contact of contacts" class="main-data-row">
-                    <div class="main-data-field">{{contact.lastName}} {{contact.firstName}}</div>
+                    <div class="main-data-field">{{contact.firstName}} {{contact.lastName}}</div>
                     <div class="main-data-field">{{contact.phone}}</div>
                     <div class="main-data-field">{{contact.email}}</div>
                     <div class="main-data-field subscribed">{{contact.subscribed ? '✅' : '❌'}}</div>

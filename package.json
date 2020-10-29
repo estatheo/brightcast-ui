@@ -45,6 +45,7 @@
     "@asymmetrik/ngx-leaflet": "3.0.1",
     "@azure/msal-angular": "^1.0.0",
     "@azure/ng-deploy": "^0.2.3",
+    "@ctrl/ngx-emoji-mart": "^4.0.2",
     "@nebular/auth": "5.0.0",
     "@nebular/eva-icons": "5.0.0",
     "@nebular/security": "5.0.0",

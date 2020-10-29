@@ -62,10 +62,10 @@ export class ContactNewComponent implements OnInit {
     if ( this.step === 0) {
       this.saveStepZero();
     }
-    if ( this.step === 1) {
+    else if ( this.step === 1) {
       this.saveStepOne();
     }
-    if ( this.step === 2) {
+    else if ( this.step === 2) {
       this.saveStepTwo();
     }
     

@@ -32,6 +32,7 @@ export class CampaignComponent implements OnInit {
     private campaignsService: CampaignService,
     private contactService: ContactService,
     private userService: AccountService,
+
     private _ngZone: NgZone,
     private chatService: ChatService) {
       this.subscribeToEvents();
@@ -43,6 +44,7 @@ export class CampaignComponent implements OnInit {
   // messages: ChatMessage[]  = [{id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}, {id: 1, text: 'hi', reply: false},{id: 2, text: 'hi', reply: true}];
   contacts: ContactPreview[] = [];
   messages: ChatMessage[] = []; 
+  chatAvailable = true;
   data: any;
   selectedContactId = 0;
   selectedChart = 'delivered';
@@ -53,7 +55,9 @@ export class CampaignComponent implements OnInit {
   routeSub: Subscription;  
   user: UserProfile;
   campaign: Campaign;
-  
+  textMessage: string;
+  image: FormData;
+
   ngOnInit(): void {
     this.chatService.startConnection();
     this.chatService.registerOnServerEvents();
@@ -74,6 +78,9 @@ export class CampaignComponent implements OnInit {
                 }
                 this.messages.push(message);
               });
+              if (this.messages[-1]?.createdAt?.getTime() < (Date.now() - (24 * 60 * 60 * 1000) )) {
+                this.chatAvailable = false;
+              }
             });
           });
         });
@@ -89,7 +96,7 @@ export class CampaignComponent implements OnInit {
     });
   }
   
-  sendMessage(msg: any) {
+  sendMessage() {
     // const files = !event.files ? [] : event.files.map((file) => {
     //   return {
     //     url: file.src,
@@ -99,7 +106,7 @@ export class CampaignComponent implements OnInit {
     // });
 
     const tempMsg = new ChatMessage();
-    tempMsg.text = msg;
+    tempMsg.text = this.textMessage;
     tempMsg.createdAt = new Date();
     tempMsg.reply = true;
     tempMsg.type = 'text';
@@ -111,9 +118,14 @@ export class CampaignComponent implements OnInit {
     tempMsg.contactId = this.selectedContactId;
     this.messages.push(tempMsg);
     this.chatService.newChatMessage(tempMsg).subscribe(() => {
+      this.textMessage = '';
+      this.image = undefined;
     }, error => {
+      this.textMessage = '';
+      this.image = undefined;
       this.toastrService.danger(error, 'There was an error on our side😢');
     });
+    this.textMessage = '';
   }
 
   private subscribeToEvents(): void {
@@ -132,6 +144,7 @@ export class CampaignComponent implements OnInit {
           this.messages.push(message);
         }
       });
+      this.chatAvailable = true;  
     });
   }
 
@@ -224,6 +237,11 @@ export class CampaignComponent implements OnInit {
           message.reply = true;
         }
         this.messages.push(message);
+        if (this.messages[-1]?.createdAt?.getTime() < (Date.now() - (24 * 60 * 60 * 1000) )) {
+          this.chatAvailable = false;
+        } else {
+          this.chatAvailable = true;
+        }
       });
     });
   }
@@ -236,5 +254,57 @@ export class CampaignComponent implements OnInit {
       //todo: send trace request to server
       this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
     });
+  }
+
+  ping() {
+    const tempMsg = new ChatMessage();
+    tempMsg.text = "Chat Initialization through template";
+    tempMsg.createdAt = new Date();
+    tempMsg.reply = true;
+    tempMsg.type = 'text';
+    tempMsg.files = "";
+    tempMsg.senderId = this.user.id;
+    tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
+    tempMsg.avatarUrl = this.user.pictureUrl;
+    tempMsg.campaignId = this.campaign.id;
+    tempMsg.contactId = this.selectedContactId;
+
+    this.chatService.sendInviteMessage(tempMsg).subscribe(() => {
+    }, error => {
+      this.toastrService.danger(error, 'There was an error on our side😢');
+    });
+  }
+
+  uploadImage(files) {
+    if (files.length === 0) {
+      return;
+    }
+
+    this.image = new FormData();
+
+    for (const file of files) {
+      this.image.append(file.name, file);
+    }
+
+    if (this.image != null || this.image !== undefined) {
+      this.userService.uploadImage(this.image).subscribe(im => {
+        const tempMsg = new ChatMessage();
+        tempMsg.text = this.textMessage;
+        tempMsg.createdAt = new Date();
+        tempMsg.reply = true;
+        tempMsg.type = 'img';
+        tempMsg.files = im['name'];
+        tempMsg.senderId = this.user.id;
+        tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
+        tempMsg.avatarUrl = this.user.pictureUrl;
+        tempMsg.campaignId = this.campaign.id;
+        tempMsg.contactId = this.selectedContactId;
+        this.messages.push(tempMsg);
+        this.chatService.newChatMessage(tempMsg).subscribe(() => {
+        }, error => {
+          this.toastrService.danger(error, 'There was an error on our side😢');
+        });
+      });
+    }
   }
 }

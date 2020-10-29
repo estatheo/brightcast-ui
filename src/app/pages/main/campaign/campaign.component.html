@@ -4,7 +4,7 @@
                 <p class="draft" *ngIf="campaign?.status === 0">{{campaign?.name}}</p>
                 <p class="sent" *ngIf="campaign?.status === 2">{{campaign?.name}}</p>
                 <p class="void" *ngIf="campaign?.status === 3">{{campaign?.name}}</p>
-                <button type="button" nbButton shape="semi-round" outline small status="primary" [routerLink]="['./edit']" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
+                <button *ngIf="campaign?.status === 0" type="button" nbButton shape="semi-round" outline small status="primary" [routerLink]="['./edit']" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
                 <button *ngIf="campaign?.status === 0" type="button" nbButton shape="semi-round" small status="primary" (click)="send()" class="send-button"><nb-icon icon="paper-plane-outline"></nb-icon>Send</button>
             </div>
             <div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="card" [class.selected]="selectedChart==='subscribed'" (click)="selectedChart = 'subscribed'">
                     <div class="value" [style.color]="selectedChart=='subscribed' ? '#FFF' : '#171725'">{{campaign?.subscribed}}</div>
-                    <div class="type" [style.color]="selectedChart=='subscribed' ? '#FFF' : '#696974'">Subscribed</div>
+                    <div class="type" [style.color]="selectedChart=='subscribed' ? '#FFF' : '#696974'">Contacts</div>
                     <div class="percentage" [style.color]="campaign?.subscribedPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.subscribedPercentage >=0">+</span>{{campaign.subscribedPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.subscribedPercentage >=0"icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.subscribedPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
                 </div>
                 <div class="card" [class.selected]="selectedChart==='replies'" (click)="selectedChart = 'replies'">
@@ -77,24 +77,31 @@
                     <div id="chat" class="message" tabindex="1" #commentDiv *ngFor="let message of messages" [ngClass]="message?.reply ? 'answer' : 'incoming'">
                         <div class="header">
                             <div class="name">
-                                {{message?.receiverName}}
+                                {{message?.senderName}}
                             </div>
                             <div class="date">
                                 {{message?.createdAt | date:'shortDate'}}
                             </div>
+                        </div>                        
+                        <div class="media" *ngIf="message?.files.length > 0">
+                            <img class="media-image" src="{{message?.files}}">
                         </div>
                         <div class="body">
                             {{message?.text}}
                         </div>
                     </div>
                 </div>
-                <div class="input">
-                    <textarea class="text" placeholder="Type your reply..." #msg></textarea>
+                <div class="input" *ngIf="chatAvailable">
+                    <textarea class="text" placeholder="Type your reply..." [(ngModel)]="textMessage" (keydown.enter)="sendMessage()"></textarea>
                     <div class="buttons">
-                        <!-- <nb-icon icon="attach-outline" (click)="attachDocument()" class="upload"></nb-icon> -->
-                        <nb-icon icon="smiling-face-outline" (click)="openEmoji()" class="emoji"></nb-icon>
-                        <nb-icon icon="paper-plane-outline" (click)="sendMessage(msg.value)" class="send"></nb-icon> 
+                            <input class="media-input" #image type="file" multiple accept="image/x-png,image/gif,image/jpeg" (change)="uploadImage(image.files)" nbInput id="file" >
+                            <nb-icon icon="attach-outline" (click)="image.click()" class="upload"></nb-icon>
+                        <!-- <nb-icon icon="smiling-face-outline" (click)="openEmoji()" class="emoji"></nb-icon> -->
+                        <nb-icon icon="paper-plane-outline" (click)="sendMessage()" class="send"></nb-icon> 
                     </div>
+                </div>
+                <div class="input" *ngIf="!chatAvailable">
+                    <button type="button" nbButton shape="semi-round" small status="primary" (click)="ping()" class="send-button"><nb-icon icon="paper-plane-outline"></nb-icon>Ping</button>
                 </div>
             </div>
             <div class="no-contacts" *ngIf="selectedContactId === undefined">
