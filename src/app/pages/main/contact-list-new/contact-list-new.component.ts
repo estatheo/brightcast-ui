@@ -252,7 +252,6 @@ export class ContactListNewComponent implements OnInit {
 
   goToCreatedList(){
     this.router.navigateByUrl('pages/main/customer-list/' + this.contactList.id);
-    window.location.reload();
   }
   
 

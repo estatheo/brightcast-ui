@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NbMenuItem, NbMenuService } from '@nebular/theme';
 import { icon } from 'leaflet';
 import { CampaignService } from '../@core/apis/campaign.service';
@@ -20,7 +20,7 @@ import { ContactListElement } from './_models/contactListElement';
     </ngx-one-column-layout>
   `,
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit{
 
   menu: NbMenuItem[] = [
     {
@@ -67,22 +67,27 @@ export class PagesComponent {
 
 
   constructor(private menuService: NbMenuService, private campaignService: CampaignService, private contactListService: ContactListService) {
+    
+  }
+
+  ngOnInit(): void {
+    this.campaignService.refreshData();
     this.campaignService.data.subscribe((c: CampaignData) => {
       c.campaigns?.forEach(y => this.menu.find(x => x.title === 'CAMPAIGNS').children.push({title: y.status === 0 ? y.name + ' (draft)' : y.name, link:`/pages/main/campaign/${y.id}`, icon: 'hash-outline',  data: {id: y.id}}))
     });
+    this.contactListService.refreshData();
     this.contactListService.data.subscribe((cl: ContactListElement[]) => {
       cl?.forEach(y => this.menu2.find(x => x.title === 'CONTACT LISTS').children.push({title: y.name, link:`/pages/main/customer-list/${y.id}`, icon: 'person-outline', data: {id: y.id}}))
     });
   }
 
-  refreshLists() {
-    this.campaignService.data.subscribe((c: CampaignData) => {
-      c.campaigns?.forEach(y => this.menu.find(x => x.title === 'CAMPAIGNS').children.push({title: y.status === 0 ? y.name + ' (draft)' : y.name, link:`/pages/main/campaign/${y.id}`, icon: 'hash-outline',  data: {id: y.id}}))
-    });
-    this.contactListService.data.subscribe((cl: ContactListElement[]) => {
-      cl?.forEach(y => this.menu2.find(x => x.title === 'CONTACT LISTS').children.push({title: y.name, link:`/pages/main/customer-list/${y.id}`, icon: 'person-outline', data: {id: y.id}}))
-    });
-  }
+  // refreshLists() {
+  //   this.campaignService.data.subscribe((c: CampaignData) => {
+  //     c.campaigns?.forEach(y => this.menu.find(x => x.title === 'CAMPAIGNS').children.push({title: y.status === 0 ? y.name + ' (draft)' : y.name, link:`/pages/main/campaign/${y.id}`, icon: 'hash-outline',  data: {id: y.id}}))
+  //   });
+  //   this.contactListService.data.subscribe((cl: ContactListElement[]) => {
+  //     cl?.forEach(y => this.menu2.find(x => x.title === 'CONTACT LISTS').children.push({title: y.name, link:`/pages/main/customer-list/${y.id}`, icon: 'person-outline', data: {id: y.id}}))
+  //   });
+  // }
 
-  //todo: retrieve campaigns and contact lists and push it into menu pages
 }

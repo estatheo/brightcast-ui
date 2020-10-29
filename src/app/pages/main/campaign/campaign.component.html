@@ -83,7 +83,7 @@
                                 {{message?.createdAt | date:'shortTime'}}
                             </div>
                         </div>                        
-                        <div class="media" *ngIf="message?.files.length > 0">
+                        <div class="media" *ngIf="message?.files !== null &&  message?.files?.length > 0">
                             <img class="media-image" src="{{message?.files}}">
                         </div>
                         <div class="body">

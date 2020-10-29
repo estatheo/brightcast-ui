@@ -14,6 +14,7 @@ import { ContactService } from '../../../@core/apis/contact.service';
 import { ChatService } from '../chat/chat.service';
 import { UserProfile } from '../../_models/userProfile';
 import { AccountService } from '../../_services';
+import { Business } from '../../_models/business';
 
 @Component({
   selector: 'ngx-campaign',
@@ -32,11 +33,10 @@ export class CampaignComponent implements OnInit {
     private campaignsService: CampaignService,
     private contactService: ContactService,
     private userService: AccountService,
-
     private _ngZone: NgZone,
     private chatService: ChatService) {
-      this.subscribeToEvents();
     }
+  
   loading = false;
   dataReady = true;
   isAnalytics = false;
@@ -51,27 +51,30 @@ export class CampaignComponent implements OnInit {
   btnstatus = ['outline', 'hero'];
   settingClass = ['personal', 'business'];
   selectedItem = "0";
-  campaignId: number;
+  campaignId;
   routeSub: Subscription;  
   user: UserProfile;
+  business: Business;
   campaign: Campaign;
   textMessage: string;
   image: FormData;
 
   ngOnInit(): void {
-    this.chatService.startConnection();
-    this.chatService.registerOnServerEvents();
     this.routeSub =  this.route.params.subscribe(p => {
-      this.campaignId = p['id'];
-      this.userService.getUserProfile()
-      .subscribe((user: UserProfile) => {
-        this.user = user;
+      this.campaignId = parseInt(p['id']);
+      this.chatService.startConnection();
+      this.chatService.registerOnServerEvents();
+      this.subscribeToEvents();
+      this.userService.getSettingsData()
+      .subscribe(data => {
+        this.user = data['user'];;
+        this.business = data['business'];
         this.campaignsService.GetCampaignData(this.campaignId).subscribe((data: Campaign) => {
           this.campaign = data;
-          this.contactService.GetContactsByCampaignId(this.campaign.id).subscribe((c: ContactPreview[]) => {
+          this.contactService.GetContactsByCampaignId(this.campaignId).subscribe((c: ContactPreview[]) => {
             this.contacts = c;
             this.selectedContactId = this.contacts[0]?.id;
-            this.chatService.loadMessagesByCampaignAndContactId(this.campaign.id, this.selectedContactId).subscribe((data: ChatMessage[]) => {
+            this.chatService.loadMessagesByCampaignAndContactId(this.campaignId, this.selectedContactId).subscribe((data: ChatMessage[]) => {
               data.forEach((message: ChatMessage) => {
                 if (message.senderId === this.user.id) {
                   message.reply = true;
@@ -86,7 +89,7 @@ export class CampaignComponent implements OnInit {
         });
       });
     });    
-  }
+  }  
 
   ngAfterViewInit() {
     this.commentDivs.changes.subscribe(() => {
@@ -97,13 +100,6 @@ export class CampaignComponent implements OnInit {
   }
   
   sendMessage() {
-    // const files = !event.files ? [] : event.files.map((file) => {
-    //   return {
-    //     url: file.src,
-    //     type: file.type,
-    //     icon: 'nb-compose',
-    //   };
-    // });
 
     const tempMsg = new ChatMessage();
     tempMsg.text = this.textMessage;
@@ -112,12 +108,12 @@ export class CampaignComponent implements OnInit {
     tempMsg.type = 'text';
     tempMsg.files = '';
     tempMsg.senderId = this.user.id;
-    tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
+    tempMsg.senderName = this.business.name;
     tempMsg.avatarUrl = this.user.pictureUrl;
-    tempMsg.campaignId = this.campaign.id;
+    tempMsg.campaignId = this.campaignId;
     tempMsg.contactId = this.selectedContactId;
-    this.messages.push(tempMsg);
     this.chatService.newChatMessage(tempMsg).subscribe(() => {
+      this.messages.push(tempMsg);
       this.textMessage = '';
       this.image = undefined;
     }, error => {
@@ -130,20 +126,10 @@ export class CampaignComponent implements OnInit {
 
   private subscribeToEvents(): void {
     this.chatService.messageReceived.subscribe((message: ChatMessage) => {
-      this._ngZone.run(() => {
-        if (message.campaignId !== this.campaign.id || message.contactId !== this.selectedContactId) {
-          return;
-        }
-        message.reply = true;
-        if (message.senderId !== this.user.id) {
-          message.reply = false;
-          this.messages.push(message);
-        } else {
-          //template message
-
-          this.messages.push(message);
-        }
-      });
+      if (message.campaignId !== this.campaignId || message.contactId !== this.selectedContactId) {
+        return;
+      }
+      this.messages.push(message);
       this.chatAvailable = true;  
     });
   }
@@ -153,7 +139,7 @@ export class CampaignComponent implements OnInit {
     
     this.messages = [];
 
-    this.chatService.loadMessagesByCampaignAndContactId(this.campaign.id, this.selectedContactId).subscribe( (data: ChatMessage[]) => {
+    this.chatService.loadMessagesByCampaignAndContactId(this.campaignId, this.selectedContactId).subscribe( (data: ChatMessage[]) => {
               data.forEach((message: ChatMessage) => {
                 if (message.senderId === this.user.id) {
                   message.reply = true;
@@ -231,7 +217,7 @@ export class CampaignComponent implements OnInit {
   selectContactId(id) {
     this.messages = [];
     this.selectedContactId = id;
-    this.chatService.loadMessagesByCampaignAndContactId(this.campaign.id, this.selectedContactId).subscribe((data: ChatMessage[]) => {
+    this.chatService.loadMessagesByCampaignAndContactId(this.campaignId, this.selectedContactId).subscribe((data: ChatMessage[]) => {
       data.forEach((message: ChatMessage) => {
         if (message.senderId === this.user.id) {
           message.reply = true;
@@ -266,10 +252,11 @@ export class CampaignComponent implements OnInit {
     tempMsg.senderId = this.user.id;
     tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
     tempMsg.avatarUrl = this.user.pictureUrl;
-    tempMsg.campaignId = this.campaign.id;
+    tempMsg.campaignId = this.campaignId;
     tempMsg.contactId = this.selectedContactId;
 
     this.chatService.sendInviteMessage(tempMsg).subscribe(() => {
+      this.messages.push(tempMsg);
     }, error => {
       this.toastrService.danger(error, 'There was an error on our side😢');
     });
@@ -295,9 +282,9 @@ export class CampaignComponent implements OnInit {
         tempMsg.type = 'img';
         tempMsg.files = im['name'];
         tempMsg.senderId = this.user.id;
-        tempMsg.senderName = this.user.firstName + ' ' + this.user.lastName;
+        tempMsg.senderName = this.business.name;
         tempMsg.avatarUrl = this.user.pictureUrl;
-        tempMsg.campaignId = this.campaign.id;
+        tempMsg.campaignId = this.campaignId;
         tempMsg.contactId = this.selectedContactId;
         this.messages.push(tempMsg);
         this.chatService.newChatMessage(tempMsg).subscribe(() => {

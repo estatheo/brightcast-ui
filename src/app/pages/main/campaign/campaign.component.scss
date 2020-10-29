@@ -286,7 +286,6 @@
       max-height: 30rem;
       
       .message {
-        min-width: 80%;
         max-width: 80%;
         border-radius: 15px;
         padding: 1rem;    
@@ -315,6 +314,7 @@
             text-align: left;
             letter-spacing: 0.1px;
             opacity: 1;
+            padding-right: 2rem;
           }
           .date {
             font-family: 'Roboto', sans-serif;
@@ -357,7 +357,7 @@
             letter-spacing: 0.1px;
             opacity: 1;
             color: #FFFFF0;
-            
+            padding-right: 2rem;
           }
           .date {
             font-family: 'Roboto', sans-serif;
