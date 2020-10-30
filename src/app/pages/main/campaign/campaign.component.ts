@@ -119,7 +119,12 @@ export class CampaignComponent implements OnInit {
     }, error => {
       this.textMessage = '';
       this.image = undefined;
-      this.toastrService.danger(error, 'There was an error on our side😢');
+      if(error === 'limitExceeded') {
+        this.toastrService.danger( 'You have Exceeded your message limit, please consider upgrading your membership! 💰💰💰');
+      } else {
+        this.toastrService.danger(error['message'], 'There was an error on our side😢');
+      }
+      
     });
     this.textMessage = '';
   }

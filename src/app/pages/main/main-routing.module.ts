@@ -13,6 +13,8 @@ import { ContactEditComponent } from './contact-edit/contact-edit.component';
 import { CampaignEditComponent } from './campaign-edit/campaign-edit.component';
 import { ContactListEditComponent } from './contact-list-edit/contact-list-edit.component';
 import { OnboardingComponent } from '../../custom/onboarding/onboarding.component';
+import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
+import { CheckoutCanceledComponent } from './checkout-canceled/checkout-canceled.component';
 
 
 const routes: Routes = [
@@ -21,6 +23,12 @@ const routes: Routes = [
     children: [
       {
         path: 'settings', component: SettingsComponent,
+      },
+      {
+        path: 'checkout/success', component: CheckoutSuccessComponent,
+      },
+      {
+        path: 'checkout/canceled', component: CheckoutCanceledComponent,
       },
       {
         path: 'customer-list/:id', component: CustomerListComponent,
