@@ -98,7 +98,7 @@ export class CampaignNewComponent implements OnInit {
     this.campaignService.NewCampaign(this.campaignData).subscribe((c: CampaignElement) => {
       this.campaignService.SendCampaign(c).subscribe(result => {
         this.toastrService.primary('🎉 The campaign has been sent!', 'SENT!');
-
+        this.campaignService.refreshData();
         this.router.navigateByUrl('/pages/main/campaign/' + c.id);
       }, error => {
         //todo: send trace request to server

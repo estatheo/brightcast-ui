@@ -32,7 +32,6 @@ import {
 import { ThemeModule } from '../../@theme/theme.module';
 import { CampaignComponent } from './campaign/campaign.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { WindowFormComponent } from '../modal-overlays/window/window-form/window-form.component';
 import { CampaignService} from '../../@core/apis/campaign.service';
 import { ContactListService } from '../../@core/apis/contactList.service';
 import { ContactComponent } from './contact/contact.component';
@@ -97,7 +96,6 @@ import { OnboardingComponent } from '../../custom/onboarding/onboarding.componen
     ECommerceModule
   ],
   entryComponents: [
-    WindowFormComponent,
 
   ],
   providers: [

@@ -218,7 +218,6 @@ export class ContactListNewComponent implements OnInit {
     this.contactListService.NewContactList(this.contactList).subscribe((cl: ContactList) => {
       this.contactList.id = cl.id;
       this.toastrService.primary('🎉 The Contact list has been created!', 'CREATED!');
-      
       this.contactListService.refreshData();
     }, error => {
       //todo: send trace request to server

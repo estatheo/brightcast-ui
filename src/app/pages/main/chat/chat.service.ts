@@ -30,13 +30,15 @@ export class ChatService {
     this._hubConnection.start()
       .then(() => console.log('Connection started'))
       .catch(err => {
-        this.toastrService.danger('There was an error connecting to the chat😢. Try to refresh the page!');
+        // this.toastrService.danger('There was an error connecting to the chat😢. Try to refresh the page!');
         console.log('Error while starting connection: ' + err);
       });
   }
 
   closeConnection = () => {
-    this._hubConnection.stop().then(() => {this.toastrService.danger( 'There has stopped😢, please refresh the page to continue!');})
+    this._hubConnection.stop().then(() => {
+      // this.toastrService.danger( 'There has stopped😢, please refresh the page to continue!');
+    })
   }
 
   registerOnServerEvents(): void {
