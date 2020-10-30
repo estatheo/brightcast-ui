@@ -65,6 +65,19 @@
     color: #017fdc;
 }
 
+.membership-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    .second-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
 
 .header-container {
     display: flex;

@@ -6,4 +6,5 @@
 export const environment = {
   production: true,
   apiUrl: 'https://api.brightcast.io',
+  priceId: 'price_1Hi49rDRG8akCxQrsS0ZBhil'
 };
