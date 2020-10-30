@@ -1,66 +1,110 @@
-<nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
-    <nb-card-header>
+
         <div class="header-container">
-            <div>
-                Campaigns
+            <div class="header-title">
+                <p class="draft" *ngIf="campaign?.status === 0">{{campaign?.name}}</p>
+                <p class="sent" *ngIf="campaign?.status === 2">{{campaign?.name}}</p>
+                <p class="void" *ngIf="campaign?.status === 3">{{campaign?.name}}</p>
+                <button *ngIf="campaign?.status === 0" type="button" nbButton shape="semi-round" outline small status="primary" [routerLink]="['./edit']" class="edit-button"><nb-icon icon="edit-2-outline"></nb-icon>Edit</button>
+                <button *ngIf="campaign?.status === 0" type="button" nbButton shape="semi-round" small status="primary" (click)="send()" class="send-button"><nb-icon icon="paper-plane-outline"></nb-icon>Send</button>
             </div>
             <div>
-                <button type="button" nbButton status="primary" (click)="openModal()">Create New</button>
+                <div class="toggler">
+                    <div class="toggle-btn">
+                        <button nbButton shape="semi-round" status="primary" matripple appearance="{{btnstatus[1]}}" (click)="toggle(0)" class="btn1">Messages</button>
+                    </div>
+                    <div class="toggle-btn">
+                        <button nbButton shape="semi-round" status="primary" matripple appearance="{{btnstatus[0]}}" (click)="toggle(1)" class="btn2">Analytics</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-    </nb-card-header>
-    <nb-card-body>
-        <table class="table table-striped" [mfData]="data?.campaigns" #mf="mfDataTable" [mfRowsOnPage]="15">
-            <thead>
-                <tr>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="name">Name</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="sent">Sent</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="email">Read</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="email">Response</mfDefaultSorter>
-                    </th>
-                    <th class="statusCol">
-                        <mfDefaultSorter by="email">Status</mfDefaultSorter>
-                    </th>
-                    <th style="width: 30%">
-                        <mfDefaultSorter by="email">Action</mfDefaultSorter>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of mf.data">
-                    <td>{{item.name}}</td>
-                    <td>{{item.sent}}</td>
-                    <td>{{item.read}}</td>
-                    <td>{{item.response}}</td>
-                    <td *ngIf="item.status == 0" ><input type="text" nbInput fullWidth status="warning" shape="round" class="status created" placeholder="Created" fieldSize="small"></td>
-                    <td *ngIf="item.status == 1" ><input type="text" nbInput fullWidth status="primary" shape="round" class="status submitted" placeholder="Submitted" fieldSize="small"></td>
-                    <td *ngIf="item.status == 2" ><input type="text" nbInput fullWidth status="success" shape="round" class="status completed" placeholder="Completed" fieldSize="small"></td>
-                    <td *ngIf="item.status == 3" ><input type="text" nbInput fullWidth status="danger" shape="round" class="status canceled" placeholder="Canceled" fieldSize="small"></td>
-                    <td>
-                        <div class="flex-icons">
-                            <nb-icon nbTooltip="Delete Campaign" nbTooltipIcon="trash-2" [icon]="'trash-2'" pack="eva" class="campaign-icons" (click)="delete(item.id)">
-                            </nb-icon>
-                            <nb-icon nbTooltip="Edit Campaign" nbTooltipIcon="edit-outline" [icon]="'edit-outline'" pack="eva" (click)="openModalForEdit(item)"
-                                class="campaign-icons">
-                            </nb-icon>
-                            <!-- <nb-icon [icon]="'refresh'" pack="eva" class="campaign-icons">
-                            </nb-icon> --> 
-                            <nb-icon nbTooltip="Send Campaign Messages To Members in Contact List" nbTooltipIcon="paper-plane" [icon]="'paper-plane'" pack="eva" class="campaign-icons" (click)="send(item)">
-                            </nb-icon>
+        <div *ngIf="isAnalytics" class="header2">
+            <nb-select [(selected)]="selectedItem" size="medium" >
+                <nb-option (click)="updateTimeFilter()" value="0" class="select-text">Select period: <span class="select-text-bold">One Month</span></nb-option>
+                <nb-option (click)="updateTimeFilter()" value="1" class="select-text">Select period: <span class="select-text-bold">One Week</span></nb-option>
+                <nb-option (click)="updateTimeFilter()" value="2" class="select-text">Select period: <span class="select-text-bold">One Day</span></nb-option>
+            </nb-select>
+        </div>
+        <div *ngIf="isAnalytics" class="main">
+            <div class="cards">
+                <div class="card-arrow" ></div>
+                <div class="card" [class.selected]="selectedChart==='delivered'" [class.sb1]="selectedChart==='delivered'" (click)="selectedChart = 'delivered'">
+                    <div class="value" [style.color]="selectedChart=='delivered' ? '#FFF' : '#171725'">{{campaign?.delivered}}</div>
+                    <div class="type" [style.color]="selectedChart=='delivered' ? '#FFF' : '#696974'">Delivered</div>
+                    <div class="percentage" [style.color]="campaign?.deliveredPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.deliveredPercentage >=0">+</span>{{campaign.deliveredPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.deliveredPercentage >=0" icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.deliveredPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+                <div class="card" [class.selected]="selectedChart==='read'" (click)="selectedChart = 'read'">
+                    <div class="value" [style.color]="selectedChart=='read' ? '#FFF' : '#171725'">{{campaign?.read}}</div>
+                    <div class="type" [style.color]="selectedChart=='read' ? '#FFF' : '#696974'">Read</div>
+                    <div class="percentage" [style.color]="campaign?.readPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.readPercentage >=0">+</span>{{campaign.readPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.readPercentage >=0" icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.readPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+                <div class="card" [class.selected]="selectedChart==='subscribed'" (click)="selectedChart = 'subscribed'">
+                    <div class="value" [style.color]="selectedChart=='subscribed' ? '#FFF' : '#171725'">{{campaign?.subscribed}}</div>
+                    <div class="type" [style.color]="selectedChart=='subscribed' ? '#FFF' : '#696974'">Contacts</div>
+                    <div class="percentage" [style.color]="campaign?.subscribedPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.subscribedPercentage >=0">+</span>{{campaign.subscribedPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.subscribedPercentage >=0"icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.subscribedPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+                <div class="card" [class.selected]="selectedChart==='replies'" (click)="selectedChart = 'replies'">
+                    <div class="value" [style.color]="selectedChart=='replies' ? '#FFF' : '#171725'">{{campaign?.replies}}</div>
+                    <div class="type" [style.color]="selectedChart=='replies' ? '#FFF' : '#696974'">Replies</div>
+                    <div class="percentage" [style.color]="campaign?.repliesPercentage >=0 ? '#3DD598' : '#FC5A5A'"><span *ngIf="campaign?.repliesPercentage >=0">+</span>{{campaign.repliesPercentage | number : '1.2-2'}} <nb-icon *ngIf="campaign?.repliesPercentage >=0"icon="arrow-upward-outline" style="color:#3DD598;"></nb-icon><nb-icon *ngIf="campaign?.repliesPercentage < 0" icon="arrow-downward-outline" style="color:#FC5A5A;"></nb-icon></div>
+                </div>
+            </div>
+            <div class="chart">
+                <ngx-ecommerce-charts *ngIf="dataReady" chartName="{{getChartTitle()}}" option="{{selectedChart}}" id="{{campaign?.id}}" filter="{{getFilter()}}" ></ngx-ecommerce-charts>
+            </div>
+        </div>
+
+        <div *ngIf="!isAnalytics && campaign?.status === 2" class="main-messages" >
+            <div class="contact-list">
+                <div class="contact" *ngFor="let contact of contacts; index as i" (click)="selectContactId(contact?.id)" [ngClass]="selectedContactId === contact?.id ? 'selected' : ''">
+                    <div class="left">
+                        <div class="name">{{contact?.firstName + ' '}}{{contact?.lastName !== null ? contact.lastName : ''}}</div>
+                        <div class="body">{{contact?.body}}</div>
+                    </div>
+                    <div class="right">
+                        <div class="time">
+                            {{(isToday(contact?.time)) ? (contact?.time | date:'shortTime') : (contact?.time | date:'shortDate')}}
                         </div>
-                    </td>
-                </tr>
+                        <div class="notification">
 
-            </tbody>
-
-        </table>
-    </nb-card-body>
-</nb-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right" *ngIf="selectedContactId">
+                <div class="chat">
+                    <div id="chat" class="message" tabindex="1" #commentDiv *ngFor="let message of messages" [ngClass]="message?.reply ? 'answer' : 'incoming'">
+                        <div class="header">
+                            <div class="name">
+                                {{message?.senderName}}
+                            </div>
+                            <div class="date">
+                                {{message?.createdAt | date:'shortTime'}}
+                            </div>
+                        </div>                        
+                        <div class="media" *ngIf="message?.files !== null &&  message?.files?.length > 0">
+                            <img class="media-image" src="{{message?.files}}">
+                        </div>
+                        <div class="body">
+                            {{message?.text}}
+                        </div>
+                    </div>
+                </div>
+                <div class="input" *ngIf="chatAvailable">
+                    <textarea class="text" placeholder="Type your reply..." [(ngModel)]="textMessage" (keydown.enter)="sendMessage()"></textarea>
+                    <div class="buttons">
+                            <input class="media-input" #image type="file" multiple accept="image/x-png,image/gif,image/jpeg" (change)="uploadImage(image.files)" nbInput id="file" >
+                            <nb-icon icon="attach-outline" (click)="image.click()" class="upload"></nb-icon>
+                        <!-- <nb-icon icon="smiling-face-outline" (click)="openEmoji()" class="emoji"></nb-icon> -->
+                        <nb-icon icon="paper-plane-outline" (click)="sendMessage()" class="send"></nb-icon> 
+                    </div>
+                </div>
+                <div class="input" *ngIf="!chatAvailable">
+                    <button type="button" nbButton shape="semi-round" small status="primary" (click)="ping()" class="send-button"><nb-icon icon="paper-plane-outline"></nb-icon>Ping</button>
+                </div>
+            </div>
+            <div class="no-contacts" *ngIf="selectedContactId === undefined">
+                <p>There are no contacts available. Please <a [routerLink]="['./edit']">edit</a> the campaign.</p>
+            </div>
+        </div>

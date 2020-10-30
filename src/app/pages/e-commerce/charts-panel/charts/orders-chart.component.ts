@@ -23,6 +23,11 @@ export class OrdersChartComponent implements AfterViewInit, OnDestroy, OnChanges
   ordersChartData;
   @Input()
   cardOption: String;
+  @Input()
+  campaignId;
+  @Input()
+  timeFilter: String;
+
   private alive = true;
 
   echartsIntance: any;
@@ -267,28 +272,85 @@ export class OrdersChartComponent implements AfterViewInit, OnDestroy, OnChanges
   updateOrdersChartOptions(ordersChartData) {
     const options = this.option;
     const chartData = {};
-    this.dashboardService.data.subscribe(data => {
+    this.dashboardService.getCampaignData(this.campaignId).subscribe(data => {
       switch (this.cardOption) {
         case 'delivered':
-          chartData['chartLabel'] = data['delivered']['chartLabels'];
-          chartData['linesData'] = [data['delivered']['chartValues']];
+          switch(this.timeFilter){
+            case 'month':
+              chartData['chartLabel'] = data['deliveredMonth']['chartLabels'];
+              chartData['linesData'] = [data['deliveredMonth']['chartValues']];
+              break;
+            case 'week':
+              chartData['chartLabel'] = data['deliveredWeek']['chartLabels'];
+              chartData['linesData'] = [data['deliveredWeek']['chartValues']];
+              break;
+            case 'day':
+              chartData['chartLabel'] = data['deliveredDay']['chartLabels'];
+              chartData['linesData'] = [data['deliveredDay']['chartValues']];
+              break;
+            default:
+              chartData['chartLabel'] = data['deliveredMonth']['chartLabels'];
+              chartData['linesData'] = [data['deliveredMonth']['chartValues']];
+              break;
+          }
           break;
         case 'read':
-          chartData['chartLabel'] = data['read']['chartLabels'];
-          chartData['linesData'] = [data['read']['chartValues']];
-          break;
-        case 'newsubscribers':
-          chartData['chartLabel'] = data['newSubscribers']['chartLabels'];
-          chartData['linesData'] = [data['newSubscribers']['chartValues']];
-          break;
-        case 'unsubscribed':
-          chartData['chartLabel'] = data['unsubscribed']['chartLabels'];
-          chartData['linesData'] = [data['unsubscribed']['chartValues']];
-          break;
+          switch(this.timeFilter){
+            case 'month':
+              chartData['chartLabel'] = data['readMonth']['chartLabels'];
+              chartData['linesData'] = [data['readMonth']['chartValues']];
+              break;
+            case 'week':
+              chartData['chartLabel'] = data['readWeek']['chartLabels'];
+              chartData['linesData'] = [data['readWeek']['chartValues']];
+              break;
+            case 'day':
+              chartData['chartLabel'] = data['readDay']['chartLabels'];
+              chartData['linesData'] = [data['readDay']['chartValues']];
+              break;
+            default:
+              chartData['chartLabel'] = data['readMonth']['chartLabels'];
+              chartData['linesData'] = [data['readMonth']['chartValues']];
+              break;
+          }
+        case 'subscribed':
+          switch(this.timeFilter){
+            case 'month':
+              chartData['chartLabel'] = data['subscribersMonth']['chartLabels'];
+              chartData['linesData'] = [data['subscribersMonth']['chartValues']];
+              break;
+            case 'week':
+              chartData['chartLabel'] = data['subscribersWeek']['chartLabels'];
+              chartData['linesData'] = [data['subscribersWeek']['chartValues']];
+              break;
+            case 'day':
+              chartData['chartLabel'] = data['subscribersDay']['chartLabels'];
+              chartData['linesData'] = [data['subscribersDay']['chartValues']];
+              break;
+            default:
+              chartData['chartLabel'] = data['subscribersMonth']['chartLabels'];
+              chartData['linesData'] = [data['subscribersMonth']['chartValues']];
+              break;
+          }
         case 'replies':
-          chartData['chartLabel'] = data['replies']['chartLabels'];
-          chartData['linesData'] = [data['replies']['chartValues']];
-          break;
+          switch(this.timeFilter){
+            case 'month':
+              chartData['chartLabel'] = data['repliesMonth']['chartLabels'];
+              chartData['linesData'] = [data['repliesMonth']['chartValues']];
+              break;
+            case 'week':
+              chartData['chartLabel'] = data['repliesWeek']['chartLabels'];
+              chartData['linesData'] = [data['repliesWeek']['chartValues']];
+              break;
+            case 'day':
+              chartData['chartLabel'] = data['repliesDay']['chartLabels'];
+              chartData['linesData'] = [data['repliesDay']['chartValues']];
+              break;
+            default:
+              chartData['chartLabel'] = data['repliesMonth']['chartLabels'];
+              chartData['linesData'] = [data['repliesMonth']['chartValues']];
+              break;
+          }
         default:
           break;
       }

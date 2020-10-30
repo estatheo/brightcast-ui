@@ -22,6 +22,10 @@ export class DashboardService {
     return this.cache$;
   }
 
+  public getCampaignData(campaignId) {
+    return this.httpClient.get(`${this.apiURL}/dashboard/data/${campaignId}`).pipe(map(response => response));
+  }
+
   private requestData() {
     return this.httpClient.get(`${this.apiURL}/dashboard/data`).pipe(map(response => response));
   }

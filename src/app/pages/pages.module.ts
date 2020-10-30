@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbAlertModule, NbInputModule, NbButtonModule, NbCheckboxModule, NbCardModule } from '@nebular/theme';
+import { NbMenuModule, NbAlertModule, NbInputModule, NbButtonModule, NbCheckboxModule, NbCardModule, NbIconModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
@@ -13,6 +13,9 @@ import { RouterModule } from '@angular/router';
 import { NbAuthModule } from '@nebular/auth';
 import { LogoutComponent } from './logout/logout.component';
 import { DashboardService } from '../@core/apis/dashboard.service';
+import { CampaignService } from '../@core/apis/campaign.service';
+import { ContactListService } from '../@core/apis/contactList.service';
+import { MenuService } from '../@core/apis/menu.service';
 
 @NgModule({
   imports: [
@@ -31,6 +34,7 @@ import { DashboardService } from '../@core/apis/dashboard.service';
     NbCheckboxModule,
     NbCardModule,
     NbAuthModule,
+    NbIconModule
   ],
   declarations: [
     PagesComponent,
@@ -38,6 +42,9 @@ import { DashboardService } from '../@core/apis/dashboard.service';
   ],
   providers: [
     DashboardService,
+    CampaignService,
+    ContactListService,
+    MenuService
   ],
 })
 export class PagesModule {

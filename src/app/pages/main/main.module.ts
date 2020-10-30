@@ -32,34 +32,36 @@ import {
 import { ThemeModule } from '../../@theme/theme.module';
 import { CampaignComponent } from './campaign/campaign.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CampaignFormComponent } from './campaign/campaign-form/campaign-form.component';
-import { WindowFormComponent } from '../modal-overlays/window/window-form/window-form.component';
 import { CampaignService} from '../../@core/apis/campaign.service';
-import { CustomerFormComponent } from './customer-list/customer-form/customer-form.component';
-import { CampaignNewComponent } from './campaign/campaign-new/campaign-new.component';
 import { ContactListService } from '../../@core/apis/contactList.service';
-import { CustomerListEditComponent } from './customer-list/customer-list-edit/customer-list-edit.component';
 import { ContactComponent } from './contact/contact.component';
-import { ContactEditComponent } from './contact/contact-edit/contact-edit.component';
-import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { ContactService } from '../../@core/apis/contact.service';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ChatComponent } from './chat/chat.component';
-
+import { ECommerceModule } from '../e-commerce/e-commerce.module';
+import { ContactListNewComponent } from './contact-list-new/contact-list-new.component';
+import { ContactNewComponent } from './contact-new/contact-new.component';
+import { CampaignNewComponent } from './campaign-new/campaign-new.component';
+import { CampaignEditComponent } from './campaign-edit/campaign-edit.component';
+import { ContactEditComponent } from './contact-edit/contact-edit.component';
+import { ContactListEditComponent } from './contact-list-edit/contact-list-edit.component';
+import { ChatService } from './chat/chat.service';
+import { OnboardingComponent } from '../../custom/onboarding/onboarding.component';
 @NgModule({
   declarations: [
     SettingsComponent,
     MainComponent,
     CustomerListComponent,
-    CustomerListEditComponent,
     CampaignComponent,
-    ContactEditComponent,
-    ContactFormComponent,
-    CampaignFormComponent,
-    CustomerFormComponent,
     CampaignNewComponent,
     ContactComponent,
     ChatComponent,
+    ContactListNewComponent,
+    ContactListEditComponent,
+    ContactNewComponent,
+    CampaignEditComponent,
+    ContactEditComponent,
+    OnboardingComponent
   ],
   imports: [
     CommonModule,
@@ -91,15 +93,16 @@ import { ChatComponent } from './chat/chat.component';
     NbChatModule,
     NbMenuModule,
     NbToastrModule,
+    ECommerceModule
   ],
   entryComponents: [
-    WindowFormComponent,
 
   ],
   providers: [
     CampaignService,
     ContactListService,
     ContactService,
+    ChatService
   ],
 })
 export class MainModule { }

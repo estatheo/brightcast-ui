@@ -70,7 +70,7 @@
 
 
   .logo-img {
-    height: 4.5rem;
+    height: 2rem;
   }
 }
 
@@ -97,4 +97,8 @@
   border-image: initial;
   overflow: hidden;
   background-position: center center;
+}
+
+::ng-deep .nb-theme-default [nbButton].appearance-outline.status-primary {
+  background-color: #fff;
 }

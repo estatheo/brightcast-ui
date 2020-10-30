@@ -1,0 +1,112 @@
+<div class="main">
+    <div class="centered">
+        <div class="card" *ngIf="step === 0">
+            <div class="header header-solo">
+                New Campaign
+            </div>
+            <div class="input">
+                <div class="placeholder">
+                    Campaign title
+                </div>
+                <input class="value" [(ngModel)]="title" nbTooltipStatus="primary" nbTooltip="Give your campaign a title. You can edit this later if you need to." nbTooltipPlacement="right" />
+                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepZero()">Next</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="step === 1">
+            <div class="header-group">
+                <div class="top-title">NEW CAMPAIGN</div>
+                <div class="header">
+                    {{campaignData?.name}}
+                </div>
+            </div>            
+                <nb-select placeholder="Choose a contact list" [(ngModel)]="contactListId" *ngIf="ready" nbTooltipStatus="primary" nbTooltip="Choose a contact list. This is the list your messages wil go out to." nbTooltipPlacement="right" >
+                    <nb-option *ngFor="let cl of contactLists" [value]="cl.id">{{cl.name}}</nb-option>
+                    <nb-option value="" disabled *ngIf="contactLists === null || contactLists?.length < 1"></nb-option>
+                </nb-select>
+            <div class="button-group">
+                <button type="button"  class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepOne()">Next</button>
+                <div class="or"><span>───────────────</span>&nbsp;&nbsp;or&nbsp;&nbsp;<span>───────────────</span></div>
+                <button type="button" class="button-secondary" nbButton shape="semi-round" status="basic" outline [routerLink]="['/pages/main/new/customer-list']"><nb-icon icon="plus-outline" ></nb-icon>New list</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="step === 2">
+            <div class="header-group">
+                <div class="top-title">NEW CAMPAIGN</div>
+                <div class="header">
+                    {{campaignData?.name}}
+                </div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListName}}</div>
+            </div>     
+            <div class="input">
+                <label for="file" class="label" >Media file</label>
+                <input class="media-input" #image type="file" multiple accept="image/x-png,image/gif,image/jpeg" (change)="uploadImage(image.files)" nbInput fullWidth id="file" nbTooltip="Add your media if needed, you can use .png, .jpeg and .gif formats." nbTooltipPlacement="right">
+            </div>       
+            <div class="input">
+                <label for="message" class="label" >Message</label>
+                <textarea rows="5" class="message-text" placeholder="Type your message..."  [(ngModel)]="body" nbTooltipStatus="primary" nbTooltip="Add your message, you can use emojis and any other formatting that WhatsApp allows." nbTooltipPlacement="right" id="message"></textarea>
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="saveStepTwo()">Preview</button>
+            </div>
+        </div>
+        <div class="card" *ngIf="step === 3">
+            <div class="header-group">
+                <div class="top-title">NEW CAMPAIGN</div>
+                <div class="header">
+                    {{campaignData?.name}}
+                </div>
+                <div class="subheader"><nb-icon icon="people-outline"></nb-icon>{{contactListName}}</div>
+            </div>            
+            <div class="preview">
+                <div class="header">
+                    <img class="avatar" src="assets/images/avatar-round.png" />
+                    <span>Brightcast</span>
+                </div>
+                <div class="body">
+                    <!-- <div class="file" *ngIf="campaignData?.file !== '' && campaignData?.file !== null"></div> -->
+                    <div class="bubble">
+                        <div class="txt">
+                            <p class="name">Brightcast</p>
+                            <p class="message">This is Brightcast and {{business?.name}} has an update for you! you want to CAST it?</p>
+                            <span class="timestamp">{{dateNow | date:'shortTime'}}</span>
+                        </div>
+                        <div class="bubble-arrow"></div>
+                    </div>
+                    <div class="bubble alt">
+                        <div class="txt">
+                            <p class="name alt">{{firstContact?.phone}}<span> ~ {{firstContact?.firstName}}</span></p>
+                            <p class="message">CAST</p>
+                            <span class="timestamp">{{dateNow | date:'shortTime'}}</span>
+                        </div>
+                        <div class="bubble-arrow alt"></div>
+                    </div>
+                    <div class="bubble">
+                        <div class="txt">
+                            <p class="name">Brightcast</p>
+                            <img class="bubble-image" src="{{campaignData.fileUrl}}" *ngIf="campaignData?.fileUrl"/>
+                            <p class="message">{{campaignData?.message}}</p>
+                            <span class="timestamp">{{dateNow | date:'shortTime'}}</span>
+                        </div>
+                        <div class="bubble-arrow"></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="button-group">
+                <button type="button" class="button" nbButton shape="semi-round" status="primary" matripple (click)="sendNow()">Send now</button>
+                <button type="button" class="button last" nbButton shape="semi-round" status="primary" matripple (click)="savePreview()">Save draft</button>
+            </div>
+        </div>
+        <div class="step-container">
+            <div class="stepper">
+                <div class="step" [ngClass]="step === 0 ? 'currentStep' : ''" (click)="switchStep(0)">●</div>
+                <div class="step" [ngClass]="step === 1 ? 'currentStep' : ''" (click)="switchStep(1)">●</div>
+                <div class="step" [ngClass]="step === 2 ? 'currentStep' : ''" (click)="switchStep(2)">●</div>
+                <div class="step" [ngClass]="step === 3 ? 'currentStep' : ''" (click)="switchStep(3)">●</div>
+            </div>
+        </div>        
+    </div>    
+</div>

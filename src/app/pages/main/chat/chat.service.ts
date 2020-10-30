@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/signalr';
 import { ChatMessage } from '../../_models/chat';
 import { Invitation } from '../../_models/invitation';
+import { NbToastrService } from '@nebular/theme';
 
 @Injectable()
 export class ChatService {
@@ -16,7 +17,7 @@ export class ChatService {
 
   private _hubConnection: HubConnection;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private toastrService: NbToastrService) {
   }
 
   startConnection = () => {
@@ -28,7 +29,16 @@ export class ChatService {
 
     this._hubConnection.start()
       .then(() => console.log('Connection started'))
-      .catch(err => console.log('Error while starting connection: ' + err));
+      .catch(err => {
+        // this.toastrService.danger('There was an error connecting to the chat😢. Try to refresh the page!');
+        console.log('Error while starting connection: ' + err);
+      });
+  }
+
+  closeConnection = () => {
+    this._hubConnection.stop().then(() => {
+      // this.toastrService.danger( 'There has stopped😢, please refresh the page to continue!');
+    })
   }
 
   registerOnServerEvents(): void {

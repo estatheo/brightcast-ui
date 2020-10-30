@@ -55,7 +55,7 @@ export class NewPasswordComponent implements OnInit {
         .subscribe(
             data => {
                 this.toastrService.success('✔ The Password Has been reseted!', 'Success!');
-                this.router.navigate(['../confirm'], { relativeTo: this.route });
+                this.router.navigate(['../password/confirm'], { relativeTo: this.route });
             },
             error => {
                 this.toastrService.danger(`⚠ ${error}`, 'Error!');

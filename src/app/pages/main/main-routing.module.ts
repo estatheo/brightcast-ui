@@ -6,6 +6,15 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { ContactComponent } from './contact/contact.component';
 import { ChatComponent } from './chat/chat.component';
+import { CampaignNewComponent } from './campaign-new/campaign-new.component';
+import { ContactListNewComponent } from './contact-list-new/contact-list-new.component';
+import { ContactNewComponent } from './contact-new/contact-new.component';
+import { ContactEditComponent } from './contact-edit/contact-edit.component';
+import { CampaignEditComponent } from './campaign-edit/campaign-edit.component';
+import { ContactListEditComponent } from './contact-list-edit/contact-list-edit.component';
+import { OnboardingComponent } from '../../custom/onboarding/onboarding.component';
+import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
+import { CheckoutCanceledComponent } from './checkout-canceled/checkout-canceled.component';
 
 
 const routes: Routes = [
@@ -16,13 +25,34 @@ const routes: Routes = [
         path: 'settings', component: SettingsComponent,
       },
       {
-        path: 'customer-list', component: CustomerListComponent,
+        path: 'checkout/success', component: CheckoutSuccessComponent,
       },
       {
-        path: 'campaign', component: CampaignComponent,
+        path: 'checkout/canceled', component: CheckoutCanceledComponent,
       },
       {
-        path: 'customer-list/:id/contacts', component: ContactComponent,
+        path: 'customer-list/:id', component: CustomerListComponent,
+      },
+      {
+        path: 'customer-list/:id/edit', component: ContactListEditComponent,
+      },
+      {
+        path: 'new/customer-list', component: ContactListNewComponent,
+      },
+      {
+        path: 'campaign/:id', component: CampaignComponent,
+      },
+      {
+        path: 'campaign/:id/edit', component: CampaignEditComponent,
+      },
+      {
+        path: 'new/campaign', component: CampaignNewComponent,
+      },
+      {
+        path: 'customer-list/:id/new/contact', component: ContactNewComponent,
+      },
+      {
+        path: 'customer-list/:contactListId/contact/:id/edit', component: ContactEditComponent,
       },
       {
         path: 'chat', component: ChatComponent,
@@ -30,6 +60,9 @@ const routes: Routes = [
       {
         path: 'campaign/chat/:campaignId/:contactId', component: ChatComponent,
       },
+      {
+        path: 'onboarding', component: OnboardingComponent
+      }
     ],
   },
 

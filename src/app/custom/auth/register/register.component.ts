@@ -25,6 +25,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      fullname: ['', Validators.required,Validators.minLength(2)],
+      businessname: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       cb: [false, Validators.pattern('true')],
@@ -56,7 +58,7 @@ export class RegisterComponent implements OnInit {
             data => {
               //  this.alertService.success('Registration successful', { keepAfterRouteChange: true });
                 this.toastrService.success('✨ Registered successfully. We have sent you an email. Please verify it\'s you.', 'Success', {duration: 7000});
-                this.router.navigate(['../confirm'], { relativeTo: this.route });
+                this.router.navigate(['./confirm'], { relativeTo: this.route });
                 this.loading = false;
             },
             error => {

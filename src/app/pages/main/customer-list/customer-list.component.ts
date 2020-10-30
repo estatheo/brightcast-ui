@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NbWindowService, NbToastrService } from '@nebular/theme';
-import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { ContactListService } from '../../../@core/apis/contactList.service';
 import { ContactListElement } from '../../_models/contactListElement';
-import { CustomerListEditComponent } from './customer-list-edit/customer-list-edit.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactService } from '../../../@core/apis/contact.service';
+import { Contact } from '../../_models/contact';
+import { ContactList } from '../../_models/contactList';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-customer-list',
@@ -15,8 +16,14 @@ import { ContactService } from '../../../@core/apis/contact.service';
 export class CustomerListComponent implements OnInit {
 
   data: ContactListElement[];
-
+  shareLink: string;  
+  contactList: ContactList;
+  contactListId: number;
+  routeSub: Subscription;
+  contacts: Contact[];
+  selectedItem = "0";
   constructor(
+    private route: ActivatedRoute,
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
     private router: Router,
@@ -24,22 +31,18 @@ export class CustomerListComponent implements OnInit {
     private contactService: ContactService) { }
 
   ngOnInit(): void {
-    this.contactListService.data.subscribe((data: ContactListElement[]) => {
-      this.data = data;
+    this.routeSub =  this.route.params.subscribe(p => {
+      this.contactListId = p['id'];
+      this.contactListService.GetContactList(this.contactListId).subscribe((data: ContactList) => {
+        this.contactList = data;
+        this.shareLink = location.protocol + '//' + location.host + '/signup_contact/' + this.contactList.keyString;  
+        this.contactService.SetContactListId(this.contactListId);
+        this.contactService.refreshData();
+        this.contactService.data.subscribe((data: Contact[]) => {
+          this.contacts = data;
+        });    
+      });
     });
-  }
-  openModal() {
-    this.windowService.open(CustomerFormComponent, { title: 'New Contact List'});
-
-  }
-  openModalForEdit(event) {
-    this.contactListService.data.subscribe((data: ContactListElement[]) => {
-      this.data = data;
-      const item: ContactListElement = event;
-      this.windowService.open(
-        CustomerListEditComponent, { title: 'Edit Contact List', context: { contactList: item } });
-    });
-
   }
 
   delete(id) {
@@ -54,5 +57,51 @@ export class CustomerListComponent implements OnInit {
     }, error => {
       this.toastrService.danger('⚠ There was an error processing the request!', 'Error!');
     });
+  }
+
+  updateTimeFilter(){
+    switch (this.selectedItem) {
+      case "0":
+        this.contacts.sort((x,y) => (x.firstName > y.firstName) ? 1 : (x.firstName === y.firstName) ? ((x.lastName > y.lastName) ? 1: -1 ) : -1);
+        break;
+      case "1":
+        this.contacts.sort((x,y) => (x.firstName > y.firstName) ? 1 : (x.firstName === y.firstName) ? ((x.lastName > y.lastName) ? 1: -1 ) : -1).reverse();
+        break;
+      case "2":
+        this.contacts.sort((x,y) => (x.phone > y.phone) ? 1 : -1);
+        break;
+      case "3":
+        this.contacts.sort((x,y) => (x.phone > y.phone) ? 1 : -1).reverse();
+        break;
+      case "4":        
+        this.contacts.sort((x,y) => (x.email > y.email) ? 1 : -1);
+        break;
+      case "5":
+        this.contacts.sort((x,y) => (x.email > y.email) ? 1 : -1).reverse();
+        break;
+      case "6":
+        this.contacts.sort((x,y) => x.subscribed ? 1 : -1);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  deleteContact(id) {
+    this.contactService.Delete(id).subscribe(() => {
+      this.toastrService.primary('🎇 The Contact has been deleted!', 'Deleted!');
+      this.contactService.refreshData();
+      this.contactService.data.subscribe((data: Contact[]) => {
+        this.contacts = data;
+        // this.router.navigate(['pages/main/customer-list/' + this.contactListId]);
+      });
+    }, error => {
+      this.toastrService.danger('❌ There was an error processing the request!', 'Error!');
+    });
+  }
+
+  copyLink() {
+    this.toastrService.warning('The Link was copied to clipboard!', 'Note');
   }
 }

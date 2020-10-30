@@ -97,4 +97,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
+
+  newCampaign(){
+    
+  }
 }

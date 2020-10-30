@@ -31,6 +31,14 @@ export class ContactService {
     return this.httpClient.get(`${this.apiURL}/contact/ofList/${this.contactListId}/`).pipe(map(response => response));
   }
 
+  GetContact(id) {
+    return this.httpClient.get(`${this.apiURL}/contact/${id}`,).pipe(map(response => response));
+  }
+
+  GetContactsByCampaignId(id) {
+    return this.httpClient.get(`${this.apiURL}/contact/byCampaignId/${id}`,).pipe(map(response => response));
+  }
+
   NewContact(contact) {
     return this.httpClient.post(`${this.apiURL}/contact/new`, contact).pipe(map(response => response));
   }

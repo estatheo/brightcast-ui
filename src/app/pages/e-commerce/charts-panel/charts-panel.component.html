@@ -21,11 +21,11 @@
  -->
 
 
-<nb-card size="large">
+<nb-card size="medium" class="card">
   <div class="chart-container">
     <div class="header-title">
       {{chartName}}
     </div>
-    <ngx-orders-chart #ordersChart [ordersChartData]="ordersChartData" cardOption="{{option}}"></ngx-orders-chart>
+    <ngx-orders-chart #ordersChart [ordersChartData]="ordersChartData" cardOption="{{option}}" campaignId="{{id}}" timeFilter="{{filter}}"></ngx-orders-chart>
   </div>
 </nb-card>

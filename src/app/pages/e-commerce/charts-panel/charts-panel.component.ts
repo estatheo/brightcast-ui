@@ -16,6 +16,10 @@ export class ECommerceChartsPanelComponent implements OnDestroy {
 
   @Input() option: string;
 
+  @Input() id;
+
+  @Input() filter;
+
   chartPanelSummary: OrderProfitChartSummary[];
   period: string = 'week';
   ordersChartData: OrdersChart;

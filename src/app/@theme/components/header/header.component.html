@@ -5,23 +5,29 @@
     </a>
     <img class="logo-img" src="assets/logo/logo.png">
   </div>
-  <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
+  <!-- <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
-  </nb-select>
+  </nb-select> -->
 </div>
 
-<div class="header-container">
+<div>
+  <button type="button" nbButton outline status="primary" [routerLink]="['/pages/main/new/campaign']" ><nb-icon icon="plus-outline"></nb-icon>New Campaign</button>
+</div>
+
+
+
+<!-- <div class="header-container">
   <nb-actions size="small">
     <nb-action class="user-action">
       <div class="profile-image" [ngStyle]="{backgroundImage: avatar }"></div>
     </nb-action>
-    <nb-action class="user-action">
+    <<nb-action class="user-action">
       <h6>{{name}}</h6>
     </nb-action>
     <div class="profile">
       
     </div>
-    <!-- <nb-action class="control-item">
+    <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
     <nb-action class="control-item" icon="email-outline"></nb-action>
@@ -30,10 +36,5 @@
       <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" [name]="user?.firstName + ' ' + user?.lastName" [picture]="user?.pictureUrl">
       </nb-user>
     </nb-action>
-    
-    -->
-    
-
-    
   </nb-actions>
-</div>
+</div> -->
