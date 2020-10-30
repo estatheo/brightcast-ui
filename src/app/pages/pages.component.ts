@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
 import { CampaignService } from '../@core/apis/campaign.service';
 import { ContactListService } from '../@core/apis/contactList.service';
 import { MenuService } from '../@core/apis/menu.service';
@@ -13,7 +13,7 @@ import { MenuItem } from './_models/MenuItem';
   styleUrls: ['pages.component.scss'],
   template: `
     <ngx-one-column-layout class="column">
-    <div class="container" >
+    <div class="container" *ngIf="!compact">
       <div class="campaign" >
         <div class="header">
           <div class="title">CAMPAIGNS</div>
@@ -66,16 +66,21 @@ export class PagesComponent implements OnInit{
   campaigns: MenuItem[] = [];
   contactLists: MenuItem[] = [];
   selectedCampaign: MenuItem;
+  compact = false;
 
-  constructor(private menuService: MenuService, private campaignService: CampaignService, private contactListService: ContactListService) {
+  constructor(private menuService: MenuService, private campaignService: CampaignService, private sidebarService: NbSidebarService) {
   }
 
   ngOnInit(): void {
+    this.sidebarService.onToggle().subscribe(x => {
+        this.compact = !this.compact;
+    })
     this.campaignService.data.subscribe((c: CampaignData) => {
       c.campaigns?.forEach(y => this.campaigns.push({name: y.status === 0 ? y.name + ' (draft)': y.name, link: `/pages/main/campaign/${y.id}`}));
       c.contactLists?.forEach(y => this.contactLists.push({name: y.name, link: `/pages/main/customer-list/${y.id}`}));
       this.selectedCampaign = this.menuService.getSelectedCampaign();
     });
+
   }
 
   selectCampaign(item: MenuItem) {

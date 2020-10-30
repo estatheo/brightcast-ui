@@ -4,6 +4,7 @@ import { AccountService } from '../../_services';
 import { NbToastrService } from '@nebular/theme';
 import { Business } from '../../_models/business';
 import { UserProfile } from '../../_models/userProfile';
+import { MembershipService } from '../../../@core/apis/membership.service';
 
 @Component({
   selector: 'ngx-settings',
@@ -25,6 +26,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
+    private membershipService: MembershipService,
     private toastrService: NbToastrService) { }
 
   ngOnInit(): void {
@@ -41,6 +43,7 @@ export class SettingsComponent implements OnInit {
       website: ['', Validators.required],
       address: ['', Validators.required],
       category: ['', Validators.required],
+      membership: [{value: '', disabled: true}, Validators.required ]
     });
     this.accountService.getSettingsData().subscribe(data => {
       this.business = data['business'];
@@ -176,5 +179,13 @@ export class SettingsComponent implements OnInit {
           this.toastrService.danger(error, 'There was an error on our side😢');
       });
     }
+  }
+
+  upgrade() {
+    this.membershipService.initializeCheckout().subscribe(res => {
+      stripe.redirectToCheckout({
+        sessionId:  res['sessionId']
+      }); 
+    })
   }
 }

@@ -47,6 +47,9 @@ import { ContactEditComponent } from './contact-edit/contact-edit.component';
 import { ContactListEditComponent } from './contact-list-edit/contact-list-edit.component';
 import { ChatService } from './chat/chat.service';
 import { OnboardingComponent } from '../../custom/onboarding/onboarding.component';
+import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
+import { CheckoutCanceledComponent } from './checkout-canceled/checkout-canceled.component';
+import { MembershipService } from '../../@core/apis/membership.service';
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -61,7 +64,9 @@ import { OnboardingComponent } from '../../custom/onboarding/onboarding.componen
     ContactNewComponent,
     CampaignEditComponent,
     ContactEditComponent,
-    OnboardingComponent
+    OnboardingComponent,
+    CheckoutSuccessComponent,
+    CheckoutCanceledComponent
   ],
   imports: [
     CommonModule,
@@ -102,7 +107,8 @@ import { OnboardingComponent } from '../../custom/onboarding/onboarding.componen
     CampaignService,
     ContactListService,
     ContactService,
-    ChatService
+    ChatService,
+    MembershipService
   ],
 })
 export class MainModule { }
