@@ -3,9 +3,9 @@
     firstName?: string;
     lastName?: string;
     pictureUrl?: string;
-    Phone?: string;
-    Default?: boolean;
-    UserId?: number;
-    RoleId?: number;
-    BusinessId?: number;
+    phone?: string;
+    default?: boolean;
+    userId?: number;
+    roleId?: number;
+    businessId?: number;
 }

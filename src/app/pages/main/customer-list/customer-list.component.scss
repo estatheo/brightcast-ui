@@ -131,8 +131,8 @@ table {
             margin: 1rem;
             
             .main-data-field {
-                min-width: 10rem;
-                max-width: 20rem;       
+                width: 10rem;
+                overflow: auto;     
                 color: #171725;         
                 font-family: 'Poppins', sans-serif;
                 font-weight: 500;
